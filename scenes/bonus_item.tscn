@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/bonuses/point.png" type="Texture" id=1]
+[ext_resource path="res://scripts/bonus_item.gd" type="Script" id=2]
+[ext_resource path="res://assets/bonuses/clock.png" type="Texture" id=3]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": false,
+"name": "point",
+"speed": 0.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": false,
+"name": "clock",
+"speed": 0.0
+} ]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 24.3902
+
+[node name="Bonus" type="RigidBody2D" groups=["bonus"]]
+scale = Vector2( 0.4, 0.4 )
+collision_mask = 0
+mode = 1
+gravity_scale = 0.0
+script = ExtResource( 2 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+animation = "clock"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 1.2, 1.2 )
+shape = SubResource( 1 )
+
+[node name="anim_scale" type="Tween" parent="."]
+
+[node name="anim_rotation" type="Tween" parent="."]
+
+[connection signal="tween_all_completed" from="anim_scale" to="." method="_on_anim_scale_end"]
+[connection signal="tween_all_completed" from="anim_rotation" to="." method="_on_anim_rotation_end"]

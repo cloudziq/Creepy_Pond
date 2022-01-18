@@ -1,0 +1,94 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://scripts/main.gd" type="Script" id=1]
+[ext_resource path="res://scenes/player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Mob.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/bonus_item.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/sounds/gameover.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/sounds/House In a Forest Loop.ogg" type="AudioStream" id=7]
+[ext_resource path="res://assets/sounds/enemy_bite.ogg" type="AudioStream" id=8]
+[ext_resource path="res://assets/sounds/player_consume.ogg" type="AudioStream" id=9]
+[ext_resource path="res://scenes/level_BG.tscn" type="PackedScene" id=10]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -64, -64, 0, 0, 0, 0, 544, -64, 0, 0, 0, 0, 544, 768, 0, 0, 0, 0, -64, 768, 0, 0, 0, 0, -64, -64 )
+}
+
+[node name="main" type="Node2D"]
+script = ExtResource( 1 )
+Mob = ExtResource( 3 )
+bonus_item = ExtResource( 4 )
+BG_scene = ExtResource( 10 )
+
+[node name="BG_old" type="ColorRect" parent="."]
+visible = false
+margin_right = 480.0
+margin_bottom = 720.0
+color = Color( 0.117647, 0.454902, 0.552941, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player" parent="." instance=ExtResource( 2 )]
+position = Vector2( -103, 59 )
+
+[node name="StartPosition" type="Position2D" parent="."]
+position = Vector2( 240, 360 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MobPath" type="Path2D" parent="."]
+position = Vector2( 0, 1.23077 )
+scale = Vector2( 1, 1.01923 )
+curve = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
+position = Vector2( -64, -64 )
+rotation = 9.77035e-07
+
+[node name="HUD" parent="." instance=ExtResource( 5 )]
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="level_music" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 7 )
+volume_db = -12.0
+
+[node name="enemy_bite" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 8 )
+volume_db = 6.0
+
+[node name="death_sound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 6 )
+
+[node name="point_collected" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 9 )
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="MobTimer" type="Timer" parent="Timers"]
+wait_time = 0.8
+
+[node name="ScoreTimer" type="Timer" parent="Timers"]
+
+[node name="StartTimer" type="Timer" parent="Timers"]
+wait_time = 1.8
+one_shot = true
+
+[node name="MobClockDelay" type="Timer" parent="Timers"]
+wait_time = 8.0
+one_shot = true
+
+[connection signal="bonus_collected" from="player" to="." method="_on_player_bonus_collected"]
+[connection signal="hit" from="player" to="." method="game_over"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]
+[connection signal="timeout" from="Timers/MobTimer" to="." method="_on_MobTimer_timeout"]
+[connection signal="timeout" from="Timers/ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
+[connection signal="timeout" from="Timers/StartTimer" to="." method="_on_StartTimer_timeout"]
+[connection signal="timeout" from="Timers/MobClockDelay" to="." method="_on_MobClockDelay_timeout"]

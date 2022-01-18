@@ -1,0 +1,90 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://assets/enemies/player_1.png" type="Texture" id=1]
+[ext_resource path="res://assets/enemies/player_2.png" type="Texture" id=2]
+[ext_resource path="res://assets/particles/spark4.png" type="Texture" id=3]
+[ext_resource path="res://assets/particles/spark1.png" type="Texture" id=4]
+[ext_resource path="res://scripts/player.gd" type="Script" id=5]
+[ext_resource path="res://assets/particles/spark2.png" type="Texture" id=6]
+[ext_resource path="res://assets/particles/spark3.png" type="Texture" id=7]
+[ext_resource path="res://assets/sounds/player_move.ogg" type="AudioStream" id=8]
+
+[sub_resource type="Gradient" id=5]
+offsets = PoolRealArray( 0.145038, 0.332061, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0.568345, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+lifetime_randomness = 1.0
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 60.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 22.0
+orbit_velocity = 0.0
+orbit_velocity_random = 1.0
+radial_accel = 0.2
+scale = 0.16
+scale_random = 0.25
+color = Color( 0.57, 0.51984, 0.4446, 1 )
+color_ramp = SubResource( 6 )
+
+[sub_resource type="AnimatedTexture" id=4]
+flags = 4
+frames = 4
+fps = 20.0
+frame_0/texture = ExtResource( 4 )
+frame_1/texture = ExtResource( 6 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 7 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 3 )
+frame_3/delay_sec = 0.0
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "player",
+"speed": 12.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 24.0
+height = 0.0
+
+[node name="player" type="Area2D"]
+scale = Vector2( 0.6, 0.6 )
+script = ExtResource( 5 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+amount = 200
+lifetime = 2.0
+speed_scale = 2.8
+randomness = 0.61
+visibility_rect = Rect2( 0, -37.4297, 44.4763, 75.3501 )
+local_coords = false
+process_material = SubResource( 3 )
+texture = SubResource( 4 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( -4, 0 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 1 )
+animation = "player"
+offset = Vector2( 8, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -4, 0 )
+shape = SubResource( 2 )
+
+[node name="player_move" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = 2.0
+pitch_scale = 0.95
+mix_target = 2
+
+[connection signal="body_entered" from="." to="." method="_on_player_body_entered"]
+[connection signal="finished" from="player_move" to="." method="_on_player_move_finished"]
