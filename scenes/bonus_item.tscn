@@ -22,12 +22,14 @@ radius = 24.3902
 
 [node name="Bonus" type="RigidBody2D" groups=["bonus"]]
 scale = Vector2( 0.4, 0.4 )
+z_index = 1
 collision_mask = 0
 mode = 1
 gravity_scale = 0.0
 script = ExtResource( 2 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
+light_mask = 2
 frames = SubResource( 2 )
 animation = "clock"
 

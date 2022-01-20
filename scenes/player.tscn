@@ -28,7 +28,7 @@ orbit_velocity_random = 1.0
 radial_accel = 0.2
 scale = 0.16
 scale_random = 0.25
-color = Color( 0.57, 0.51984, 0.4446, 1 )
+color = Color( 0.24, 0.32, 0.44, 0.4 )
 color_ramp = SubResource( 6 )
 
 [sub_resource type="AnimatedTexture" id=4]
@@ -52,14 +52,19 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 24.0
+radius = 14.0
 height = 0.0
 
 [node name="player" type="Area2D"]
-scale = Vector2( 0.6, 0.6 )
+z_index = 10
 script = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Particles2D" type="Particles2D" parent="."]
+light_mask = 2
+position = Vector2( -4, 0 )
 amount = 200
 lifetime = 2.0
 speed_scale = 2.8
@@ -68,17 +73,27 @@ visibility_rect = Rect2( 0, -37.4297, 44.4763, 75.3501 )
 local_coords = false
 process_material = SubResource( 3 )
 texture = SubResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( -4, 0 )
-scale = Vector2( 0.5, 0.5 )
+scale = Vector2( 0.26, 0.26 )
 frames = SubResource( 1 )
 animation = "player"
 offset = Vector2( 8, 0 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -4, 0 )
 shape = SubResource( 2 )
+one_way_collision_margin = 0.0
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="player_move" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )

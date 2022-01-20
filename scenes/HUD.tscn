@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Xolonium-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://assets/fonts/Vellyc.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/bonuses/point.png" type="Texture" id=4]
 
 [sub_resource type="DynamicFont" id=5]
 size = 32
@@ -54,7 +55,7 @@ margin_left = -239.0
 margin_top = -88.0
 margin_right = 240.0
 margin_bottom = 71.0
-custom_colors/font_color = Color( 0.807843, 0.141176, 0.141176, 1 )
+custom_colors/font_color = Color( 0.141176, 0.639216, 0.8, 1 )
 custom_colors/font_outline_modulate = Color( 0.694118, 0.796078, 0.643137, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 4
@@ -68,15 +69,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="TextureRect" parent="."]
+self_modulate = Color( 1, 1, 1, 0.14902 )
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -240.0
+margin_top = -20.0
+margin_right = 240.0
+margin_bottom = -260.0
+texture = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="Title"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -239.0
-margin_top = -241.0
+margin_top = -104.0
 margin_right = 240.0
-margin_bottom = -29.0
+margin_bottom = 108.0
 custom_colors/font_color = Color( 0.141176, 0.580392, 0.807843, 1 )
 custom_colors/font_outline_modulate = Color( 0.694118, 0.796078, 0.643137, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -84,7 +100,7 @@ custom_constants/shadow_offset_x = 4
 custom_constants/line_spacing = 4
 custom_constants/shadow_offset_y = 3
 custom_fonts/font = SubResource( 4 )
-text = "CREEPY WATERS"
+text = "CREEPY POND"
 align = 1
 valign = 1
 autowrap = true

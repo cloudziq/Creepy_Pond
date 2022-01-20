@@ -33,7 +33,7 @@ func show_game_over():
 #  Wait until the MessageTimer has counted down.
 	yield($MessageTimer, "timeout")
 
-	$Message.add_color_override("font_color", Color(.8, .14, .14))
+	$Message.add_color_override("font_color", Color(.14, .64, .8))
 	#$Message.text = "Avoid the Creeps!"
 
 #  Make a one-shot timer and wait for it to finish.

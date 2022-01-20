@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/particles/light_sprite.png" type="Texture" id=1]
+[ext_resource path="res://scripts/level_light.gd" type="Script" id=2]
+
+[node name="Node2D" type="Node2D"]
+z_index = 20
+script = ExtResource( 2 )
+
+[node name="Light" type="Light2D" parent="."]
+position = Vector2( 240, 360 )
+scale = Vector2( 4, 8 )
+texture = ExtResource( 1 )
+color = Color( 0.662745, 0.662745, 0.662745, 1 )
+energy = 2.2
+mode = 2
+range_height = 200.0
+range_z_min = -1280
+range_z_max = 1280
+
+[node name="light_pos" type="Tween" parent="."]
+
+[node name="light_height" type="Tween" parent="."]
+
+[node name="light_height_timer" type="Timer" parent="."]
+wait_time = 10.0
+
+[connection signal="tween_all_completed" from="light_pos" to="." method="_on_light_pos_end"]
+[connection signal="tween_all_completed" from="light_height" to="." method="_on_light_height_end"]
+[connection signal="timeout" from="light_height_timer" to="." method="_on_light_height_timer_timeout"]

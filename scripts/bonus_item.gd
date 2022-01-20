@@ -14,7 +14,7 @@ var clock_anim_dir = 1
 #	["bomb",  100]
 #]
 var bonuses = [
-	["point",  90],
+	["point",  94],
 	["clock",  100],
 ]
 
