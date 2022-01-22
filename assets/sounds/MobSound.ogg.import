@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/MobSound.ogg-cb3a59410fe7f919d583695925f245fb.oggstr"
+
+[deps]
+
+source_file="res://assets/sounds/MobSound.ogg"
+dest_files=[ "res://.import/MobSound.ogg-cb3a59410fe7f919d583695925f245fb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

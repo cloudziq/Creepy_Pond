@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/light_sprite.png-b1488cd41af7c7c61c3c128b8f17db2b.stex"
+path="res://.import/bg22_n.png-ce020b30900ae2e3eff1246cb2010bb8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/particles/light_sprite.png"
-dest_files=[ "res://.import/light_sprite.png-b1488cd41af7c7c61c3c128b8f17db2b.stex" ]
+source_file="res://assets/level_bg/bg22_n.png"
+dest_files=[ "res://.import/bg22_n.png-ce020b30900ae2e3eff1246cb2010bb8.stex" ]
 
 [params]
 
@@ -20,11 +20,11 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=false
+process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false

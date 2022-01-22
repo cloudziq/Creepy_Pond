@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/Mob.gd" type="Script" id=1]
 [ext_resource path="res://assets/enemies/enemy1_1.png" type="Texture" id=2]
@@ -7,9 +7,15 @@
 [ext_resource path="res://assets/enemies/enemy2_2.png" type="Texture" id=5]
 [ext_resource path="res://assets/enemies/enemy3_1.png" type="Texture" id=6]
 [ext_resource path="res://assets/enemies/enemy3_2.png" type="Texture" id=7]
+[ext_resource path="res://assets/sounds/MobSound.ogg" type="AudioStream" id=8]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "enemy3",
+"speed": 3.0
+}, {
 "frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
 "loop": true,
 "name": "enemy1",
@@ -18,11 +24,6 @@ animations = [ {
 "frames": [ ExtResource( 4 ), ExtResource( 5 ) ],
 "loop": true,
 "name": "enemy2",
-"speed": 3.0
-}, {
-"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "enemy3",
 "speed": 3.0
 } ]
 
@@ -51,5 +52,12 @@ shape = SubResource( 2 )
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 position = Vector2( -128, 104 )
 rect = Rect2( -20, -20, 40, 40 )
+
+[node name="MobSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( -130.5, 103 )
+stream = ExtResource( 8 )
+volume_db = 8.0
+max_distance = 140.0
+attenuation = 1.80251
 
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

@@ -9,6 +9,10 @@ func _ready():
 	$Message.hide()
 	$ScoreLabel.text = ""
 
+	yield(get_tree().create_timer(.1), "timeout")
+	if get_parent().score_record != 0:
+		$ScoreLabel.text = "BEST SCORE:  " + str(get_parent().score_record)
+
 
 
 
@@ -30,26 +34,24 @@ func show_game_over():
 	$Message.add_color_override("font_color", Color(1, 1, 1))
 	show_message("GAME OVER :(")
 
-#  Wait until the MessageTimer has counted down.
 	yield($MessageTimer, "timeout")
-
 	$Message.add_color_override("font_color", Color(.14, .64, .8))
-	#$Message.text = "Avoid the Creeps!"
 
-#  Make a one-shot timer and wait for it to finish.
 	yield(get_tree().create_timer(1), "timeout")
-	$StartButton.show()
-	$Title.show()
+	$ScoreLabel.text = "BEST SCORE:  " + str(get_parent().score_record)
+	for node in get_tree().get_nodes_in_group("main_menu"):
+		node.show()
 
 
 
 
 func _on_StartButton_pressed():
-	$StartButton.hide()
+	for node in get_tree().get_nodes_in_group("main_menu"):
+		node.hide()
 	emit_signal("start_game")
 	show_message("Avoid the Creeps!")
+	$ButtonClick.play()
 	$ScoreLabel.text = ""
-	$Title.hide()
 
 
 

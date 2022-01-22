@@ -1,7 +1,7 @@
 extends Node2D
 
-var BG_amount     = 14
-var default_range = 8000
+var BG_amount     = 22
+var default_range = 10000
 
 
 var ACTIVE
@@ -22,7 +22,7 @@ func _ready():
 	if z_index != 100:
 		$Sprite.self_modulate = Color(.12, .28, .64, .84)
 	else:
-		$Sprite.self_modulate = Color(.18, .24, .62, .22)
+		$Sprite.self_modulate = Color(.18, .24, .62, .42)
 	assign_tex()
 	ACTIVE = true
 
@@ -35,38 +35,39 @@ func _process(_delta):
 	if ACTIVE:
 		if not ROTATE:
 			ROTATE = true
-			time  = rand_range(120, 240)
+			time  = rand_range(180, 320)
 			delay = rand_range(4, 10)
-			rot = randi() % 361 # ; rot = -rot if rot > 0 else rot
+			rot = randi() % 361
 			$anim_rotate.interpolate_property($Sprite, "rotation_degrees",
 				$Sprite.rotation_degrees, rot, time,
 				Tween.TRANS_SINE, Tween.EASE_IN_OUT, delay)
 			$anim_rotate.start()
 		elif not COLOR and not CHANGE:
 			COLOR = true
-			time  = rand_range(4, 8)
-			delay = rand_range(6, 12)
+			time  = rand_range(4, 10)
+			delay = rand_range(18, 32)
 			R = rand_range(.20, .32)
-			G = rand_range(.28, .56)
-			B = rand_range(.42, .94)
-			A = rand_range(.70, .82) if z_index != 100 else rand_range(.18, .32)
+			G = rand_range(.26, .48)
+			B = rand_range(.52, .94)
+			A = rand_range(.62, .84) if z_index != 100 else rand_range(.28, .36)
 			$anim_color.interpolate_property($Sprite, "self_modulate",
 				$Sprite.self_modulate, Color(R,G,B,A), time,
 				Tween.TRANS_SINE, Tween.EASE_IN_OUT, delay)
 			$anim_color.start()
 		elif not SCALE:
 			SCALE = true
-			time  = rand_range(18, 42)
+			time  = rand_range(32, 68)
 			delay = rand_range(6, 14)
-			var scale = rand_range(6.64, 12)
+			var scale = rand_range(6.64, 10)
 			$anim_scale.interpolate_property($Sprite, "scale",
 				$Sprite.scale, Vector2(scale, scale), time,
 				Tween.TRANS_SINE, Tween.EASE_IN_OUT, delay)
 			$anim_scale.start()
-		elif randi() % default_range + 1 >= default_range - 4 and CHANGE == false:
+		elif randi() % default_range + 1 == default_range and CHANGE == false:
 			CHANGE = true
-			time  = rand_range(12, 18)
-			delay = rand_range(4, 10)
+			print("BG change start")
+			time  = rand_range(40, 60)
+			delay = rand_range(2, 12)
 			color = $Sprite.self_modulate ; color.a = 0
 			$anim_color.remove($Sprite, "self_modulate")
 			$anim_color.interpolate_property($Sprite, "self_modulate",

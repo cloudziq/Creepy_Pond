@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Rule of Three.ogg-3be2d5f7bd00c034d0cbabc30fbcf656.oggstr"
+
+[deps]
+
+source_file="res://assets/sounds/Rule of Three.ogg"
+dest_files=[ "res://.import/Rule of Three.ogg-3be2d5f7bd00c034d0cbabc30fbcf656.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
