@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bonus_clock_collect.ogg-5c4dab92bebc4ca44aa545250e11332a.oggstr"
+
+[deps]
+
+source_file="res://assets/sounds/bonus_clock_collect.ogg"
+dest_files=[ "res://.import/bonus_clock_collect.ogg-5c4dab92bebc4ca44aa545250e11332a.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scripts/main.gd" type="Script" id=1]
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=2]
@@ -8,13 +8,14 @@
 [ext_resource path="res://assets/sounds/gameover.wav" type="AudioStream" id=6]
 [ext_resource path="res://assets/sounds/House In a Forest Loop.ogg" type="AudioStream" id=7]
 [ext_resource path="res://assets/sounds/enemy_bite.ogg" type="AudioStream" id=8]
-[ext_resource path="res://assets/sounds/player_consume.ogg" type="AudioStream" id=9]
+[ext_resource path="res://assets/sounds/bonus_point_collect.ogg" type="AudioStream" id=9]
 [ext_resource path="res://scenes/Level_BG.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/level_light.tscn" type="PackedScene" id=11]
-[ext_resource path="res://assets/sounds/player_collect.ogg" type="AudioStream" id=12]
+[ext_resource path="res://assets/sounds/bonus_clock_collect.ogg" type="AudioStream" id=12]
 [ext_resource path="res://assets/sounds/clock_ticking.ogg" type="AudioStream" id=13]
 [ext_resource path="res://assets/sounds/bonus_appear.ogg" type="AudioStream" id=14]
 [ext_resource path="res://assets/sounds/Rule of Three.ogg" type="AudioStream" id=15]
+[ext_resource path="res://assets/sounds/bonus_pill_collect.ogg" type="AudioStream" id=16]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -73,16 +74,20 @@ volume_db = 6.0
 [node name="death_sound" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 6 )
 
-[node name="point_collected" type="AudioStreamPlayer" parent="Sounds"]
+[node name="bonus_point_collect" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 9 )
+
+[node name="bonus_pill_collect" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 16 )
+volume_db = 4.0
+
+[node name="bonus_clock_collect" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 12 )
+volume_db = -12.0
 
 [node name="clock_ticking" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 13 )
 volume_db = -10.0
-
-[node name="bonus_collected" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource( 12 )
-volume_db = -12.0
 
 [node name="bonus_appear" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 14 )
@@ -91,7 +96,6 @@ volume_db = -12.0
 [node name="Timers" type="Node" parent="."]
 
 [node name="MobTimer" type="Timer" parent="Timers"]
-wait_time = 0.8
 
 [node name="ScoreTimer" type="Timer" parent="Timers"]
 
@@ -111,6 +115,10 @@ one_shot = true
 wait_time = 25.0
 one_shot = true
 
+[node name="PillBonusDelay" type="Timer" parent="Timers"]
+wait_time = 12.0
+one_shot = true
+
 [connection signal="bonus_collected" from="player" to="." method="_on_player_bonus_collected"]
 [connection signal="hit" from="player" to="." method="game_over"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
@@ -120,3 +128,4 @@ one_shot = true
 [connection signal="timeout" from="Timers/MobClockDelay" to="." method="_on_MobClockDelay_timeout"]
 [connection signal="timeout" from="Timers/BonusDelay" to="." method="_on_BonusDelay_timeout"]
 [connection signal="timeout" from="Timers/ClockBonusDelay" to="." method="_on_ClockBonusDelay_timeout"]
+[connection signal="timeout" from="Timers/PillBonusDelay" to="." method="_on_PillBonusDelay_timeout"]

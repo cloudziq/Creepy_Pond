@@ -5,13 +5,12 @@ export(PackedScene) var bonus_item ; var bonus
 export(PackedScene) var BG_scene
 export(PackedScene) var level_light
 
-#export var allow_clock = false
-
 
 var score = 0 ; var score_record = 0
-var allow_bonus_spawn = false
-var allow_clock_spawn = false
-var allow_mob_spawn   = true
+var allow_bonus_spawn
+var allow_clock_spawn
+var allow_pill_spawn
+var allow_mob_spawn
 
 
 
@@ -34,6 +33,7 @@ func _ready():
 		if a >= lights_num - 2:
 			light.is_vertical = 1
 
+	window_prepare()
 	load_config()
 
 
@@ -53,18 +53,28 @@ func _process(_delta):
 
 func new_game():
 	score = 0
+	get_node("player").speed = 160
+	allow_mob_spawn   = true
+	allow_bonus_spawn = false
 	allow_clock_spawn = false
+	allow_pill_spawn  = false
 	$player.start($StartPosition.position)
 	$Timers/StartTimer.start()
-	$Timers/BonusDelay.start()
+	$Timers/BonusDelay.wait_time = 4 ; $Timers/BonusDelay.start()
 	$Timers/ClockBonusDelay.start()
+	$Timers/PillBonusDelay.start()
 	$Sounds/level_music.play()
+	$Timers/MobTimer.wait_time = 1
+
 
 
 
 
 func game_over():
-	allow_bonus_spawn = false
+	if score > score_record:
+		score_record = score
+		save_config()
+#	allow_bonus_spawn = false
 	get_tree().call_group("mobs",  "queue_free")
 	get_tree().call_group("bonus", "queue_free")
 	$HUD.show_game_over()
@@ -76,14 +86,13 @@ func game_over():
 	yield(get_tree().create_timer(.8), "timeout")
 	$Sounds/death_sound.play()
 	$Sounds/clock_ticking.stop()
-	if score > score_record:
-		score_record = score
-		save_config()
 
 
 
 
 var save_version = 2
+var config_path
+# userdata path: "user://config.cfg"
 
 func save_config():
 	var password = "7846536587438346574"
@@ -94,7 +103,7 @@ func save_config():
 	config.set_value("config", "score_record", score_record)
 
 #	config.save("user://config.cfg")
-	config.save_encrypted("user://config.cfg", key)
+	config.save_encrypted(config_path, key)
 
 
 
@@ -104,14 +113,34 @@ func load_config():
 	var key = password.sha256_buffer()
 	var config = ConfigFile.new()
 
+	var system = OS.get_name()
+	match system:
+		"Windows", "X11":
+			config_path = OS.get_executable_path().get_base_dir() + "/config.cfg"
+
 #	var err = config.load("user://config.cfg")
-	var err = config.load_encrypted("user://config.cfg", key)
+	var err = config.load_encrypted(config_path, key)
 	if err != OK: return
 
 	if config.get_value("config", "save_version") != save_version:
 		score_record = 0
 	else:
 		score_record = config.get_value("config", "score_record")
+
+
+
+
+func window_prepare():
+	var display_size = OS.get_screen_size()
+	var window_size = OS.window_size
+	window_size.x *= 4 ; window_size.y *= 4
+
+	if display_size.y <= window_size.y:
+		var scale_ratio = window_size.y / (display_size.y - 200)
+		window_size.x /= scale_ratio ; window_size.y /= scale_ratio
+
+	OS.set_window_size(window_size)
+	OS.set_window_position(display_size * .5 - window_size * .5)
 
 
 
@@ -128,8 +157,7 @@ func _on_MobTimer_timeout():
 
 
 
-func _on_StartTimer_timeout():    ## After pressing Start Button
-	$Timers/MobTimer.wait_time = .8
+func _on_StartTimer_timeout():    ## After intro message
 	$Timers/MobTimer.start()
 	$Timers/ScoreTimer.start()
 
@@ -137,10 +165,11 @@ func _on_StartTimer_timeout():    ## After pressing Start Button
 
 
 func _on_ScoreTimer_timeout():
-	if $Timers/MobTimer.wait_time > .20:
-		$Timers/MobTimer.wait_time -= $Timers/MobTimer.wait_time / 100
+	if $Timers/MobTimer.wait_time > .10 and $Timers/MobClockDelay.is_stopped():
+		$Timers/MobTimer.wait_time -= $Timers/MobTimer.wait_time / 88
 	score += 1
 	$HUD.update_score(score)
+	print($Timers/MobTimer.wait_time)
 
 
 
@@ -160,18 +189,22 @@ func _on_player_bonus_collected():
 		"point":
 			score += 1
 			$HUD.update_score(score)
-			$Sounds/point_collected.pitch_scale = rand_range(.6, 1.4)
-			$Sounds/point_collected.play()
+			$Sounds/bonus_point_collect.pitch_scale = rand_range(.6, 1.4)
+			$Sounds/bonus_point_collect.play()
+		"speed_pill":
+			$Sounds/bonus_pill_collect.play()
+			$Timers/PillBonusDelay.start()
+			get_node("player").speed *= 1.1
 		"clock":
 			var time
 			var default_timer = 8
 			mob.time_scale("reduce")
-			time = default_timer * (1 + (1 - ($Timers/MobTimer.wait_time * 2)))
+			time = default_timer * (1 + (1 - ($Timers/MobTimer.wait_time * 1.6)))
 			#print("CLOCK TIME:" + ("%.2f" % time))
 			$Timers/MobClockDelay.wait_time = time
 			$Timers/MobClockDelay.start()
 			$Timers/ClockBonusDelay.start()
-			$Sounds/bonus_collected.play()
+			$Sounds/bonus_clock_collect.play()
 			$Sounds/clock_ticking.play()
 			allow_mob_spawn = false
 
@@ -184,7 +217,9 @@ func _on_BonusDelay_timeout():
 	allow_bonus_spawn = true
 
 
-
-
 func _on_ClockBonusDelay_timeout():
 	allow_clock_spawn = true
+
+
+func _on_PillBonusDelay_timeout():
+	allow_pill_spawn = true

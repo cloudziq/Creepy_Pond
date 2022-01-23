@@ -58,6 +58,7 @@ height = 0.0
 [node name="player" type="Area2D"]
 z_index = 10
 script = ExtResource( 5 )
+speed = 160
 
 [node name="Particles2D" type="Particles2D" parent="."]
 light_mask = 2
@@ -72,27 +73,23 @@ process_material = SubResource( 3 )
 texture = SubResource( 4 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( -4, 0 )
+position = Vector2( -0.530001, 0 )
 scale = Vector2( 0.26, 0.26 )
 frames = SubResource( 1 )
 animation = "player"
 offset = Vector2( 8, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -4, 0 )
+position = Vector2( -0.530001, 0 )
 shape = SubResource( 2 )
-one_way_collision_margin = 0.0
-__meta__ = {
-"_edit_lock_": true
-}
+
+[node name="Listener2D" type="Listener2D" parent="."]
+current = true
 
 [node name="player_move" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
 volume_db = 2.2
 mix_target = 2
-
-[node name="Listener2D" type="Listener2D" parent="."]
-current = true
 
 [connection signal="body_entered" from="." to="." method="_on_player_body_entered"]
 [connection signal="finished" from="player_move" to="." method="_on_player_move_finished"]

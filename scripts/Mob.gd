@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-export var min_speed = 32    # Minimum speed range.
+export var min_speed = 28    # Minimum speed range.
 export var max_speed = 64    # Maximum speed range.
 
 
@@ -40,14 +40,28 @@ func _ready():
 
 	# Set the velocity (speed & direction).
 	var speed_min = min_speed * (1 + (1 - timer.wait_time))
+	speed_min += (speed_min / 12)
 	var speed_max = max_speed * (1 + (1 - timer.wait_time))
+	speed_max += (speed_max / 10)
 #		print("min: "+ ("%.2f" % speed_min) +"    max: "+ ("%.2f" % speed_max))
 	linear_velocity = Vector2(rand_range(speed_min, speed_max), 0)
 	linear_velocity = linear_velocity.rotated(direction)
 
-	var pitch = 1 - scale if scale >= scale_mid else 1 + scale
+	var pitch = 1.2 - scale if scale >= scale_mid else 1.2 + scale
 	$MobSound.pitch_scale += pitch
 	$MobSound.play()
+
+
+
+
+#func _process(_delta):
+#	if position.distance_to(get_parent().get_node("player").position) > 150:
+#		$MobSound.stream_paused = true
+#	else:
+#		$MobSound.stream_paused = false
+
+
+
 
 
 

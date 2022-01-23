@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/player_1.png-112be15a0646d476985d7a31ecbfaa81.s3tc.stex"
-path.etc2="res://.import/player_1.png-112be15a0646d476985d7a31ecbfaa81.etc2.stex"
+path="res://.import/player_1.png-112be15a0646d476985d7a31ecbfaa81.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://assets/enemies/player_1.png"
-dest_files=[ "res://.import/player_1.png-112be15a0646d476985d7a31ecbfaa81.s3tc.stex", "res://.import/player_1.png-112be15a0646d476985d7a31ecbfaa81.etc2.stex" ]
+dest_files=[ "res://.import/player_1.png-112be15a0646d476985d7a31ecbfaa81.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
@@ -26,7 +24,7 @@ flags/filter=true
 flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=true
+process/fix_alpha_border=false
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false

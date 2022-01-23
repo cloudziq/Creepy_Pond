@@ -6,7 +6,7 @@
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 207, 385 )
+position = Vector2( 240, 360 )
 scale = Vector2( 6.64, 6.64 )
 
 [node name="anim_rotate" type="Tween" parent="."]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/bonuses/point.png" type="Texture" id=1]
 [ext_resource path="res://scripts/bonus_item.gd" type="Script" id=2]
 [ext_resource path="res://assets/bonuses/clock.png" type="Texture" id=3]
+[ext_resource path="res://assets/bonuses/speed_pill.png" type="Texture" id=4]
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -14,6 +15,11 @@ animations = [ {
 "frames": [ ExtResource( 3 ) ],
 "loop": false,
 "name": "clock",
+"speed": 0.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": false,
+"name": "speed_pill",
 "speed": 0.0
 } ]
 
