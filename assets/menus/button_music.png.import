@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/player_2.png-6ae05f26ad354a5c81c0ace8a7acbe87.stex"
+path="res://.import/button_music.png-fcf4c93676cddd6f0039a0fe50247a52.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemies/player_2.png"
-dest_files=[ "res://.import/player_2.png-6ae05f26ad354a5c81c0ace8a7acbe87.stex" ]
+source_file="res://assets/menus/button_music.png"
+dest_files=[ "res://.import/button_music.png-fcf4c93676cddd6f0039a0fe50247a52.stex" ]
 
 [params]
 
@@ -21,10 +21,10 @@ compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=true
+flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=false
+process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false

@@ -14,22 +14,22 @@ dest_files=[ "res://.import/bg7.png-1af2011f4f24a9c45ac9e471922f74fc.stex" ]
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/lossy_quality=0.8
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=true
+flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=false
-process/premult_alpha=false
+process/premult_alpha=true
 process/HDR_as_SRGB=false
 process/invert_color=false
 process/normal_map_invert_y=false
-stream=false
+stream=0
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

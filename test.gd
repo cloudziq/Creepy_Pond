@@ -4,9 +4,10 @@ extends Node2D
 
 
 func _ready():
-	fps()
+	print(deg2rad(180))
+	print(PI)
 
 
 
-func fps():
+func test():
 	pass

@@ -19,7 +19,7 @@
 
 [sub_resource type="Curve2D" id=1]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, -64, -64, 0, 0, 0, 0, 544, -64, 0, 0, 0, 0, 544, 768, 0, 0, 0, 0, -64, 768, 0, 0, 0, 0, -64, -64 )
+"points": PoolVector2Array( 0, 0, 0, 0, -96, -102.038, 0, 0, 0, 0, 512, -102.038, 0, 0, 0, 0, 512, 729.963, 0, 0, 0, 0, -96, 729.963, 0, 0, 0, 0, -96, -102.038 )
 }
 
 [node name="main" type="Node2D"]
@@ -49,49 +49,57 @@ position = Vector2( 240, 360 )
 [node name="HUD" parent="." instance=ExtResource( 5 )]
 
 [node name="MobPath" type="Path2D" parent="."]
-position = Vector2( 0, 1.23077 )
+position = Vector2( 32, 40 )
 scale = Vector2( 1, 1.01923 )
 curve = SubResource( 1 )
 
 [node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
-position = Vector2( -64, -64 )
-rotation = 9.77035e-07
+position = Vector2( -96, -102.038 )
 
 [node name="Sounds" type="Node" parent="."]
 
 [node name="level_musicO" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 7 )
 volume_db = -12.0
+bus = "Music"
 
 [node name="level_music" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 15 )
 volume_db = -4.0
+bus = "Music"
 
 [node name="enemy_bite" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 8 )
 volume_db = 6.0
+bus = "Sound"
 
 [node name="death_sound" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 6 )
+bus = "Music"
 
 [node name="bonus_point_collect" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 9 )
+bus = "Sound"
 
 [node name="bonus_pill_collect" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 16 )
 volume_db = 4.0
+bus = "Sound"
 
 [node name="bonus_clock_collect" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 12 )
 volume_db = -12.0
+bus = "Sound"
 
 [node name="clock_ticking" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 13 )
 volume_db = -10.0
+bus = "Sound"
 
 [node name="bonus_appear" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 14 )
 volume_db = -12.0
+bus = "Sound"
 
 [node name="Timers" type="Node" parent="."]
 
@@ -112,11 +120,11 @@ wait_time = 4.0
 one_shot = true
 
 [node name="ClockBonusDelay" type="Timer" parent="Timers"]
-wait_time = 25.0
+wait_time = 40.0
 one_shot = true
 
 [node name="PillBonusDelay" type="Timer" parent="Timers"]
-wait_time = 12.0
+wait_time = 20.0
 one_shot = true
 
 [connection signal="bonus_collected" from="player" to="." method="_on_player_bonus_collected"]

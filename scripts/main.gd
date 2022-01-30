@@ -6,6 +6,7 @@ export(PackedScene) var BG_scene
 export(PackedScene) var level_light
 
 
+var default_player_speed
 var score = 0 ; var score_record = 0
 var allow_bonus_spawn
 var allow_clock_spawn
@@ -33,6 +34,7 @@ func _ready():
 		if a >= lights_num - 2:
 			light.is_vertical = 1
 
+	default_player_speed = $player.speed
 	window_prepare()
 	load_config()
 
@@ -53,7 +55,7 @@ func _process(_delta):
 
 func new_game():
 	score = 0
-	get_node("player").speed = 160
+	$player.speed = default_player_speed
 	allow_mob_spawn   = true
 	allow_bonus_spawn = false
 	allow_clock_spawn = false
@@ -69,10 +71,9 @@ func new_game():
 
 
 
-
 func game_over():
-	if score > score_record:
-		score_record = score
+	if score > SETTINGS["score_record"]:
+		SETTINGS["score_record"] = score
 		save_config()
 #	allow_bonus_spawn = false
 	get_tree().call_group("mobs",  "queue_free")
@@ -90,19 +91,21 @@ func game_over():
 
 
 
-var save_version = 2
+var SETTINGS
+var save_version = 1
 var config_path
-# userdata path: "user://config.cfg"
+# userdata path: "user://config.cfg"     -- for mobile
 
 func save_config():
 	var password = "7846536587438346574"
 	var key = password.sha256_buffer()
 	var config = ConfigFile.new()
 
-	config.set_value("config", "save_version", save_version)
-	config.set_value("config", "score_record", score_record)
+	config.set_value("main", "save_version", save_version)
+	config.set_value("main", "settings", SETTINGS)
 
-#	config.save("user://config.cfg")
+
+#	config.save(config_path)
 	config.save_encrypted(config_path, key)
 
 
@@ -118,14 +121,16 @@ func load_config():
 		"Windows", "X11":
 			config_path = OS.get_executable_path().get_base_dir() + "/config.cfg"
 
-#	var err = config.load("user://config.cfg")
+#	var err = config.load(config_path)
 	var err = config.load_encrypted(config_path, key)
-	if err != OK: return
-
-	if config.get_value("config", "save_version") != save_version:
-		score_record = 0
+	if err != OK or config.get_value("main", "save_version") != save_version:
+		SETTINGS = {
+			"sound_mute"   : false,
+			"music_mute"   : false,
+			"score_record" : 0
+		}
 	else:
-		score_record = config.get_value("config", "score_record")
+		SETTINGS = config.get_value("main", "settings")
 
 
 
@@ -136,10 +141,11 @@ func window_prepare():
 	window_size.x *= 4 ; window_size.y *= 4
 
 	if display_size.y <= window_size.y:
-		var scale_ratio = window_size.y / (display_size.y - 200)
+		var scale_ratio = window_size.y / (display_size.y - 100)
 		window_size.x /= scale_ratio ; window_size.y /= scale_ratio
 
 	OS.set_window_size(window_size)
+	window_size.y += 80
 	OS.set_window_position(display_size * .5 - window_size * .5)
 
 
@@ -165,10 +171,10 @@ func _on_StartTimer_timeout():    ## After intro message
 
 
 func _on_ScoreTimer_timeout():
-	if $Timers/MobTimer.wait_time > .10 and $Timers/MobClockDelay.is_stopped():
-		$Timers/MobTimer.wait_time -= $Timers/MobTimer.wait_time / 88
+	if $Timers/MobTimer.wait_time > .1 and $Timers/MobClockDelay.is_stopped():
+		$Timers/MobTimer.wait_time -= $Timers/MobTimer.wait_time / 86
 	score += 1
-	$HUD.update_score(score)
+	$HUD.update_score(score, false)
 	print($Timers/MobTimer.wait_time)
 
 
@@ -188,7 +194,7 @@ func _on_player_bonus_collected():
 	match bonus.bonuses[bonus.bonus_type][0]:
 		"point":
 			score += 1
-			$HUD.update_score(score)
+			$HUD.update_score(score, true)
 			$Sounds/bonus_point_collect.pitch_scale = rand_range(.6, 1.4)
 			$Sounds/bonus_point_collect.play()
 		"speed_pill":
@@ -213,7 +219,7 @@ func _on_player_bonus_collected():
 
 func _on_BonusDelay_timeout():
 	if $Timers/BonusDelay.wait_time == 4:
-		$Timers/BonusDelay.wait_time = 2
+		$Timers/BonusDelay.wait_time = 1
 	allow_bonus_spawn = true
 
 

@@ -56,7 +56,7 @@ func _process(_delta):
 			$anim_color.start()
 		elif not SCALE:
 			SCALE = true
-			time  = rand_range(32, 68)
+			time  = rand_range(18, 48)
 			delay = rand_range(6, 14)
 			var scale = rand_range(6.64, 10)
 			$anim_scale.interpolate_property($Sprite, "scale",

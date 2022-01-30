@@ -35,13 +35,13 @@ func _process(_delta):
 			pos_mod = pos_mod if randi() % 2 + 1 == 1 else -pos_mod
 			position_x = (screen_w / 2) + pos_mod
 			position_y = rand_range(0, screen_h)
-			time = rand_range(4, 8)  #  5,9
+			time = rand_range(4, 8)
 		else:
 			pos_mod = (screen_h / 6)
 			pos_mod = pos_mod if randi() % 2 + 1 == 1 else -pos_mod
 			position_x = rand_range(0, screen_w)
 			position_y = (screen_h / 2) + pos_mod
-			time = rand_range(4, 7)  # 3,7
+			time = rand_range(4, 7)
 
 		$light_pos.interpolate_property($Light, "position",
 			$Light.position, Vector2(position_x, position_y), time,

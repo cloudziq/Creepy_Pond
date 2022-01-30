@@ -3,7 +3,7 @@ extends Area2D
 signal hit
 signal bonus_collected
 
-export var speed = 260
+export var speed = 125
 
 
 var screen_size
@@ -32,10 +32,7 @@ func start(pos):
 func _input(event):
 	if event is InputEventScreenTouch and event.pressed:
 		target = event.position
-		var rotation = position.angle_to_point(target)
-		$AnimatedSprite.rotation = rotation
-		$CollisionShape2D.rotation = rotation
-		$Particles2D.rotation = rotation
+		rotation = position.angle_to_point(target)
 		$Particles2D.emitting = true
 
 
@@ -44,7 +41,6 @@ func _input(event):
 func _process(delta):
 	var velocity = Vector2()
 
-	# Move towards the target and stop when close.
 	if position.distance_to(target) > 10:
 		velocity = target - position
 

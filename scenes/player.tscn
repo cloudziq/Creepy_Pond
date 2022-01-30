@@ -1,13 +1,15 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://assets/enemies/player_1.png" type="Texture" id=1]
-[ext_resource path="res://assets/enemies/player_2.png" type="Texture" id=2]
+[ext_resource path="res://assets/mobs/player_1.png" type="Texture" id=1]
+[ext_resource path="res://assets/mobs/player_2.png" type="Texture" id=2]
 [ext_resource path="res://assets/particles/spark4.png" type="Texture" id=3]
 [ext_resource path="res://assets/particles/spark1.png" type="Texture" id=4]
 [ext_resource path="res://scripts/player.gd" type="Script" id=5]
 [ext_resource path="res://assets/particles/spark2.png" type="Texture" id=6]
 [ext_resource path="res://assets/particles/spark3.png" type="Texture" id=7]
 [ext_resource path="res://assets/sounds/player_move.ogg" type="AudioStream" id=8]
+[ext_resource path="res://assets/mobs/player_3.png" type="Texture" id=9]
+[ext_resource path="res://assets/mobs/player_4.png" type="Texture" id=10]
 
 [sub_resource type="Gradient" id=5]
 offsets = PoolRealArray( 0.145038, 0.332061, 1 )
@@ -45,10 +47,10 @@ frame_3/delay_sec = 0.0
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 1 ), ExtResource( 2 ) ],
+"frames": [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 2 ), ExtResource( 1 ) ],
 "loop": true,
 "name": "player",
-"speed": 12.0
+"speed": 40.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
@@ -58,11 +60,11 @@ height = 0.0
 [node name="player" type="Area2D"]
 z_index = 10
 script = ExtResource( 5 )
-speed = 160
 
 [node name="Particles2D" type="Particles2D" parent="."]
 light_mask = 2
 position = Vector2( -4, 0 )
+emitting = false
 amount = 200
 lifetime = 2.0
 speed_scale = 2.8
@@ -73,6 +75,7 @@ process_material = SubResource( 3 )
 texture = SubResource( 4 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+self_modulate = Color( 1, 1, 1, 0.6 )
 position = Vector2( -0.530001, 0 )
 scale = Vector2( 0.26, 0.26 )
 frames = SubResource( 1 )
@@ -90,6 +93,7 @@ current = true
 stream = ExtResource( 8 )
 volume_db = 2.2
 mix_target = 2
+bus = "Sound"
 
 [connection signal="body_entered" from="." to="." method="_on_player_body_entered"]
 [connection signal="finished" from="player_move" to="." method="_on_player_move_finished"]

@@ -1,7 +1,7 @@
 extends RigidBody2D
 
-export var min_speed = 28    # Minimum speed range.
-export var max_speed = 64    # Maximum speed range.
+export var min_speed = 34    # Minimum speed range.
+export var max_speed = 68    # Maximum speed range.
 
 
 
@@ -18,9 +18,9 @@ func _ready():
 	# randomize scale
 	var scale_min = .22 ; var scale_max = .38
 	var scale_mid = (scale_min + scale_max) / 2
-	var scale = rand_range(.22, .38)
-	$AnimatedSprite.set_scale(Vector2(scale, scale))
-	$CollisionShape2D.set_scale(Vector2(scale, scale))
+	var scale = rand_range(scale_min, scale_max)
+	$AnimatedSprite.scale = (Vector2(scale, scale))
+	$CollisionShape2D.scale = (Vector2(scale, scale))
 
 	# Randomize color a bit
 	var R = rand_range(.72, .90)
@@ -36,14 +36,14 @@ func _ready():
 
 	# Add some randomness to the direction.
 	direction += rand_range(-PI / 4, PI / 4)
-	rotation = direction
+	rotation = direction - PI
 
 	# Set the velocity (speed & direction).
 	var speed_min = min_speed * (1 + (1 - timer.wait_time))
-	speed_min += (speed_min / 12)
+	speed_min += (speed_min / 4)
 	var speed_max = max_speed * (1 + (1 - timer.wait_time))
-	speed_max += (speed_max / 10)
-#		print("min: "+ ("%.2f" % speed_min) +"    max: "+ ("%.2f" % speed_max))
+	speed_max += (speed_max / 8)
+#	print("min: "+ ("%.2f" % speed_min) +"    max: "+ ("%.2f" % speed_max))
 	linear_velocity = Vector2(rand_range(speed_min, speed_max), 0)
 	linear_velocity = linear_velocity.rotated(direction)
 

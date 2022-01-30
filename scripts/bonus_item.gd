@@ -12,7 +12,7 @@ var anim_dir ; var anim_iter
 
 var bonuses = [
 	["point",       76],
-	["speed_pill",  94],
+	["speed_pill",  96],
 	["clock",      100],
 ]
 
@@ -42,7 +42,7 @@ func _ready():
 		pos1.y = rand_range(bonus_spawn_offset, screen_h - bonus_spawn_offset)
 	set_position(pos1)
 
-	print("bonus spawned: " + str(bonuses[bonus_type][0]).to_upper() +"  ("+ str(floor(pos1.x)) +", "+ str(floor(pos1.y)) +")" )    ## Wyjebać to
+	print("bonus: " + str(bonuses[bonus_type][0]).to_upper() +"  ("+ str(floor(pos1.x)) +", "+ str(floor(pos1.y)) +")" )    ## Wyjebać to
 
 	match bonuses[bonus_type][0]:
 		"point":
@@ -80,16 +80,22 @@ func point_bonus_anim(anim_type):
 
 
 func pill_bonus_anim(dir):
-	var rot
+	var rot ; var time ; var delay
+
 	if dir == 1:
-		rot = 90
+		rot = 270
+		time = .6
+		delay = .2
 		anim_dir = -1
 	else:
 		rot = 0
+		time = .6
+		delay = .6
 		anim_dir = 1
+
 	$anim_rotation.interpolate_property($Sprite, "rotation_degrees",
-		$Sprite.rotation_degrees, rot, 1,
-		Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		$Sprite.rotation_degrees, rot, time,
+		Tween.TRANS_SINE, Tween.EASE_IN_OUT, delay)
 	$anim_rotation.start()
 
 
@@ -100,7 +106,7 @@ func clock_bonus_anim(dir, iter):
 	anim_iter += 1
 
 	if iter < 7:
-		delay = .02
+		delay = .01
 		if dir == 1:
 			rot = 16
 			anim_dir = -1
@@ -108,7 +114,7 @@ func clock_bonus_anim(dir, iter):
 			rot = -16
 			anim_dir = 1
 	elif iter == 7:
-		delay = .01
+		delay = .005
 		rot = 0
 	else:
 		rot = 0
@@ -132,8 +138,6 @@ func _on_anim_scale_end():
 	match bonuses[bonus_type][0]:
 		"point":
 			point_bonus_anim("scale")
-
-
 
 
 func _on_anim_rotation_end():

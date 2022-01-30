@@ -1,13 +1,51 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scripts/Mob.gd" type="Script" id=1]
-[ext_resource path="res://assets/enemies/enemy1_1.png" type="Texture" id=2]
-[ext_resource path="res://assets/enemies/enemy1_2.png" type="Texture" id=3]
-[ext_resource path="res://assets/enemies/enemy2_1.png" type="Texture" id=4]
-[ext_resource path="res://assets/enemies/enemy2_2.png" type="Texture" id=5]
-[ext_resource path="res://assets/enemies/enemy3_1.png" type="Texture" id=6]
-[ext_resource path="res://assets/enemies/enemy3_2.png" type="Texture" id=7]
+[ext_resource path="res://assets/mobs/enemy1_1.png" type="Texture" id=2]
+[ext_resource path="res://assets/mobs/enemy1_2.png" type="Texture" id=3]
+[ext_resource path="res://assets/mobs/enemy2_1.png" type="Texture" id=4]
+[ext_resource path="res://assets/mobs/enemy2_2.png" type="Texture" id=5]
+[ext_resource path="res://assets/mobs/enemy3_1.png" type="Texture" id=6]
+[ext_resource path="res://assets/mobs/enemy3_2.png" type="Texture" id=7]
 [ext_resource path="res://assets/sounds/MobSound.ogg" type="AudioStream" id=8]
+[ext_resource path="res://assets/particles/spark2.png" type="Texture" id=9]
+[ext_resource path="res://assets/particles/spark3.png" type="Texture" id=10]
+[ext_resource path="res://assets/particles/spark4.png" type="Texture" id=11]
+[ext_resource path="res://assets/particles/spark1.png" type="Texture" id=12]
+
+[sub_resource type="Gradient" id=7]
+offsets = PoolRealArray( 0.145038, 0.332061, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0.568345, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 7 )
+
+[sub_resource type="ParticlesMaterial" id=8]
+lifetime_randomness = 1.0
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 60.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 22.0
+orbit_velocity = 0.0
+orbit_velocity_random = 1.0
+radial_accel = 0.2
+scale = 0.16
+scale_random = 0.25
+color = Color( 0.24, 0.32, 0.44, 0.4 )
+color_ramp = SubResource( 6 )
+
+[sub_resource type="AnimatedTexture" id=9]
+flags = 4
+frames = 4
+fps = 20.0
+frame_0/texture = ExtResource( 12 )
+frame_1/texture = ExtResource( 9 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 10 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 11 )
+frame_3/delay_sec = 0.0
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -16,14 +54,14 @@ animations = [ {
 "name": "enemy3",
 "speed": 3.0
 }, {
-"frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
-"loop": true,
-"name": "enemy1",
-"speed": 3.0
-}, {
 "frames": [ ExtResource( 4 ), ExtResource( 5 ) ],
 "loop": true,
 "name": "enemy2",
+"speed": 3.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "enemy1",
 "speed": 3.0
 } ]
 
@@ -37,20 +75,32 @@ collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource( 1 )
 
+[node name="Particles2D" type="Particles2D" parent="."]
+self_modulate = Color( 1, 1, 1, 0.6 )
+light_mask = 2
+position = Vector2( -5, 0 )
+amount = 200
+lifetime = 2.0
+speed_scale = 2.8
+randomness = 0.61
+visibility_rect = Rect2( 7.36713e-05, -36.5065, 43.6622, 74.3238 )
+local_coords = false
+process_material = SubResource( 8 )
+texture = SubResource( 9 )
+
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "enemy1"
-frame = 1
+animation = "enemy2"
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-rotation = 1.5708
+position = Vector2( -5, 0 )
+rotation = 1.57079
 shape = SubResource( 2 )
 one_way_collision_margin = 0.0
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 position = Vector2( 0.999996, 0 )
-scale = Vector2( 2.45, 2.2 )
 rect = Rect2( -20, -20, 40, 40 )
 
 [node name="MobSound" type="AudioStreamPlayer2D" parent="."]
@@ -58,5 +108,6 @@ stream = ExtResource( 8 )
 volume_db = 8.0
 max_distance = 140.0
 attenuation = 1.80251
+bus = "Sound"
 
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

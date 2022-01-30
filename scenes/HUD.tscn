@@ -1,29 +1,31 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Xolonium-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://assets/fonts/Vellyc.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://assets/bonuses/point.png" type="Texture" id=4]
 [ext_resource path="res://assets/menus/button_press.png" type="Texture" id=5]
-[ext_resource path="res://assets/enemies/enemy1_1.png" type="Texture" id=6]
-[ext_resource path="res://assets/enemies/enemy1_2.png" type="Texture" id=7]
-[ext_resource path="res://assets/enemies/enemy2_1.png" type="Texture" id=8]
-[ext_resource path="res://assets/enemies/enemy2_2.png" type="Texture" id=9]
-[ext_resource path="res://assets/enemies/player_2.png" type="Texture" id=10]
+[ext_resource path="res://assets/mobs/enemy1_1.png" type="Texture" id=6]
+[ext_resource path="res://assets/mobs/enemy1_2.png" type="Texture" id=7]
+[ext_resource path="res://assets/mobs/enemy2_1.png" type="Texture" id=8]
+[ext_resource path="res://assets/mobs/enemy2_2.png" type="Texture" id=9]
+[ext_resource path="res://assets/mobs/player_2.png" type="Texture" id=10]
 [ext_resource path="res://assets/menus/button.png" type="Texture" id=11]
 [ext_resource path="res://assets/sounds/pause.wav" type="AudioStream" id=12]
 [ext_resource path="res://assets/sounds/ButtonClick.ogg" type="AudioStream" id=13]
+[ext_resource path="res://assets/menus/button_music.png" type="Texture" id=14]
+[ext_resource path="res://assets/menus/button_sound.png" type="Texture" id=15]
 
 [sub_resource type="SpriteFrames" id=7]
 animations = [ {
-"frames": [ ExtResource( 8 ), ExtResource( 9 ) ],
-"loop": true,
-"name": "anim2",
-"speed": 1.0
-}, {
 "frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
 "loop": true,
 "name": "anim1",
+"speed": 1.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "anim2",
 "speed": 1.0
 } ]
 
@@ -33,14 +35,47 @@ outline_size = 1
 use_filter = true
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxTexture" id=12]
+[sub_resource type="StyleBoxTexture" id=18]
+content_margin_left = 0.0
+content_margin_right = 64.0
+content_margin_top = 50.0
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 64, 64 )
+modulate_color = Color( 0.572549, 1, 0.658824, 1 )
+
+[sub_resource type="StyleBoxTexture" id=20]
+content_margin_left = 0.0
+content_margin_right = 64.0
+content_margin_top = 50.0
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 64, 64 )
+modulate_color = Color( 0.709804, 0.709804, 0.709804, 1 )
+
+[sub_resource type="StyleBoxEmpty" id=21]
+
+[sub_resource type="StyleBoxTexture" id=22]
+content_margin_left = 0.0
+content_margin_right = 64.0
+content_margin_top = 50.0
+texture = ExtResource( 15 )
+region_rect = Rect2( 0, 0, 64, 64 )
+modulate_color = Color( 0.572549, 1, 0.658824, 1 )
+
+[sub_resource type="StyleBoxTexture" id=23]
+content_margin_left = 0.0
+content_margin_right = 64.0
+content_margin_top = 50.0
+texture = ExtResource( 15 )
+region_rect = Rect2( 0, 0, 64, 64 )
+modulate_color = Color( 0.709804, 0.709804, 0.709804, 1 )
+
+[sub_resource type="StyleBoxTexture" id=11]
 texture = ExtResource( 11 )
 region_rect = Rect2( 0, 0, 256, 128 )
 margin_left = 139.0
 margin_right = 138.0
 margin_top = 37.0
 margin_bottom = 47.0
-modulate_color = Color( 0.47451, 0.588235, 0.87451, 1 )
 
 [sub_resource type="StyleBoxTexture" id=13]
 texture = ExtResource( 5 )
@@ -51,14 +86,6 @@ margin_top = 37.0
 margin_bottom = 47.0
 
 [sub_resource type="StyleBoxEmpty" id=14]
-
-[sub_resource type="StyleBoxTexture" id=11]
-texture = ExtResource( 11 )
-region_rect = Rect2( 0, 0, 256, 128 )
-margin_left = 139.0
-margin_right = 138.0
-margin_top = 37.0
-margin_bottom = 47.0
 
 [sub_resource type="InputEventAction" id=2]
 action = "ui_select"
@@ -102,6 +129,15 @@ use_filter = true
 extra_spacing_top = 34
 font_data = ExtResource( 3 )
 
+[sub_resource type="StyleBoxTexture" id=12]
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 256, 128 )
+margin_left = 139.0
+margin_right = 138.0
+margin_top = 37.0
+margin_bottom = 47.0
+modulate_color = Color( 0.47451, 0.588235, 0.87451, 1 )
+
 [sub_resource type="DynamicFont" id=16]
 size = 35
 outline_size = 2
@@ -130,31 +166,33 @@ __meta__ = {
 
 [node name="title_player" type="Sprite" parent="Sprites"]
 modulate = Color( 0.713726, 0.890196, 0.945098, 1 )
-position = Vector2( 290, 500 )
+position = Vector2( 282, 539 )
 rotation = 2.62445
 texture = ExtResource( 10 )
 
 [node name="title_point" type="Sprite" parent="Sprites"]
 modulate = Color( 0.713726, 0.890196, 0.945098, 1 )
-position = Vector2( 400, 438 )
+position = Vector2( 404, 462 )
 texture = ExtResource( 4 )
 
 [node name="title_enemy" type="AnimatedSprite" parent="Sprites"]
 modulate = Color( 1.03, 1.46, 1.39, 1 )
-position = Vector2( 84, 348 )
-rotation = -1.94265
+position = Vector2( 73, 306 )
+rotation = -5.05053
 scale = Vector2( 1.13391, 1.09646 )
 frames = SubResource( 7 )
 animation = "anim1"
+frame = 1
 playing = true
 
 [node name="title_enemy2" type="AnimatedSprite" parent="Sprites"]
 modulate = Color( 1.03, 1.46, 1.39, 1 )
 position = Vector2( 409, 239 )
-rotation = -1.1669
+rotation = -4.27478
 scale = Vector2( 0.948654, 0.894891 )
 frames = SubResource( 7 )
 animation = "anim2"
+frame = 1
 playing = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." groups=["main_menu"]]
@@ -209,7 +247,77 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="separator" type="Control" parent="VBoxContainer"]
+[node name="MiddleButtons" type="CenterContainer" parent="VBoxContainer/Title/game_name"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 209.0
+margin_bottom = 129.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Title/game_name/MiddleButtons"]
+margin_left = 158.0
+margin_top = 34.0
+margin_right = 322.0
+margin_bottom = 98.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonMusic" type="Button" parent="VBoxContainer/Title/game_name/MiddleButtons/HBoxContainer"]
+margin_right = 64.0
+margin_bottom = 64.0
+custom_styles/hover = SubResource( 18 )
+custom_styles/pressed = SubResource( 20 )
+custom_styles/focus = SubResource( 21 )
+custom_styles/normal = SubResource( 18 )
+toggle_mode = true
+shortcut_in_tooltip = false
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="disabled" type="TextureRect" parent="VBoxContainer/Title/game_name/MiddleButtons/HBoxContainer/ButtonMusic"]
+modulate = Color( 0.266667, 0.0235294, 0.0235294, 0.580392 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="----" type="Control" parent="VBoxContainer/Title/game_name/MiddleButtons/HBoxContainer"]
+margin_left = 68.0
+margin_right = 96.7
+margin_bottom = 64.0
+rect_min_size = Vector2( 28.7, 0 )
+size_flags_horizontal = 3
+
+[node name="ButtonSound" type="Button" parent="VBoxContainer/Title/game_name/MiddleButtons/HBoxContainer"]
+margin_left = 100.0
+margin_right = 164.0
+margin_bottom = 64.0
+custom_styles/hover = SubResource( 22 )
+custom_styles/pressed = SubResource( 23 )
+custom_styles/focus = SubResource( 21 )
+custom_styles/normal = SubResource( 22 )
+toggle_mode = true
+shortcut_in_tooltip = false
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="disabled" type="TextureRect" parent="VBoxContainer/Title/game_name/MiddleButtons/HBoxContainer/ButtonSound"]
+modulate = Color( 0.266667, 0.0235294, 0.0235294, 0.580392 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Separator" type="Control" parent="VBoxContainer"]
 margin_top = 484.0
 margin_right = 480.0
 margin_bottom = 608.0
@@ -229,12 +337,11 @@ margin_bottom = 111.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_pivot_offset = Vector2( 128, 64 )
-custom_styles/hover = SubResource( 12 )
+custom_styles/hover = SubResource( 11 )
 custom_styles/pressed = SubResource( 13 )
 custom_styles/focus = SubResource( 14 )
 custom_styles/normal = SubResource( 11 )
 shortcut_in_tooltip = false
-action_mode = 0
 shortcut = SubResource( 3 )
 
 [node name="Label" type="Label" parent="VBoxContainer/StartButtonArea/StartButton"]
@@ -264,9 +371,9 @@ __meta__ = {
 }
 
 [node name="ScoreLabel" type="Label" parent="."]
-margin_right = 480.0
-margin_bottom = 720.0
-grow_horizontal = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 240, 0 )
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 5 )
 text = "666"
@@ -276,10 +383,11 @@ __meta__ = {
 }
 
 [node name="Message" type="Label" parent="."]
+visible = false
 margin_top = 280.0
 margin_right = 480.0
 margin_bottom = 439.0
-custom_colors/font_color = Color( 0.141176, 0.639216, 0.8, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0.694118, 0.796078, 0.643137, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 4
@@ -299,7 +407,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 8 )
-text = "version 0.64"
+text = "version 0.7"
 align = 1
 valign = 2
 __meta__ = {
@@ -313,13 +421,16 @@ one_shot = true
 [node name="ButtonClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 13 )
 volume_db = -8.0
+bus = "Sound"
 
 [node name="PauseSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
 volume_db = -8.0
 pitch_scale = 0.66
+bus = "Sound"
 
 [node name="PAUSE" type="MarginContainer" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 60.0
@@ -414,6 +525,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="toggled" from="VBoxContainer/Title/game_name/MiddleButtons/HBoxContainer/ButtonMusic" to="." method="_on_ButtonMusic_toggled"]
+[connection signal="toggled" from="VBoxContainer/Title/game_name/MiddleButtons/HBoxContainer/ButtonSound" to="." method="_on_ButtonSound_toggled"]
 [connection signal="pressed" from="VBoxContainer/StartButtonArea/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_MessageTimer_timeout"]
 [connection signal="pressed" from="PAUSE/NinePatchRect/VBoxContainer/StartButtonArea/ResumeButton" to="." method="_on_ResumeButton_pressed"]
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_completed"]

@@ -37,7 +37,7 @@ script = ExtResource( 2 )
 [node name="Sprite" type="AnimatedSprite" parent="."]
 light_mask = 2
 frames = SubResource( 2 )
-animation = "clock"
+animation = "speed_pill"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 1.2, 1.2 )
