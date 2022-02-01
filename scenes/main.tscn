@@ -9,7 +9,7 @@
 [ext_resource path="res://assets/sounds/House In a Forest Loop.ogg" type="AudioStream" id=7]
 [ext_resource path="res://assets/sounds/enemy_bite.ogg" type="AudioStream" id=8]
 [ext_resource path="res://assets/sounds/bonus_point_collect.ogg" type="AudioStream" id=9]
-[ext_resource path="res://scenes/Level_BG.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/Level_BGs.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/level_light.tscn" type="PackedScene" id=11]
 [ext_resource path="res://assets/sounds/bonus_clock_collect.ogg" type="AudioStream" id=12]
 [ext_resource path="res://assets/sounds/clock_ticking.ogg" type="AudioStream" id=13]
@@ -108,7 +108,7 @@ bus = "Sound"
 [node name="ScoreTimer" type="Timer" parent="Timers"]
 
 [node name="StartTimer" type="Timer" parent="Timers"]
-wait_time = 1.8
+wait_time = 2.2
 one_shot = true
 
 [node name="MobClockDelay" type="Timer" parent="Timers"]

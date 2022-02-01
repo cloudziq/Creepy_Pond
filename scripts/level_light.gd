@@ -15,7 +15,7 @@ func _ready():
 	screen_w = get_viewport().size.x
 	screen_h = get_viewport().size.y
 
-	yield(get_tree().create_timer(.1), "timeout")
+	yield(get_tree().create_timer(.001), "timeout")
 
 	if is_vertical:
 		$Light.rotation_degrees = 90

@@ -49,14 +49,14 @@ frame_3/delay_sec = 0.0
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "enemy3",
-"speed": 3.0
-}, {
 "frames": [ ExtResource( 4 ), ExtResource( 5 ) ],
 "loop": true,
 "name": "enemy2",
+"speed": 3.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "enemy3",
 "speed": 3.0
 }, {
 "frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
@@ -91,6 +91,7 @@ texture = SubResource( 9 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "enemy2"
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

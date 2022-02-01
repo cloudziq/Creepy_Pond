@@ -13,7 +13,7 @@ func _ready():
 	MobSpawn.offset = randi()
 	var mob_types = $AnimatedSprite.frames.get_animation_names()
 	$AnimatedSprite.animation = mob_types[randi() % mob_types.size()]
-	$AnimatedSprite.z_index = 50
+	z_index = 10
 
 	# randomize scale
 	var scale_min = .22 ; var scale_max = .38

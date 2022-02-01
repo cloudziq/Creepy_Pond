@@ -1,6 +1,6 @@
 extends Node2D
 
-var BG_amount     = 22
+var BG_amount     = 24
 var default_range = 10000
 
 
@@ -97,7 +97,7 @@ func _on_anim_color_end():
 
 func assign_tex():
 	#print("BG CHANGED")
-	var path = "res://assets/level_bg/bg" + str(floor(rand_range(1, BG_amount)))
+	var path = "res://assets/level_bg/bg" + str(floor(rand_range(1, BG_amount+1)))
 	$Sprite.texture = load(path +".png")
 	if z_index != 100:
 		$Sprite.normal_map = load(path +"_n.png")

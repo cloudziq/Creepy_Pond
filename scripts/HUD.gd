@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 signal start_game
+signal toggle_title_anim
 
 export var show_FPS_counter = false
 
@@ -25,7 +26,7 @@ func _ready():
 		$ScoreLabel.text = "BEST SCORE:  " + str(get_parent().SETTINGS["score_record"])
 
 	buttons_sound_allow = false
-	var node_path = "VBoxContainer/Title/game_name/MiddleButtons/HBoxContainer/"
+	var node_path = "VBoxContainer/MiddleButtons/HBoxContainer/"
 	if get_parent().SETTINGS["music_mute"] == true:
 		get_node(node_path +"ButtonMusic").pressed = true
 	if get_parent().SETTINGS["sound_mute"] == true:
@@ -78,12 +79,13 @@ func show_game_over():
 	show_message("GAME OVER :(")
 
 	yield($MessageTimer, "timeout")
-	yield(get_tree().create_timer(1), "timeout")
+	$ScoreLabel.set("custom_colors/font_color", Color(0,0,0,1))
 	$ScoreLabel.text = "BEST SCORE:  " + str(get_parent().SETTINGS["score_record"])
 	for node in get_tree().get_nodes_in_group("main_menu"):
 		node.show()
 	main_menu_visible = true
 	$FPS_DISPLAY.text = ""
+	emit_signal("toggle_title_anim")
 
 
 
@@ -97,6 +99,7 @@ func _on_StartButton_pressed():
 	$ButtonClick.play()
 	$ScoreLabel.text = ""
 	main_menu_visible = false
+	emit_signal("toggle_title_anim")
 
 
 
@@ -135,12 +138,12 @@ func _on_Tween_completed(_object, key):
 
 
 func _on_ButtonMusic_toggled(button_pressed):
-	var node = $VBoxContainer/Title/game_name/MiddleButtons/HBoxContainer/ButtonMusic/disabled
+	var node = $VBoxContainer/MiddleButtons/HBoxContainer/ButtonMusic/disabled
 	process_button(node, "Music", button_pressed)
 
 
 func _on_ButtonSound_toggled(button_pressed):
-	var node = $VBoxContainer/Title/game_name/MiddleButtons/HBoxContainer/ButtonSound/disabled
+	var node = $VBoxContainer/MiddleButtons/HBoxContainer/ButtonSound/disabled
 	process_button(node, "Sound", button_pressed)
 
 

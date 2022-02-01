@@ -18,7 +18,7 @@ var allow_mob_spawn
 
 func _ready():
 	randomize()
-	var num_of_BGs = 4
+	var num_of_BGs = 3
 	var lights_num = 4
 
 	for a in num_of_BGs:
@@ -27,6 +27,8 @@ func _ready():
 		if a == num_of_BGs - 1:
 			BG.z_index = 100
 			BG.light_mask = 2
+		else:
+			BG.z_index = 0
 
 	for a in lights_num:
 		var light = level_light.instance()
@@ -182,6 +184,7 @@ func _on_ScoreTimer_timeout():
 
 func _on_MobClockDelay_timeout():
 	$Sounds/clock_ticking.stop()
+	$HUD/ScoreLabel.set("custom_colors/font_color", Color(0,0,0,1))
 	allow_mob_spawn = true
 
 
@@ -212,6 +215,7 @@ func _on_player_bonus_collected():
 			$Timers/ClockBonusDelay.start()
 			$Sounds/bonus_clock_collect.play()
 			$Sounds/clock_ticking.play()
+			$HUD/ScoreLabel.set("custom_colors/font_color", Color(0, .6, 0, 1))
 			allow_mob_spawn = false
 
 
