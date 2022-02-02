@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/player_2n.png-49fe72c5727ae9a4eb8f096ab8bb89c2.stex"
+path="res://.import/enemy2_1_n.png-5abfc9140e0a575ad3db07cfc810625e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/mobs/player_2n.png"
-dest_files=[ "res://.import/player_2n.png-49fe72c5727ae9a4eb8f096ab8bb89c2.stex" ]
+source_file="res://assets/mobs/enemy2_1_n.png"
+dest_files=[ "res://.import/enemy2_1_n.png-5abfc9140e0a575ad3db07cfc810625e.stex" ]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=false
+flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

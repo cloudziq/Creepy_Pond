@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Xolonium-Regular.ttf" type="DynamicFontData" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://assets/mobs/enemy1_2.png" type="Texture" id=7]
 [ext_resource path="res://assets/mobs/enemy2_1.png" type="Texture" id=8]
 [ext_resource path="res://assets/mobs/enemy2_2.png" type="Texture" id=9]
-[ext_resource path="res://assets/mobs/player_2.png" type="Texture" id=10]
 [ext_resource path="res://assets/menus/button.png" type="Texture" id=11]
 [ext_resource path="res://assets/sounds/pause.wav" type="AudioStream" id=12]
 [ext_resource path="res://assets/sounds/ButtonClick.ogg" type="AudioStream" id=13]
@@ -188,7 +187,6 @@ visible = false
 modulate = Color( 0.713726, 0.890196, 0.945098, 1 )
 position = Vector2( 282, 539 )
 rotation = 2.62445
-texture = ExtResource( 10 )
 
 [node name="title_point" type="Sprite" parent="Sprites"]
 visible = false
@@ -200,7 +198,7 @@ texture = ExtResource( 4 )
 modulate = Color( 1.03, 1.46, 1.39, 1 )
 position = Vector2( 73, 306 )
 rotation = -5.05053
-scale = Vector2( 1.13391, 1.09646 )
+scale = Vector2( 0.59, 0.58 )
 frames = SubResource( 7 )
 animation = "anim1"
 frame = 1
@@ -208,9 +206,9 @@ playing = true
 
 [node name="title_enemy2" type="AnimatedSprite" parent="Sprites"]
 modulate = Color( 1.03, 1.46, 1.39, 1 )
-position = Vector2( 409, 239 )
+position = Vector2( 403, 346 )
 rotation = -4.27478
-scale = Vector2( 0.948654, 0.894891 )
+scale = Vector2( 0.59, 0.59 )
 frames = SubResource( 7 )
 animation = "anim2"
 frame = 1
@@ -623,7 +621,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 8 )
-text = "version 0.7"
+text = "version 0.8"
 align = 1
 valign = 2
 __meta__ = {

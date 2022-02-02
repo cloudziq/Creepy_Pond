@@ -44,12 +44,12 @@ func _process(_delta):
 			$anim_rotate.start()
 		elif not COLOR and not CHANGE:
 			COLOR = true
-			time  = rand_range(4, 10)
-			delay = rand_range(18, 32)
+			time  = rand_range(14, 22)
+			delay = rand_range(8, 18)
 			R = rand_range(.20, .32)
 			G = rand_range(.26, .48)
-			B = rand_range(.52, .94)
-			A = rand_range(.62, .84) if z_index != 100 else rand_range(.28, .36)
+			B = rand_range(.34, .74)
+			A = rand_range(.52, .76) if z_index != 100 else rand_range(.38, .46)
 			$anim_color.interpolate_property($Sprite, "self_modulate",
 				$Sprite.self_modulate, Color(R,G,B,A), time,
 				Tween.TRANS_SINE, Tween.EASE_IN_OUT, delay)
@@ -65,9 +65,8 @@ func _process(_delta):
 			$anim_scale.start()
 		elif randi() % default_range + 1 == default_range and CHANGE == false:
 			CHANGE = true
-			print("BG change start")
 			time  = rand_range(40, 60)
-			delay = rand_range(2, 12)
+			delay = rand_range(4, 12)
 			color = $Sprite.self_modulate ; color.a = 0
 			$anim_color.remove($Sprite, "self_modulate")
 			$anim_color.interpolate_property($Sprite, "self_modulate",

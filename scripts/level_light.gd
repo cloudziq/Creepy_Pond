@@ -3,6 +3,8 @@ extends Node2D
 export var is_vertical = 0
 
 
+
+
 var screen_w ; var screen_h
 
 
@@ -61,6 +63,6 @@ func _on_light_height_end():
 
 func _on_light_height_timer_timeout():
 	$light_height.interpolate_property($Light, "range_height",
-		$Light.range_height, rand_range(60, 420), rand_range(6, 12),
+		$Light.range_height, rand_range(60, 120), rand_range(6, 12),
 		Tween.TRANS_SINE, Tween.EASE_IN_OUT, rand_range(2, 6))
 	$light_height.start()

@@ -112,10 +112,10 @@ _global_script_class_icons={
 
 config/name="Creepy Pond"
 run/main_scene="res://scenes/main.tscn"
-boot_splash/image="res://assets/mobs/player_2.png"
+boot_splash/image="res://assets/mobs/player3.png"
 boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0.105882, 0.294118, 0.419608, 1 )
-config/icon="res://assets/mobs/player_2.png"
+config/icon="res://assets/mobs/player3.png"
 config/windows_native_icon="res://icon.ico"
 
 [audio]
@@ -164,19 +164,21 @@ pointing/emulate_touch_from_mouse=true
 
 common/physics_fps=30
 2d/thread_model=2
+2d/default_gravity=0
 2d/default_gravity_vector=Vector2( 0, 0 )
 2d/default_linear_damp=0.0
+2d/default_angular_damp=0.0
 
 [rendering]
 
 quality/filters/sharpen_intensity=0.1
-quality/driver/fallback_to_gles2=true
 quality/intended_usage/framebuffer_allocation=0
 quality/intended_usage/framebuffer_allocation.mobile=1
 quality/reflections/texture_array_reflections=false
 quality/shading/force_lambert_over_burley=true
 quality/filters/use_nearest_mipmap_filter=true
 batching/parameters/colored_vertex_format_threshold=0.5
-batching/lights/scissor_area_threshold=0.6
+batching/lights/scissor_area_threshold=0.4
+batching/parameters/item_reordering_lookahead=8
 quality/filters/use_fxaa=true
 quality/filters/use_debanding=true

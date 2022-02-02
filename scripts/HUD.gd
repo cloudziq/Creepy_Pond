@@ -77,7 +77,7 @@ func update_score(score, mod):
 func show_game_over():
 	$Message.add_color_override("font_color", Color(1, 1, 1))
 	show_message("GAME OVER :(")
-
+	emit_signal("toggle_title_anim")
 	yield($MessageTimer, "timeout")
 	$ScoreLabel.set("custom_colors/font_color", Color(0,0,0,1))
 	$ScoreLabel.text = "BEST SCORE:  " + str(get_parent().SETTINGS["score_record"])
@@ -85,7 +85,6 @@ func show_game_over():
 		node.show()
 	main_menu_visible = true
 	$FPS_DISPLAY.text = ""
-	emit_signal("toggle_title_anim")
 
 
 

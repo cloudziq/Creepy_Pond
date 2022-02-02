@@ -14,13 +14,16 @@ var bonuses = [
 	["point",       76],
 	["speed_pill",  96],
 	["clock",      100],
+#	["point",       16],
+#	["speed_pill",  26],
+#	["clock",      100],
 ]
 
 
 
 
 func _ready():
-	var bonus_spawn_offset = 60
+	var bonus_spawn_offset = 80
 	var val = randi() % 100 + 1
 	anim_dir = 1 ; anim_iter = 0
 
@@ -42,7 +45,8 @@ func _ready():
 		pos1.y = rand_range(bonus_spawn_offset, screen_h - bonus_spawn_offset)
 	set_position(pos1)
 
-	print("bonus: " + str(bonuses[bonus_type][0]).to_upper() +"  ("+ str(floor(pos1.x)) +", "+ str(floor(pos1.y)) +")" )    ## Wyjebać to
+	var a = str(bonuses[bonus_type][0]).to_upper()
+	print("bonus: "+ a +"  ("+ str(floor(pos1.x)) +", "+ str(floor(pos1.y)) +")" )    ## Wyjebać
 
 	match bonuses[bonus_type][0]:
 		"point":

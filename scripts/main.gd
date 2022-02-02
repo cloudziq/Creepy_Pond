@@ -7,6 +7,7 @@ export(PackedScene) var level_light
 
 
 var default_player_speed
+var default_playback_speed
 var score = 0 ; var score_record = 0
 var allow_bonus_spawn
 var allow_clock_spawn
@@ -36,7 +37,8 @@ func _ready():
 		if a >= lights_num - 2:
 			light.is_vertical = 1
 
-	default_player_speed = $player.speed
+	default_player_speed   = $player.speed
+	default_playback_speed = $player/Sprite/AnimationPlayer.playback_speed
 	window_prepare()
 	load_config()
 
@@ -58,6 +60,7 @@ func _process(_delta):
 func new_game():
 	score = 0
 	$player.speed = default_player_speed
+	$player/Sprite/AnimationPlayer.playback_speed = default_playback_speed
 	allow_mob_spawn   = true
 	allow_bonus_spawn = false
 	allow_clock_spawn = false
@@ -203,7 +206,10 @@ func _on_player_bonus_collected():
 		"speed_pill":
 			$Sounds/bonus_pill_collect.play()
 			$Timers/PillBonusDelay.start()
-			get_node("player").speed *= 1.1
+			$player/pill_particles/big.emitting   = true
+			$player/pill_particles/small.emitting = true
+			$player.speed *= 1.1
+			$player/Sprite/AnimationPlayer.playback_speed *= 1.1
 		"clock":
 			var time
 			var default_timer = 8

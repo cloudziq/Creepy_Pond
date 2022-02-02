@@ -33,7 +33,7 @@ func _input(event):
 	if event is InputEventScreenTouch and event.pressed:
 		target = event.position
 		rotation = position.angle_to_point(target)
-		$Particles2D.emitting = true
+		$move_particles.emitting = true
 
 
 
@@ -46,13 +46,13 @@ func _process(delta):
 
 	if velocity.length() > 0 and is_visible_in_tree():
 		velocity = velocity.normalized() * speed
-		$AnimatedSprite.play()
+		$Sprite/AnimationPlayer.play("player")
 		if sound_player_move_allow:
 			$player_move.play()
 			sound_player_move_allow = false
 	else:
-		$AnimatedSprite.stop()
-		$Particles2D.emitting = false
+		$Sprite/AnimationPlayer.stop()
+		$move_particles.emitting = false
 		$player_move.stop()
 
 	position += velocity * delta
@@ -75,7 +75,7 @@ func _on_player_body_entered(body):
 			emit_signal("hit")
 			$CollisionShape2D.set_deferred("disabled", true)
 			yield(get_tree().create_timer(1), "timeout")
-			$Particles2D.restart()
+			$move_particles.restart()
 
 
 

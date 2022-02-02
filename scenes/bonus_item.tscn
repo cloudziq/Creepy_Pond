@@ -12,14 +12,14 @@ animations = [ {
 "name": "point",
 "speed": 0.0
 }, {
-"frames": [ ExtResource( 3 ) ],
-"loop": false,
-"name": "clock",
-"speed": 0.0
-}, {
 "frames": [ ExtResource( 4 ) ],
 "loop": false,
 "name": "speed_pill",
+"speed": 0.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": false,
+"name": "clock",
 "speed": 0.0
 } ]
 
