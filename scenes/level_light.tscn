@@ -9,14 +9,12 @@ script = ExtResource( 2 )
 
 [node name="Light" type="Light2D" parent="."]
 position = Vector2( 240, 360 )
-scale = Vector2( 2, 6 )
+scale = Vector2( 4, 6 )
 texture = ExtResource( 1 )
-color = Color( 0.619608, 0.611765, 0.611765, 1 )
-energy = 2.4
-mode = 2
+color = Color( 0.482353, 0.866667, 0.905882, 1 )
 range_height = 200.0
-range_z_min = -1280
-range_z_max = 1280
+range_z_min = -2
+range_z_max = 200
 
 [node name="light_pos" type="Tween" parent="."]
 

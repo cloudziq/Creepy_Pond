@@ -171,7 +171,7 @@ common/physics_fps=30
 
 [rendering]
 
-quality/filters/sharpen_intensity=0.1
+quality/driver/driver_name="GLES2"
 quality/intended_usage/framebuffer_allocation=0
 quality/intended_usage/framebuffer_allocation.mobile=1
 quality/reflections/texture_array_reflections=false
@@ -181,4 +181,3 @@ batching/parameters/colored_vertex_format_threshold=0.5
 batching/lights/scissor_area_threshold=0.4
 batching/parameters/item_reordering_lookahead=8
 quality/filters/use_fxaa=true
-quality/filters/use_debanding=true

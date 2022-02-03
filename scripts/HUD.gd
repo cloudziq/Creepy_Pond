@@ -57,13 +57,12 @@ func show_message(text):
 func update_score(score, mod):
 	$ScoreLabel.text = str(score)
 	if mod:
-		var obj = $ScoreLabel.get("custom_fonts/font")
-		var size  = obj.size
+		var size = $ScoreLabel.rect_scale
 
-		$Tween.interpolate_property(obj, "size",
+		$Tween.interpolate_property($ScoreLabel, "rect_scale",
 			size, size * 1.8, .25,
 			Tween.TRANS_SINE, 0)
-		$Tween.interpolate_property(obj, "size",
+		$Tween.interpolate_property($ScoreLabel, "rect_scale",
 			size * 1.8, size, 1,
 			Tween.TRANS_SINE, Tween.EASE_OUT, .25)
 		$Tween.start()
@@ -77,12 +76,12 @@ func update_score(score, mod):
 func show_game_over():
 	$Message.add_color_override("font_color", Color(1, 1, 1))
 	show_message("GAME OVER :(")
-	emit_signal("toggle_title_anim")
 	yield($MessageTimer, "timeout")
 	$ScoreLabel.set("custom_colors/font_color", Color(0,0,0,1))
 	$ScoreLabel.text = "BEST SCORE:  " + str(get_parent().SETTINGS["score_record"])
 	for node in get_tree().get_nodes_in_group("main_menu"):
 		node.show()
+	emit_signal("toggle_title_anim")
 	main_menu_visible = true
 	$FPS_DISPLAY.text = ""
 

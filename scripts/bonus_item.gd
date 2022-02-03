@@ -1,9 +1,9 @@
 extends RigidBody2D
 
 
-export var bonus_type = -1
 
 
+var bonus_type = -1
 var anim_scale  = true
 var anim_rotate = true
 
@@ -43,42 +43,48 @@ func _ready():
 	while pos1.x == -1 or pos1.distance_to(pos2) <= screen_h / 3:
 		pos1.x = rand_range(bonus_spawn_offset, screen_w - bonus_spawn_offset)
 		pos1.y = rand_range(bonus_spawn_offset, screen_h - bonus_spawn_offset)
-	set_position(pos1)
+	position = pos1
 
 	var a = str(bonuses[bonus_type][0]).to_upper()
 	print("bonus: "+ a +"  ("+ str(floor(pos1.x)) +", "+ str(floor(pos1.y)) +")" )    ## Wyjebać
 
 	match bonuses[bonus_type][0]:
 		"point":
-			point_bonus_anim("all")
-			$Sprite.animation = "point"
+#			point_bonus_anim("all")
+			$Sprite.scale = Vector2(.4, .4)
+			$CollisionShape2D.scale = Vector2(1,1)
+			$Sprite/AnimationPlayer.play("point")
 		"speed_pill":
 			pill_bonus_anim(1)
-			$Sprite.animation = "speed_pill"
+			$Sprite.scale = Vector2(.5, .5)
+			$CollisionShape2D.scale = Vector2(1.2, 1.2)
+			$Sprite/AnimationPlayer.play("pill")
 			get_parent().allow_pill_spawn = false
 		"clock":
 			clock_bonus_anim(1, 0)
-			$Sprite.animation = "clock"
+			$Sprite.scale = Vector2(.5, .5)
+			$CollisionShape2D.scale = Vector2(1.2, 1.2)
+			$Sprite/AnimationPlayer.play("clock")
 			get_parent().allow_clock_spawn = false
 
 
 
 
-func point_bonus_anim(anim_type):
-	var scale_def = 1
-
-	if anim_type == "rotation" or "all":
-		$anim_rotation.interpolate_property($Sprite, "rotation",
-			$Sprite.rotation, deg2rad(randi() % 360), rand_range(.1, .4),
-			Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-		$anim_rotation.start()
-
-	if anim_type == "scale" or "all":
-		var scale = rand_range(scale_def - .8, scale_def + .4)
-		$anim_scale.interpolate_property($Sprite, "scale",
-			$Sprite.scale, Vector2(scale, scale), rand_range(.8, 1.6),
-			Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-		$anim_scale.start()
+#func point_bonus_anim(anim_type):
+#	var scale_def = .5
+#
+#	if anim_type == "rotation" or "all":
+#		$anim_rotation.interpolate_property($Sprite, "rotation",
+#			$Sprite.rotation, deg2rad(randi() % 360), rand_range(.1, .4),
+#			Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+#		$anim_rotation.start()
+#
+#	if anim_type == "scale" or "all":
+#		var scale = rand_range(scale_def * .6, scale_def * 1.1)
+#		$anim_scale.interpolate_property($Sprite, "scale",
+#			$Sprite.scale, Vector2(scale, scale), rand_range(.8, 1.6),
+#			Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+#		$anim_scale.start()
 
 
 
@@ -138,16 +144,16 @@ func clock_bonus_anim(dir, iter):
 
 
 
-func _on_anim_scale_end():
-	match bonuses[bonus_type][0]:
-		"point":
-			point_bonus_anim("scale")
+#func _on_anim_scale_end():
+#	match bonuses[bonus_type][0]:
+#		"point":
+#			point_bonus_anim("scale")
 
 
 func _on_anim_rotation_end():
 	match bonuses[bonus_type][0]:
-		"point":
-			point_bonus_anim("rotation")
+#		"point":
+#			point_bonus_anim("rotation")
 		"speed_pill":
 			pill_bonus_anim(anim_dir)
 		"clock":

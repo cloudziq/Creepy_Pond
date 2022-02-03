@@ -14,9 +14,13 @@ func _ready():
 	for row in title_length.size():
 		for index in title_length[row]:
 			var node = get_node("VBoxContainer" + "/row"+str(row+1) + "/"+str(index+1))
-			if not def_pos.has(node):
-				def_pos[node] = node.get("rect_position")
-			anim(node, false)
+			if allow:
+				if not def_pos.has(node):
+					def_pos[node] = node.rect_position
+				anim(node, false)
+			else:
+				$Tween.remove_all()
+				node.rect_position = def_pos[node]
 
 
 
@@ -28,7 +32,7 @@ func anim(node, delay):
 	var delay_time = rand_range(.6, 1.2) if delay else 0.0
 
 	$Tween.interpolate_property(node, "rect_position",
-		node.get("rect_position"), pos, rand_range(2, 4),
+		node.rect_position, pos, rand_range(2, 4),
 		Tween.TRANS_SINE, Tween.EASE_IN_OUT, delay_time)
 	$Tween.start()
 
@@ -36,12 +40,13 @@ func anim(node, delay):
 
 
 func _on_Tween_completed(object, _key):
-	if allow:
 		anim(object, true)
 
 
 
 
 func _on_HUD_toggle_title_anim():
-	if allow: allow = false
-	else: allow = true ; _ready()
+	if allow:
+		allow = false ; _ready()
+	else:
+		allow = true ; _ready()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://assets/mobs/player1.png" type="Texture" id=1]
 [ext_resource path="res://assets/mobs/player2.png" type="Texture" id=2]
@@ -15,29 +15,23 @@
 [ext_resource path="res://assets/mobs/player3_n.png" type="Texture" id=13]
 [ext_resource path="res://assets/mobs/player4_n.png" type="Texture" id=14]
 
+[sub_resource type="AnimatedTexture" id=9]
+flags = 4
+frames = 4
+fps = 20.0
+frame_0/texture = ExtResource( 4 )
+frame_1/texture = ExtResource( 6 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 7 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 3 )
+frame_3/delay_sec = 0.0
+
 [sub_resource type="Gradient" id=7]
 offsets = PoolRealArray( 0.145038, 0.332061, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0.568345, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=6]
-gradient = SubResource( 7 )
-
-[sub_resource type="ParticlesMaterial" id=8]
-lifetime_randomness = 1.0
-flag_disable_z = true
-direction = Vector3( 0, 0, 0 )
-spread = 60.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 22.0
-orbit_velocity = 0.0
-orbit_velocity_random = 1.0
-radial_accel = 0.2
-scale = 0.16
-scale_random = 0.25
-color = Color( 0.24, 0.32, 0.44, 0.4 )
-color_ramp = SubResource( 6 )
-
-[sub_resource type="AnimatedTexture" id=9]
+[sub_resource type="AnimatedTexture" id=4]
 flags = 4
 frames = 4
 fps = 20.0
@@ -53,63 +47,9 @@ frame_3/delay_sec = 0.0
 offsets = PoolRealArray( 0, 0.0700637, 0.726115 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0.568345, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=12]
-gradient = SubResource( 5 )
-
-[sub_resource type="ParticlesMaterial" id=3]
-lifetime_randomness = 0.6
-emission_shape = 5
-emission_ring_radius = 6.0
-emission_ring_inner_radius = 0.0
-emission_ring_height = 1.0
-emission_ring_axis = Vector3( 0, 0, 1 )
-flag_disable_z = true
-direction = Vector3( 0, 0, 0 )
-spread = 180.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 40.0
-initial_velocity_random = 0.4
-orbit_velocity = 0.08
-orbit_velocity_random = 1.0
-radial_accel = 12.0
-tangential_accel = 26.0
-tangential_accel_random = 1.0
-damping = 10.0
-scale = 0.16
-scale_random = 0.25
-color = Color( 0.572549, 0.807843, 0.94902, 0.490196 )
-color_ramp = SubResource( 12 )
-
-[sub_resource type="AnimatedTexture" id=4]
-flags = 4
-frames = 4
-fps = 20.0
-frame_0/texture = ExtResource( 4 )
-frame_1/texture = ExtResource( 6 )
-frame_1/delay_sec = 0.0
-frame_2/texture = ExtResource( 7 )
-frame_2/delay_sec = 0.0
-frame_3/texture = ExtResource( 3 )
-frame_3/delay_sec = 0.0
-
 [sub_resource type="Gradient" id=13]
 offsets = PoolRealArray( 0.0191083, 0.0828025, 0.878981 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0.568345, 1, 1, 1, 0 )
-
-[sub_resource type="GradientTexture" id=14]
-gradient = SubResource( 13 )
-
-[sub_resource type="ParticlesMaterial" id=11]
-flag_disable_z = true
-direction = Vector3( 0, 0, 0 )
-spread = 0.0
-gravity = Vector3( 0, 0, 0 )
-orbit_velocity = 0.0
-orbit_velocity_random = 1.0
-radial_accel = 12.0
-scale = 2.6
-color = Color( 1, 1, 1, 0.490196 )
-color_ramp = SubResource( 14 )
 
 [sub_resource type="Animation" id=15]
 resource_name = "player"
@@ -141,29 +81,40 @@ tracks/1/keys = {
 }
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 14.0
+radius = 12.0
 height = 0.0
 
 [node name="player" type="Area2D"]
 z_index = 10
+collision_layer = 0
 script = ExtResource( 5 )
 
-[node name="move_particles" type="Particles2D" parent="."]
+[node name="move_particles" type="CPUParticles2D" parent="."]
 self_modulate = Color( 1, 1, 1, 0.6 )
 light_mask = 2
 position = Vector2( -5, 0 )
+emitting = false
 amount = 200
 lifetime = 2.0
 speed_scale = 2.8
 randomness = 0.61
-visibility_rect = Rect2( 7.36713e-05, -36.5065, 43.6622, 74.3238 )
+lifetime_randomness = 1.0
 local_coords = false
-process_material = SubResource( 8 )
 texture = SubResource( 9 )
+direction = Vector2( 0, 0 )
+spread = 60.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 22.0
+orbit_velocity_random = 1.0
+radial_accel = 0.2
+scale_amount = 0.16
+scale_amount_random = 0.25
+color = Color( 0.24, 0.32, 0.44, 0.4 )
+color_ramp = SubResource( 7 )
 
 [node name="pill_particles" type="Node2D" parent="."]
 
-[node name="small" type="Particles2D" parent="pill_particles"]
+[node name="small" type="CPUParticles2D" parent="pill_particles"]
 light_mask = 2
 position = Vector2( -4, 0 )
 emitting = false
@@ -173,25 +124,45 @@ one_shot = true
 speed_scale = 2.2
 explosiveness = 0.8
 randomness = 0.61
-visibility_rect = Rect2( -121.296, -141.905, 251.858, 266.743 )
+lifetime_randomness = 0.6
 local_coords = false
-process_material = SubResource( 3 )
 texture = SubResource( 4 )
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 40.0
+initial_velocity_random = 0.4
+orbit_velocity = 0.08
+orbit_velocity_random = 1.0
+radial_accel = 12.0
+tangential_accel = 26.0
+tangential_accel_random = 1.0
+damping = 10.0
+scale_amount = 0.16
+scale_amount_random = 0.25
+color = Color( 0.572549, 0.807843, 0.94902, 0.490196 )
+color_ramp = SubResource( 5 )
 
-[node name="big" type="Particles2D" parent="pill_particles"]
+[node name="big" type="CPUParticles2D" parent="pill_particles"]
 light_mask = 2
 position = Vector2( -1, 0 )
 emitting = false
 amount = 1
 one_shot = true
-visibility_rect = Rect2( -121.296, -141.905, 251.858, 266.743 )
-process_material = SubResource( 11 )
 texture = SubResource( 4 )
+direction = Vector2( 0, 0 )
+spread = 0.0
+gravity = Vector2( 0, 0 )
+orbit_velocity_random = 1.0
+radial_accel = 12.0
+scale_amount = 2.6
+color = Color( 1, 1, 1, 0.490196 )
+color_ramp = SubResource( 13 )
 
 [node name="Sprite" type="Sprite" parent="."]
 self_modulate = Color( 1, 1, 1, 0.6 )
 position = Vector2( -0.530001, 0 )
-scale = Vector2( 0.15, 0.15 )
+scale = Vector2( 0.14, 0.14 )
 texture = ExtResource( 1 )
 normal_map = ExtResource( 11 )
 offset = Vector2( 8, 0 )

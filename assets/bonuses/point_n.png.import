@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bomb.png-c7bc6ee613dc10be8fb068cfc19e0ae2.stex"
+path="res://.import/point_n.png-3214a2bbf4f16da782f1ef167fb061b8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/bonuses/bomb.png"
-dest_files=[ "res://.import/bomb.png-c7bc6ee613dc10be8fb068cfc19e0ae2.stex" ]
+source_file="res://assets/bonuses/point_n.png"
+dest_files=[ "res://.import/point_n.png-3214a2bbf4f16da782f1ef167fb061b8.stex" ]
 
 [params]
 

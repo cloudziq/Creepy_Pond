@@ -3,7 +3,7 @@ extends Area2D
 signal hit
 signal bonus_collected
 
-export var speed = 125
+export var speed = 115
 
 
 var screen_size

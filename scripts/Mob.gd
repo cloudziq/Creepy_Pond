@@ -19,9 +19,11 @@ func _ready():
 	# randomize scale
 	var scale_min = .12 ; var scale_max = .18
 	var scale_mid = (scale_min + scale_max) / 2
-	var scale = rand_range(scale_min, scale_max)
-	$Sprite.scale = (Vector2(scale, scale))
-	$CollisionShape2D.scale = (Vector2(scale, scale))
+	var scale_new = rand_range(scale_min, scale_max)
+	$Sprite.scale = (Vector2(scale_new, scale_new))
+	$CollisionShape2D.scale = (Vector2(scale_new, scale_new))
+	$move_particles.scale = Vector2(scale_new * 6, scale_new * 5)
+	$move_particles.set("scale_amount", 0.16 * (.3 - scale_new))
 
 	# Randomize color a bit
 	var R = rand_range(.72, .90)
@@ -47,12 +49,11 @@ func _ready():
 #	print("min: "+ ("%.2f" % speed_min) +"    max: "+ ("%.2f" % speed_max))
 	var speed = rand_range(speed_min, speed_max)
 	linear_velocity = Vector2(speed, 0)
-	print(speed)
 	linear_velocity = linear_velocity.rotated(direction)
 
 	$Sprite/AnimationPlayer.playback_speed = .4 + (speed / 100)
 
-	var pitch = 1.2 - scale if scale >= scale_mid else 1.2 + scale
+	var pitch = 1.2 - scale_new if scale_new >= scale_mid else 1.2 + scale_new
 	$MobSound.pitch_scale += pitch
 	$MobSound.play()
 

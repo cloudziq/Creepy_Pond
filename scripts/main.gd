@@ -19,7 +19,7 @@ var allow_mob_spawn
 
 func _ready():
 	randomize()
-	var num_of_BGs = 3
+	var num_of_BGs = 4
 	var lights_num = 4
 
 	for a in num_of_BGs:
@@ -48,9 +48,9 @@ func _ready():
 
 func _process(_delta):
 	if allow_bonus_spawn:
+		allow_bonus_spawn = false
 		bonus = bonus_item.instance()
 		add_child(bonus)
-		allow_bonus_spawn = false
 		$Sounds/bonus_appear.pitch_scale = rand_range(.8, 1.2)
 		$Sounds/bonus_appear.play()
 
@@ -180,7 +180,7 @@ func _on_ScoreTimer_timeout():
 		$Timers/MobTimer.wait_time -= $Timers/MobTimer.wait_time / 86
 	score += 1
 	$HUD.update_score(score, false)
-	print($Timers/MobTimer.wait_time)
+#	print($Timers/MobTimer.wait_time)
 
 
 
@@ -211,10 +211,8 @@ func _on_player_bonus_collected():
 			$player.speed *= 1.1
 			$player/Sprite/AnimationPlayer.playback_speed *= 1.1
 		"clock":
-			var time
 			var default_timer = 8
-			mob.time_scale("reduce")
-			time = default_timer * (1 + (1 - ($Timers/MobTimer.wait_time * 1.6)))
+			var time = default_timer * (1 + (1 - ($Timers/MobTimer.wait_time * 1.6)))
 			#print("CLOCK TIME:" + ("%.2f" % time))
 			$Timers/MobClockDelay.wait_time = time
 			$Timers/MobClockDelay.start()
@@ -222,6 +220,7 @@ func _on_player_bonus_collected():
 			$Sounds/bonus_clock_collect.play()
 			$Sounds/clock_ticking.play()
 			$HUD/ScoreLabel.set("custom_colors/font_color", Color(0, .6, 0, 1))
+			mob.time_scale("reduce")
 			allow_mob_spawn = false
 
 
