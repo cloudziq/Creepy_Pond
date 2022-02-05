@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scripts/main.gd" type="Script" id=1]
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://scenes/bonus_item.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/sounds/gameover.wav" type="AudioStream" id=6]
-[ext_resource path="res://assets/sounds/House In a Forest Loop.ogg" type="AudioStream" id=7]
 [ext_resource path="res://assets/sounds/enemy_bite.ogg" type="AudioStream" id=8]
 [ext_resource path="res://assets/sounds/bonus_point_collect.ogg" type="AudioStream" id=9]
 [ext_resource path="res://scenes/Level_BG.tscn" type="PackedScene" id=10]
@@ -57,11 +56,6 @@ curve = SubResource( 1 )
 position = Vector2( -96, -102.038 )
 
 [node name="Sounds" type="Node" parent="."]
-
-[node name="level_musicO" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource( 7 )
-volume_db = -12.0
-bus = "Music"
 
 [node name="level_music" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 15 )

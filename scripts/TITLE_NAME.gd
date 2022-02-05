@@ -46,7 +46,4 @@ func _on_Tween_completed(object, _key):
 
 
 func _on_HUD_toggle_title_anim():
-	if allow:
-		allow = false ; _ready()
-	else:
-		allow = true ; _ready()
+	allow = not allow ; _ready()

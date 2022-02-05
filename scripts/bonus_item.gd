@@ -11,7 +11,7 @@ var anim_dir ; var anim_iter
 
 
 var bonuses = [
-	["point",       76],
+	["point",       74],
 	["speed_pill",  96],
 	["clock",      100],
 #	["point",       16],
