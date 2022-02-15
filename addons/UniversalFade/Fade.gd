@@ -18,19 +18,19 @@ static func _create_fader(color: Color, pattern: String, reverse: bool, smooth: 
 		var old = _get_scene_tree_root().get_meta("__current_fade__")
 		if is_instance_valid(old):
 			old.queue_free()
-	
+
 	var texture: Texture
 	if pattern.empty():
 		smooth = true
 		reverse = false
-		
+
 		if _get_scene_tree_root().has_meta("__1px_pattern__"):
 			texture = _get_scene_tree_root().get_meta("__1px_pattern__")
 		else:
 			var image := Image.new()
 			image.create(1, 1, false, Image.FORMAT_RGBA8)
 			image.fill(Color.black)
-			
+
 			texture = ImageTexture.new()
 			texture.create_from_image(image)
 			_get_scene_tree_root().set_meta("__1px_pattern__", texture)
@@ -38,7 +38,7 @@ static func _create_fader(color: Color, pattern: String, reverse: bool, smooth: 
 		var pattern_path := str("res://addons/UniversalFade/Pattern", pattern, ".png")
 		assert(ResourceLoader.exists(pattern_path, "Texture"), "Invalid pattern name.")
 		texture = load(pattern_path)
-	
+
 	var fader = load("res://addons/UniversalFade/Fade.tscn").instance()
 	fader._prepare_fade(color, texture, reverse, smooth)
 	_get_scene_tree_root().set_meta("__current_fade__", fader)
@@ -61,6 +61,6 @@ func _fade(animation: String, time: float):
 
 func _fade_finished(anim_name: String) -> void:
 	emit_signal("finished")
-	
+
 	if anim_name == "FadeIn":
 		queue_free()

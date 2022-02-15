@@ -163,8 +163,8 @@ color_ramp = SubResource( 13 )
 self_modulate = Color( 1, 1, 1, 0.6 )
 position = Vector2( -0.530001, 0 )
 scale = Vector2( 0.14, 0.14 )
-texture = ExtResource( 1 )
-normal_map = ExtResource( 11 )
+texture = ExtResource( 2 )
+normal_map = ExtResource( 12 )
 offset = Vector2( 8, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
@@ -187,4 +187,3 @@ mix_target = 2
 bus = "Sound"
 
 [connection signal="body_entered" from="." to="." method="_on_player_body_entered"]
-[connection signal="finished" from="player_move" to="." method="_on_player_move_finished"]

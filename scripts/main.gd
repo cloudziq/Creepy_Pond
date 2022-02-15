@@ -6,13 +6,17 @@ export(PackedScene) var BG_scene
 export(PackedScene) var level_light
 
 
-var default_player_speed
-var default_playback_speed
+#var default_player_speed
+#var default_playback_speed
 var score = 0 ; var score_record = 0
 var allow_bonus_spawn
 var allow_clock_spawn
 var allow_pill_spawn
 var allow_mob_spawn
+
+onready var default_player_speed   = $player.speed
+onready var default_playback_speed = $player/Sprite/AnimationPlayer.playback_speed
+onready var default_pill_bonus_wait_time = $Timers/PillBonusDelay.wait_time
 
 
 
@@ -37,8 +41,6 @@ func _ready():
 		if a >= lights_num - 2:
 			light.is_vertical = 1
 
-	default_player_speed   = $player.speed
-	default_playback_speed = $player/Sprite/AnimationPlayer.playback_speed
 	window_prepare()
 	load_config()
 
@@ -61,6 +63,7 @@ func new_game():
 	score = 0
 	$player.speed = default_player_speed
 	$player/Sprite/AnimationPlayer.playback_speed = default_playback_speed
+	$Timers/PillBonusDelay.wait_time = default_pill_bonus_wait_time
 	allow_mob_spawn   = true
 	allow_bonus_spawn = false
 	allow_clock_spawn = false
@@ -81,14 +84,14 @@ func game_over():
 		SETTINGS["score_record"] = score
 		save_config()
 #	allow_bonus_spawn = false
-	get_tree().call_group("mobs",  "queue_free")
-	get_tree().call_group("bonus", "queue_free")
 	$HUD.show_game_over()
 	$Timers/ScoreTimer.stop()
 	$Timers/MobTimer.stop()
 	$Timers/BonusDelay.stop()
 	$Sounds/level_music.stop()
 	$Sounds/enemy_bite.play()
+	get_tree().call_group("mobs",  "queue_free")
+	get_tree().call_group("bonus", "queue_free")
 	yield(get_tree().create_timer(.8), "timeout")
 	$Sounds/death_sound.play()
 	$Sounds/clock_ticking.stop()
@@ -205,6 +208,7 @@ func _on_player_bonus_collected():
 			$Sounds/bonus_point_collect.play()
 		"speed_pill":
 			$Sounds/bonus_pill_collect.play()
+			$Timers/PillBonusDelay.wait_time += 2
 			$Timers/PillBonusDelay.start()
 			$player/pill_particles/big.emitting   = true
 			$player/pill_particles/small.emitting = true

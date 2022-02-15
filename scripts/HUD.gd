@@ -20,6 +20,7 @@ func _ready():
 	$Message.hide()
 	$PAUSE.hide()
 	$ScoreLabel.text = ""
+	$MenuLightEffects/AnimationPlayer.play("light_move")
 
 	yield(get_tree().create_timer(.1), "timeout")
 	if get_parent().SETTINGS["score_record"] != 0:
@@ -74,8 +75,8 @@ func update_score(score, mod):
 
 
 func show_game_over():
-	$Message.add_color_override("font_color", Color(1, 1, 1))
-	show_message("GAME OVER :(")
+	$Message.add_color_override("font_color", Color(.56, .20, .18))
+	show_message("GAME OVER")
 	yield($MessageTimer, "timeout")
 	$ScoreLabel.set("custom_colors/font_color", Color(0,0,0,1))
 	$ScoreLabel.text = "BEST SCORE:  " + str(get_parent().SETTINGS["score_record"])
@@ -84,15 +85,17 @@ func show_game_over():
 	emit_signal("toggle_title_anim")
 	main_menu_visible = true
 	$FPS_DISPLAY.text = ""
+	Fade.fade_in(1.2, Color.black, "Noise")
 
 
 
 
 func _on_StartButton_pressed():
+	Fade.fade_in(1.6)
 	for node in get_tree().get_nodes_in_group("main_menu"):
 		node.hide()
 	emit_signal("start_game")
-	$Message.add_color_override("font_color", Color(.14, .64, .8))
+	$Message.add_color_override("font_color", Color(.18, .40, .16))
 	MessageFade = true ; show_message("Avoid the Creeps!")
 	$ButtonClick.play()
 	$ScoreLabel.text = ""
@@ -169,4 +172,4 @@ func create_button_audio(pitch, volume, audio):
 		audio.volume_db   = volume
 		audio.play()
 		yield(audio, "finished")
-		remove_child(audio)
+		audio.queue_free()

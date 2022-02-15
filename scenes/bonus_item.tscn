@@ -134,5 +134,4 @@ shape = SubResource( 1 )
 
 [node name="anim_rotation" type="Tween" parent="."]
 
-[connection signal="tween_all_completed" from="anim_scale" to="." method="_on_anim_scale_end"]
 [connection signal="tween_all_completed" from="anim_rotation" to="." method="_on_anim_rotation_end"]

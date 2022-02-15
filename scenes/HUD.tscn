@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Xolonium-Regular.ttf" type="DynamicFontData" id=2]
@@ -16,6 +16,8 @@
 [ext_resource path="res://assets/menus/button_music.png" type="Texture" id=14]
 [ext_resource path="res://assets/menus/button_sound.png" type="Texture" id=15]
 [ext_resource path="res://scripts/TITLE_NAME.gd" type="Script" id=16]
+[ext_resource path="res://assets/particles/spark1.png" type="Texture" id=17]
+[ext_resource path="res://assets/fonts/BOULDERROUGH.ttf" type="DynamicFontData" id=18]
 
 [sub_resource type="SpriteFrames" id=7]
 animations = [ {
@@ -120,10 +122,11 @@ use_filter = true
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=1]
-size = 64
-outline_size = 1
+size = 82
+outline_size = 2
 use_filter = true
-font_data = ExtResource( 2 )
+extra_spacing_char = 4
+font_data = ExtResource( 18 )
 
 [sub_resource type="DynamicFont" id=8]
 size = 12
@@ -172,6 +175,62 @@ use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 2 )
 
+[sub_resource type="Animation" id=26]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 66, 196 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Light_2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 528, 197 ) ]
+}
+
+[sub_resource type="Animation" id=27]
+resource_name = "light_move"
+length = 10.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ Vector2( -24, 193 ), Vector2( 532, 192 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Light_2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ Vector2( 528, 197 ), Vector2( -54, 191 ) ]
+}
+
 [node name="HUD" type="CanvasLayer"]
 pause_mode = 2
 script = ExtResource( 1 )
@@ -203,7 +262,6 @@ rotation = -5.05053
 scale = Vector2( 0.59, 0.58 )
 frames = SubResource( 7 )
 animation = "anim1"
-frame = 1
 playing = true
 
 [node name="title_enemy2" type="AnimatedSprite" parent="Sprites"]
@@ -213,7 +271,6 @@ rotation = -4.27478
 scale = Vector2( 0.59, 0.59 )
 frames = SubResource( 7 )
 animation = "anim2"
-frame = 1
 playing = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." groups=["main_menu"]]
@@ -298,7 +355,7 @@ margin_right = 143.0
 margin_bottom = 100.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_colors/font_color = Color( 0.141176, 0.580392, 0.807843, 1 )
+custom_colors/font_color = Color( 0.141176, 0.580392, 0.811765, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0.91, 1, 0.1 )
 custom_colors/font_color_shadow = Color( 0.0392157, 0.152941, 0.133333, 1 )
 custom_constants/shadow_offset_y = 8
@@ -465,15 +522,17 @@ __meta__ = {
 [node name="MiddleButtons" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 484.0
 margin_right = 480.0
-margin_bottom = 548.0
+margin_bottom = 592.0
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MiddleButtons"]
-margin_left = 132.0
-margin_right = 348.0
-margin_bottom = 64.0
+margin_left = 142.0
+margin_top = 22.0
+margin_right = 338.0
+margin_bottom = 86.0
 grow_horizontal = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -503,14 +562,14 @@ __meta__ = {
 
 [node name="----" type="Control" parent="VBoxContainer/MiddleButtons/HBoxContainer"]
 margin_left = 68.0
-margin_right = 148.0
+margin_right = 128.0
 margin_bottom = 64.0
-rect_min_size = Vector2( 80, 0 )
+rect_min_size = Vector2( 60, 0 )
 size_flags_horizontal = 3
 
 [node name="ButtonSound" type="Button" parent="VBoxContainer/MiddleButtons/HBoxContainer"]
-margin_left = 152.0
-margin_right = 216.0
+margin_left = 132.0
+margin_right = 196.0
 margin_bottom = 64.0
 custom_styles/hover = SubResource( 22 )
 custom_styles/pressed = SubResource( 23 )
@@ -532,10 +591,9 @@ __meta__ = {
 }
 
 [node name="----" type="Control" parent="VBoxContainer"]
-margin_top = 552.0
+margin_top = 596.0
 margin_right = 480.0
 margin_bottom = 596.0
-size_flags_vertical = 3
 
 [node name="StartButtonArea" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 600.0
@@ -599,17 +657,17 @@ __meta__ = {
 }
 
 [node name="Message" type="Label" parent="."]
-visible = false
-margin_top = 280.0
-margin_right = 480.0
-margin_bottom = 439.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
+margin_left = 11.0
+margin_top = 270.0
+margin_right = 471.0
+margin_bottom = 445.0
+custom_colors/font_color = Color( 0.187521, 0.398438, 0.169647, 1 )
 custom_colors/font_outline_modulate = Color( 0.694118, 0.796078, 0.643137, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 4
-custom_constants/shadow_offset_y = 3
+custom_constants/shadow_offset_y = 4
 custom_fonts/font = SubResource( 1 )
-text = "Avoid the Creeps!"
+text = "GAME OVER"
 align = 1
 valign = 1
 autowrap = true
@@ -623,7 +681,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 8 )
-text = "version 0.8"
+text = "v0.86"
 align = 1
 valign = 2
 __meta__ = {
@@ -631,7 +689,7 @@ __meta__ = {
 }
 
 [node name="MessageTimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 4.0
 one_shot = true
 
 [node name="ButtonClick" type="AudioStreamPlayer" parent="."]
@@ -742,6 +800,32 @@ __meta__ = {
 }
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="MenuLightEffects" type="Node2D" parent="." groups=["main_menu"]]
+
+[node name="Light_1" type="Light2D" parent="MenuLightEffects"]
+position = Vector2( 66, 196 )
+texture = ExtResource( 17 )
+texture_scale = 6.0
+color = Color( 0.407843, 0.611765, 0.996078, 1 )
+energy = 0.8
+range_layer_min = 1
+range_layer_max = 1
+
+[node name="Light_2" type="Light2D" parent="MenuLightEffects"]
+position = Vector2( 528, 197 )
+texture = ExtResource( 17 )
+texture_scale = 6.0
+color = Color( 0.356863, 0.403922, 0.196078, 1 )
+mode = 1
+range_layer_min = 1
+range_layer_max = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MenuLightEffects"]
+root_node = NodePath("../Light_1")
+playback_speed = 0.6
+anims/RESET = SubResource( 26 )
+anims/light_move = SubResource( 27 )
 
 [connection signal="toggle_title_anim" from="." to="VBoxContainer/Title/TitleBG/TITLE_NAME" method="_on_HUD_toggle_title_anim"]
 [connection signal="tween_completed" from="VBoxContainer/Title/TitleBG/TITLE_NAME/Tween" to="VBoxContainer/Title/TitleBG/TITLE_NAME" method="_on_Tween_completed"]

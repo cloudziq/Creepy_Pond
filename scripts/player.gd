@@ -1,14 +1,15 @@
 extends Area2D
 
+
 signal hit
 signal bonus_collected
 
-export var speed = 115
+
+export var speed = 100
 
 
 var screen_size
 var target = Vector2()
-var sound_player_move_allow
 
 
 
@@ -22,7 +23,6 @@ func _ready():
 
 func start(pos):
 	position = pos ; target = pos
-	sound_player_move_allow = true
 	$CollisionShape2D.disabled = false
 	show()
 
@@ -47,9 +47,8 @@ func _process(delta):
 	if velocity.length() > 0 and is_visible_in_tree():
 		velocity = velocity.normalized() * speed
 		$Sprite/AnimationPlayer.play("player")
-		if sound_player_move_allow:
+		if not $player_move.playing:
 			$player_move.play()
-			sound_player_move_allow = false
 	else:
 		$Sprite/AnimationPlayer.stop()
 		$move_particles.emitting = false
@@ -76,9 +75,3 @@ func _on_player_body_entered(body):
 			$CollisionShape2D.set_deferred("disabled", true)
 			yield(get_tree().create_timer(1), "timeout")
 			$move_particles.restart()
-
-
-
-
-func _on_player_move_finished():
-	sound_player_move_allow = true

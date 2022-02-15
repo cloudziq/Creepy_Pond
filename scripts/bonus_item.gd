@@ -1,8 +1,6 @@
 extends RigidBody2D
 
 
-
-
 var bonus_type = -1
 var anim_scale  = true
 var anim_rotate = true
@@ -11,7 +9,7 @@ var anim_dir ; var anim_iter
 
 
 var bonuses = [
-	["point",       74],
+	["point",       72],
 	["speed_pill",  96],
 	["clock",      100],
 #	["point",       16],
@@ -45,8 +43,8 @@ func _ready():
 		pos1.y = rand_range(bonus_spawn_offset, screen_h - bonus_spawn_offset)
 	position = pos1
 
-	var a = str(bonuses[bonus_type][0]).to_upper()
-	print("bonus: "+ a +"  ("+ str(floor(pos1.x)) +", "+ str(floor(pos1.y)) +")" )    ## Wyjebać
+#	var a = str(bonuses[bonus_type][0]).to_upper()
+#	print("bonus: "+ a +"  ("+ str(floor(pos1.x)) +", "+ str(floor(pos1.y)) +")" )    ## Wyjebać
 
 	match bonuses[bonus_type][0]:
 		"point":
@@ -140,14 +138,12 @@ func clock_bonus_anim(dir, iter):
 
 
 
-
-
-
-
 #func _on_anim_scale_end():
 #	match bonuses[bonus_type][0]:
 #		"point":
 #			point_bonus_anim("scale")
+
+
 
 
 func _on_anim_rotation_end():
