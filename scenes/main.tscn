@@ -39,7 +39,6 @@ __meta__ = {
 }
 
 [node name="player" parent="." instance=ExtResource( 2 )]
-position = Vector2( -103, 59 )
 z_as_relative = false
 
 [node name="StartPosition" type="Position2D" parent="."]
@@ -119,7 +118,7 @@ wait_time = 40.0
 one_shot = true
 
 [node name="PillBonusDelay" type="Timer" parent="Timers"]
-wait_time = 14.0
+wait_time = 16.0
 one_shot = true
 
 [connection signal="bonus_collected" from="player" to="." method="_on_player_bonus_collected"]

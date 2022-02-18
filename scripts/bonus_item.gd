@@ -1,29 +1,26 @@
 extends RigidBody2D
 
 
-var bonus_type = -1
-var anim_scale  = true
-var anim_rotate = true
+onready var anim_dir  := 1
+onready var anim_iter := 0
 
-var anim_dir ; var anim_iter
+var bonus_type  := -1
+var anim_scale  := true
+var anim_rotate := true
 
 
 var bonuses = [
-	["point",       72],
+	["point",       62],
 	["speed_pill",  96],
 	["clock",      100],
-#	["point",       16],
-#	["speed_pill",  26],
-#	["clock",      100],
 ]
 
 
 
 
 func _ready():
-	var bonus_spawn_offset = 80
+	var bonus_spawn_offset = 100
 	var val = randi() % 100 + 1
-	anim_dir = 1 ; anim_iter = 0
 
 	for index in bonuses.size():
 		if val <= bonuses[index][1]:
@@ -64,25 +61,6 @@ func _ready():
 			$CollisionShape2D.scale = Vector2(1.2, 1.2)
 			$Sprite/AnimationPlayer.play("clock")
 			get_parent().allow_clock_spawn = false
-
-
-
-
-#func point_bonus_anim(anim_type):
-#	var scale_def = .5
-#
-#	if anim_type == "rotation" or "all":
-#		$anim_rotation.interpolate_property($Sprite, "rotation",
-#			$Sprite.rotation, deg2rad(randi() % 360), rand_range(.1, .4),
-#			Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-#		$anim_rotation.start()
-#
-#	if anim_type == "scale" or "all":
-#		var scale = rand_range(scale_def * .6, scale_def * 1.1)
-#		$anim_scale.interpolate_property($Sprite, "scale",
-#			$Sprite.scale, Vector2(scale, scale), rand_range(.8, 1.6),
-#			Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-#		$anim_scale.start()
 
 
 
@@ -138,18 +116,8 @@ func clock_bonus_anim(dir, iter):
 
 
 
-#func _on_anim_scale_end():
-#	match bonuses[bonus_type][0]:
-#		"point":
-#			point_bonus_anim("scale")
-
-
-
-
 func _on_anim_rotation_end():
 	match bonuses[bonus_type][0]:
-#		"point":
-#			point_bonus_anim("rotation")
 		"speed_pill":
 			pill_bonus_anim(anim_dir)
 		"clock":

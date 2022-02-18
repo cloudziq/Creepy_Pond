@@ -63,7 +63,7 @@ tracks/0/keys = {
 }
 
 [node name="Fade" type="CanvasLayer"]
-layer = 100
+layer = 2
 script = ExtResource( 0 )
 
 [node name="TextureRect" type="TextureRect" parent="."]

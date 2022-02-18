@@ -4,11 +4,10 @@ extends Area2D
 signal hit
 signal bonus_collected
 
+export var speed := 100.0
 
-export var speed = 100
+onready var screen_size = get_viewport_rect().size
 
-
-var screen_size
 var target = Vector2()
 
 
@@ -16,7 +15,6 @@ var target = Vector2()
 
 func _ready():
 	hide()
-	screen_size = get_viewport_rect().size
 
 
 
@@ -47,12 +45,12 @@ func _process(delta):
 	if velocity.length() > 0 and is_visible_in_tree():
 		velocity = velocity.normalized() * speed
 		$Sprite/AnimationPlayer.play("player")
-		if not $player_move.playing:
-			$player_move.play()
+		if not $PlayerMove.playing:
+			$PlayerMove.play()
 	else:
 		$Sprite/AnimationPlayer.stop()
 		$move_particles.emitting = false
-		$player_move.stop()
+		$PlayerMove.stop()
 
 	position += velocity * delta
 	position.x = clamp(position.x, 0, screen_size.x)

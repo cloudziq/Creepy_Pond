@@ -1,22 +1,16 @@
 extends Node2D
 
-export var is_vertical = 0
 
+onready var screen_w = get_viewport().size.x
+onready var screen_h = get_viewport().size.y
 
-
-
-var screen_w ; var screen_h
-
-
-var CHANGE = true
+var is_vertical := 0
+var CHANGE := true
 
 
 
 
 func _ready():
-	screen_w = get_viewport().size.x
-	screen_h = get_viewport().size.y
-
 	yield(get_tree().create_timer(.001), "timeout")
 
 	if is_vertical:

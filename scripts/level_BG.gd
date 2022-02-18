@@ -1,23 +1,19 @@
 extends Node2D
 
-var BG_amount     = 24
-var default_range = 10000
+
+var BG_amount      := 24
+var default_range  := 10000
+
+onready var ACTIVE := false
+onready var ROTATE := false
+onready var SCALE  := false
+onready var COLOR  := false
+onready var CHANGE := false
 
 
-var ACTIVE
-var ROTATE
-var SCALE
-var COLOR
-var CHANGE
 
 
 func _ready():
-	ACTIVE = false
-	ROTATE = false
-	SCALE  = false
-	COLOR  = false
-	CHANGE = false
-
 	yield(get_tree().create_timer(.1), "timeout")
 	if z_index != 100:
 		$Sprite.self_modulate = Color(.12, .28, .64, .84)

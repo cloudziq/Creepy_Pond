@@ -1,10 +1,10 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=54 format=2]
 
 [ext_resource path="res://scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Xolonium-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://assets/fonts/Vellyc.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://assets/bonuses/point.png" type="Texture" id=4]
-[ext_resource path="res://assets/menus/button_press.png" type="Texture" id=5]
+[ext_resource path="res://assets/menus/button_back.png" type="Texture" id=5]
 [ext_resource path="res://assets/mobs/enemy1_1.png" type="Texture" id=6]
 [ext_resource path="res://assets/mobs/enemy1_2.png" type="Texture" id=7]
 [ext_resource path="res://assets/mobs/enemy2_1.png" type="Texture" id=8]
@@ -18,17 +18,20 @@
 [ext_resource path="res://scripts/TITLE_NAME.gd" type="Script" id=16]
 [ext_resource path="res://assets/particles/spark1.png" type="Texture" id=17]
 [ext_resource path="res://assets/fonts/BOULDERROUGH.ttf" type="DynamicFontData" id=18]
+[ext_resource path="res://assets/menus/button_play.png" type="Texture" id=19]
+[ext_resource path="res://assets/menus/button_credits.png" type="Texture" id=20]
+[ext_resource path="res://assets/particles/light_sprite.png" type="Texture" id=21]
 
 [sub_resource type="SpriteFrames" id=7]
 animations = [ {
-"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "anim1",
-"speed": 1.0
-}, {
 "frames": [ ExtResource( 8 ), ExtResource( 9 ) ],
 "loop": true,
 "name": "anim2",
+"speed": 1.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "anim1",
 "speed": 1.0
 } ]
 
@@ -57,6 +60,28 @@ modulate_color = Color( 0.709804, 0.709804, 0.709804, 1 )
 
 [sub_resource type="StyleBoxEmpty" id=21]
 
+[sub_resource type="StyleBoxTexture" id=24]
+texture = ExtResource( 19 )
+region_rect = Rect2( 3.10803, 0.604012, 122.176, 126.248 )
+margin_left = 12.0
+margin_right = 12.0
+margin_top = 12.0
+margin_bottom = 12.0
+modulate_color = Color( 0.435294, 0.933333, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=29]
+texture = ExtResource( 19 )
+region_rect = Rect2( -5, -7, 140, 144 )
+modulate_color = Color( 0.435294, 0.933333, 1, 1 )
+
+[sub_resource type="StyleBoxEmpty" id=14]
+
+[sub_resource type="InputEventAction" id=2]
+action = "ui_select"
+
+[sub_resource type="ShortCut" id=3]
+shortcut = SubResource( 2 )
+
 [sub_resource type="StyleBoxTexture" id=22]
 content_margin_left = 0.0
 content_margin_right = 64.0
@@ -73,46 +98,21 @@ texture = ExtResource( 15 )
 region_rect = Rect2( 0, 0, 64, 64 )
 modulate_color = Color( 0.709804, 0.709804, 0.709804, 1 )
 
-[sub_resource type="StyleBoxTexture" id=11]
-texture = ExtResource( 11 )
-region_rect = Rect2( 0, 0, 256, 128 )
-margin_left = 139.0
-margin_right = 138.0
-margin_top = 37.0
-margin_bottom = 47.0
-modulate_color = Color( 0.47451, 0.588235, 0.87451, 1 )
+[sub_resource type="StyleBoxTexture" id=28]
+content_margin_left = 0.0
+content_margin_right = 64.0
+content_margin_top = 50.0
+texture = ExtResource( 20 )
+region_rect = Rect2( 0, 0, 64, 64 )
+modulate_color = Color( 0.870588, 0.909804, 0.505882, 1 )
 
-[sub_resource type="StyleBoxTexture" id=13]
-texture = ExtResource( 5 )
-region_rect = Rect2( 0, 0, 256, 128 )
-margin_left = 139.0
-margin_right = 138.0
-margin_top = 37.0
-margin_bottom = 47.0
-
-[sub_resource type="StyleBoxEmpty" id=14]
-
-[sub_resource type="StyleBoxTexture" id=24]
-texture = ExtResource( 11 )
-region_rect = Rect2( 0, 0, 256, 128 )
-margin_left = 139.0
-margin_right = 138.0
-margin_top = 37.0
-margin_bottom = 47.0
-
-[sub_resource type="InputEventAction" id=2]
-action = "ui_select"
-
-[sub_resource type="ShortCut" id=3]
-shortcut = SubResource( 2 )
-
-[sub_resource type="DynamicFont" id=6]
-size = 48
-outline_size = 2
-outline_color = Color( 0.156863, 0.156863, 0.156863, 1 )
-use_filter = true
-extra_spacing_bottom = -2
-font_data = ExtResource( 3 )
+[sub_resource type="StyleBoxTexture" id=39]
+content_margin_left = 0.0
+content_margin_right = 64.0
+content_margin_top = 50.0
+texture = ExtResource( 20 )
+region_rect = Rect2( -4, -5, 73, 75 )
+modulate_color = Color( 0.870588, 0.909804, 0.505882, 1 )
 
 [sub_resource type="DynamicFont" id=5]
 size = 32
@@ -128,46 +128,60 @@ use_filter = true
 extra_spacing_char = 4
 font_data = ExtResource( 18 )
 
+[sub_resource type="Animation" id=40]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Light2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -125, 97 ) ]
+}
+
+[sub_resource type="Animation" id=41]
+resource_name = "message_anim"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Light2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 4 ),
+"transitions": PoolRealArray( 1, 2, 1 ),
+"update": 0,
+"values": [ Vector2( -125, 90 ), Vector2( 544, 90 ), Vector2( -125, 90 ) ]
+}
+
 [sub_resource type="DynamicFont" id=8]
-size = 12
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
 use_filter = true
-extra_spacing_bottom = 2
+extra_spacing_bottom = 1
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=15]
-size = 80
+size = 68
 outline_size = 2
 outline_color = Color( 0.160784, 0.27451, 0.498039, 1 )
 use_filter = true
 extra_spacing_top = 34
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxTexture" id=12]
-texture = ExtResource( 11 )
-region_rect = Rect2( 0, 0, 256, 128 )
-margin_left = 139.0
-margin_right = 138.0
-margin_top = 37.0
-margin_bottom = 47.0
-modulate_color = Color( 0.47451, 0.588235, 0.87451, 1 )
+[sub_resource type="StyleBoxTexture" id=30]
+texture = ExtResource( 19 )
+region_rect = Rect2( 0, 0, 128, 128 )
 
-[sub_resource type="StyleBoxTexture" id=25]
-texture = ExtResource( 11 )
-region_rect = Rect2( 0, 0, 256, 128 )
-margin_left = 139.0
-margin_right = 138.0
-margin_top = 37.0
-margin_bottom = 47.0
-
-[sub_resource type="DynamicFont" id=16]
-size = 35
-outline_size = 2
-outline_color = Color( 0.156863, 0.156863, 0.156863, 1 )
-use_filter = true
-extra_spacing_bottom = 4
-font_data = ExtResource( 2 )
+[sub_resource type="StyleBoxTexture" id=31]
+texture = ExtResource( 19 )
+region_rect = Rect2( -10, -10, 147, 149 )
 
 [sub_resource type="DynamicFont" id=17]
 outline_size = 1
@@ -177,6 +191,7 @@ font_data = ExtResource( 2 )
 
 [sub_resource type="Animation" id=26]
 length = 0.001
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
@@ -231,6 +246,92 @@ tracks/1/keys = {
 "values": [ Vector2( 528, 197 ), Vector2( -54, 191 ) ]
 }
 
+[sub_resource type="DynamicFont" id=32]
+size = 40
+outline_size = 2
+outline_color = Color( 0.160784, 0.27451, 0.498039, 1 )
+use_filter = true
+extra_spacing_top = 32
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=33]
+size = 32
+outline_size = 2
+outline_color = Color( 0.160784, 0.27451, 0.498039, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxTexture" id=34]
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 64, 64 )
+modulate_color = Color( 0.870588, 0.909804, 0.505882, 1 )
+
+[sub_resource type="StyleBoxTexture" id=35]
+texture = ExtResource( 5 )
+region_rect = Rect2( -5, -6, 74, 75 )
+modulate_color = Color( 0.392157, 0.870588, 0.941176, 1 )
+
+[sub_resource type="Animation" id=36]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 60, 27 ) ]
+}
+
+[sub_resource type="Animation" id=38]
+resource_name = "credits window hide"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 2, 0.5 ),
+"update": 0,
+"values": [ Vector2( 60, 27 ), Vector2( -400, 27 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide"
+} ]
+}
+
+[sub_resource type="Animation" id=37]
+resource_name = "credits window show"
+step = 0.02
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 500, 27 ), Vector2( 60, 27 ) ]
+}
+
 [node name="HUD" type="CanvasLayer"]
 pause_mode = 2
 script = ExtResource( 1 )
@@ -262,6 +363,7 @@ rotation = -5.05053
 scale = Vector2( 0.59, 0.58 )
 frames = SubResource( 7 )
 animation = "anim1"
+frame = 1
 playing = true
 
 [node name="title_enemy2" type="AnimatedSprite" parent="Sprites"]
@@ -271,6 +373,7 @@ rotation = -4.27478
 scale = Vector2( 0.59, 0.59 )
 frames = SubResource( 7 )
 animation = "anim2"
+frame = 1
 playing = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." groups=["main_menu"]]
@@ -519,28 +622,35 @@ __meta__ = {
 
 [node name="Tween" type="Tween" parent="VBoxContainer/Title/TitleBG/TITLE_NAME"]
 
-[node name="MiddleButtons" type="CenterContainer" parent="VBoxContainer"]
+[node name="----" type="Control" parent="VBoxContainer"]
 margin_top = 484.0
 margin_right = 480.0
-margin_bottom = 592.0
+margin_bottom = 484.0
+
+[node name="MiddleButtons" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 488.0
+margin_right = 480.0
+margin_bottom = 646.0
 size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MiddleButtons"]
-margin_left = 142.0
-margin_top = 22.0
-margin_right = 338.0
-margin_bottom = 86.0
+margin_left = 78.0
+margin_top = 19.0
+margin_right = 402.0
+margin_bottom = 139.0
 grow_horizontal = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ButtonMusic" type="Button" parent="VBoxContainer/MiddleButtons/HBoxContainer"]
+margin_top = 56.0
 margin_right = 64.0
-margin_bottom = 64.0
+margin_bottom = 120.0
+size_flags_vertical = 8
 custom_styles/hover = SubResource( 18 )
 custom_styles/pressed = SubResource( 20 )
 custom_styles/focus = SubResource( 21 )
@@ -560,17 +670,43 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="----" type="Control" parent="VBoxContainer/MiddleButtons/HBoxContainer"]
+[node name="----1" type="Control" parent="VBoxContainer/MiddleButtons/HBoxContainer"]
 margin_left = 68.0
-margin_right = 128.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 60, 0 )
+margin_right = 98.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 30, 0 )
+size_flags_horizontal = 3
+
+[node name="StartButton" type="Button" parent="VBoxContainer/MiddleButtons/HBoxContainer"]
+margin_left = 102.0
+margin_right = 222.0
+margin_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 120, 120 )
+rect_pivot_offset = Vector2( 128, 64 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/hover = SubResource( 24 )
+custom_styles/pressed = SubResource( 29 )
+custom_styles/focus = SubResource( 14 )
+custom_styles/normal = SubResource( 24 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 3 )
+
+[node name="----2" type="Control" parent="VBoxContainer/MiddleButtons/HBoxContainer"]
+margin_left = 226.0
+margin_right = 256.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 30, 0 )
 size_flags_horizontal = 3
 
 [node name="ButtonSound" type="Button" parent="VBoxContainer/MiddleButtons/HBoxContainer"]
-margin_left = 132.0
-margin_right = 196.0
-margin_bottom = 64.0
+margin_left = 260.0
+margin_top = 56.0
+margin_right = 324.0
+margin_bottom = 120.0
+size_flags_vertical = 8
 custom_styles/hover = SubResource( 22 )
 custom_styles/pressed = SubResource( 23 )
 custom_styles/focus = SubResource( 21 )
@@ -590,55 +726,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="----" type="Control" parent="VBoxContainer"]
-margin_top = 596.0
-margin_right = 480.0
-margin_bottom = 596.0
-
-[node name="StartButtonArea" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 600.0
+[node name="LowerButtonArea" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 650.0
 margin_right = 480.0
 margin_bottom = 740.0
-rect_min_size = Vector2( 0, 140 )
-size_flags_vertical = 3
+rect_min_size = Vector2( 0, 90 )
 
-[node name="StartButton" type="Button" parent="VBoxContainer/StartButtonArea"]
-margin_left = 101.0
-margin_top = 21.0
-margin_right = 378.0
-margin_bottom = 119.0
-grow_horizontal = 2
-grow_vertical = 2
-rect_pivot_offset = Vector2( 128, 64 )
-custom_styles/hover = SubResource( 11 )
-custom_styles/pressed = SubResource( 13 )
-custom_styles/focus = SubResource( 14 )
-custom_styles/normal = SubResource( 24 )
+[node name="CreditsButton" type="Button" parent="VBoxContainer/LowerButtonArea"]
+margin_left = 208.0
+margin_top = 13.0
+margin_right = 272.0
+margin_bottom = 77.0
+custom_styles/hover = SubResource( 28 )
+custom_styles/pressed = SubResource( 39 )
+custom_styles/focus = SubResource( 21 )
+custom_styles/normal = SubResource( 28 )
 shortcut_in_tooltip = false
-shortcut = SubResource( 3 )
-
-[node name="Label" type="Label" parent="VBoxContainer/StartButtonArea/StartButton"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -92.5
-margin_top = -28.0
-margin_right = 106.5
-margin_bottom = 41.0
-rect_scale = Vector2( 1.2, 1.2 )
-rect_pivot_offset = Vector2( 128, 64 )
-size_flags_horizontal = 0
-size_flags_vertical = 0
-custom_colors/font_color = Color( 0.298039, 0.670588, 0.831373, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_x = 3
-custom_constants/shadow_offset_y = 4
-custom_constants/shadow_as_outline = 0
-custom_fonts/font = SubResource( 6 )
-text = "START"
-align = 1
-valign = 1
+action_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -667,7 +771,7 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 4
 custom_constants/shadow_offset_y = 4
 custom_fonts/font = SubResource( 1 )
-text = "GAME OVER"
+text = "Avoid the creeps"
 align = 1
 valign = 1
 autowrap = true
@@ -675,13 +779,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Message"]
+anims/RESET = SubResource( 40 )
+anims/message_anim = SubResource( 41 )
+
+[node name="Light2D" type="Light2D" parent="Message"]
+position = Vector2( -125, 97 )
+texture = ExtResource( 21 )
+texture_scale = 2.4
+color = Color( 0.54902, 0.72549, 0.552941, 1 )
+mode = 2
+range_layer_min = 1
+range_layer_max = 1
+
 [node name="version_num" type="Label" parent="." groups=["main_menu"]]
-modulate = Color( 0.788235, 0.788235, 0.788235, 0.6 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_vertical = 1
+custom_colors/font_color = Color( 1, 1, 1, 0.65098 )
 custom_fonts/font = SubResource( 8 )
-text = "v0.86"
+text = "v0.9"
 align = 1
 valign = 2
 __meta__ = {
@@ -703,90 +820,72 @@ volume_db = -8.0
 pitch_scale = 0.66
 bus = "Sound"
 
-[node name="PAUSE" type="MarginContainer" parent="."]
+[node name="PauseLayer" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="PAUSE" type="MarginContainer" parent="PauseLayer"]
+pause_mode = 2
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 60.0
-margin_top = 225.0
-margin_right = -60.0
-margin_bottom = -225.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NinePatchRect" type="NinePatchRect" parent="PAUSE"]
-margin_right = 360.0
-margin_bottom = 270.0
+[node name="NinePatchRect" type="NinePatchRect" parent="PauseLayer/PAUSE"]
+margin_left = 80.0
+margin_top = 220.0
+margin_right = 400.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 320, 280 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture = ExtResource( 11 )
 patch_margin_left = 73
 patch_margin_top = 56
 patch_margin_right = 66
 patch_margin_bottom = 55
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PAUSE/NinePatchRect"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseLayer/PAUSE/NinePatchRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_bottom = -37.0
+margin_bottom = -32.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="PAUSE/NinePatchRect/VBoxContainer"]
-margin_right = 360.0
-margin_bottom = 131.0
+[node name="Label" type="Label" parent="PauseLayer/PAUSE/NinePatchRect/VBoxContainer"]
+margin_right = 320.0
+margin_bottom = 110.0
 size_flags_vertical = 3
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 4
 custom_constants/shadow_offset_y = 4
 custom_fonts/font = SubResource( 15 )
-text = "PAUSE"
+text = "PAUSED"
 align = 1
 
-[node name="StartButtonArea" type="CenterContainer" parent="PAUSE/NinePatchRect/VBoxContainer"]
-margin_top = 135.0
-margin_right = 360.0
-margin_bottom = 233.0
-
-[node name="ResumeButton" type="Button" parent="PAUSE/NinePatchRect/VBoxContainer/StartButtonArea"]
-margin_left = 41.0
-margin_right = 318.0
-margin_bottom = 98.0
+[node name="ResumeButton" type="Button" parent="PauseLayer/PAUSE/NinePatchRect/VBoxContainer"]
+margin_left = 93.0
+margin_top = 114.0
+margin_right = 227.0
+margin_bottom = 248.0
 grow_horizontal = 2
 grow_vertical = 2
+rect_min_size = Vector2( 134, 134 )
 rect_pivot_offset = Vector2( 128, 64 )
-custom_styles/hover = SubResource( 12 )
-custom_styles/pressed = SubResource( 13 )
+size_flags_horizontal = 4
+size_flags_vertical = 0
+custom_styles/hover = SubResource( 30 )
+custom_styles/pressed = SubResource( 31 )
 custom_styles/focus = SubResource( 14 )
-custom_styles/normal = SubResource( 25 )
+custom_styles/normal = SubResource( 30 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 3 )
-
-[node name="Label" type="Label" parent="PAUSE/NinePatchRect/VBoxContainer/StartButtonArea/ResumeButton"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -128.0
-margin_top = -28.0
-margin_right = 128.0
-margin_bottom = 41.0
-rect_scale = Vector2( 1.2, 1.2 )
-rect_pivot_offset = Vector2( 128, 64 )
-size_flags_horizontal = 0
-size_flags_vertical = 0
-custom_colors/font_color = Color( 0.298039, 0.670588, 0.831373, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_x = 3
-custom_constants/shadow_offset_y = 4
-custom_constants/shadow_as_outline = 0
-custom_fonts/font = SubResource( 16 )
-text = "RESUME"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="FPS_DISPLAY" type="Label" parent="."]
 anchor_right = 1.0
@@ -827,11 +926,111 @@ playback_speed = 0.6
 anims/RESET = SubResource( 26 )
 anims/light_move = SubResource( 27 )
 
+[node name="CREDITS" type="MarginContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 370.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CREDITS"]
+modulate = Color( 0.72549, 0.929412, 0.929412, 1 )
+margin_left = 60.0
+margin_top = 27.0
+margin_right = 420.0
+margin_bottom = 327.0
+rect_min_size = Vector2( 360, 300 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 11 )
+patch_margin_left = 73
+patch_margin_top = 56
+patch_margin_right = 66
+patch_margin_bottom = 55
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CREDITS/NinePatchRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label1" type="Label" parent="CREDITS/NinePatchRect/VBoxContainer"]
+margin_right = 360.0
+margin_bottom = 71.0
+size_flags_vertical = 0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 4
+custom_constants/shadow_offset_y = 4
+custom_fonts/font = SubResource( 32 )
+text = "game by Dziq"
+align = 1
+valign = 1
+
+[node name="----" type="Control" parent="CREDITS/NinePatchRect/VBoxContainer"]
+margin_top = 75.0
+margin_right = 360.0
+margin_bottom = 100.0
+size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="CREDITS/NinePatchRect/VBoxContainer"]
+margin_top = 104.0
+margin_right = 360.0
+margin_bottom = 171.0
+size_flags_vertical = 0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 4
+custom_constants/shadow_offset_y = 4
+custom_fonts/font = SubResource( 33 )
+text = "music: SdiviHall
+opengameart.org"
+align = 1
+valign = 1
+
+[node name="----2" type="Control" parent="CREDITS/NinePatchRect/VBoxContainer"]
+margin_top = 175.0
+margin_right = 360.0
+margin_bottom = 200.0
+size_flags_vertical = 3
+
+[node name="BackButton" type="Button" parent="CREDITS/NinePatchRect/VBoxContainer"]
+margin_left = 148.0
+margin_top = 204.0
+margin_right = 212.0
+margin_bottom = 268.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 64, 64 )
+rect_pivot_offset = Vector2( 128, 64 )
+size_flags_horizontal = 4
+size_flags_vertical = 0
+custom_styles/hover = SubResource( 34 )
+custom_styles/pressed = SubResource( 35 )
+custom_styles/focus = SubResource( 14 )
+custom_styles/normal = SubResource( 34 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CREDITS"]
+root_node = NodePath("../NinePatchRect")
+anims/RESET = SubResource( 36 )
+"anims/credits window hide" = SubResource( 38 )
+"anims/credits window show" = SubResource( 37 )
+
 [connection signal="toggle_title_anim" from="." to="VBoxContainer/Title/TitleBG/TITLE_NAME" method="_on_HUD_toggle_title_anim"]
 [connection signal="tween_completed" from="VBoxContainer/Title/TitleBG/TITLE_NAME/Tween" to="VBoxContainer/Title/TitleBG/TITLE_NAME" method="_on_Tween_completed"]
 [connection signal="toggled" from="VBoxContainer/MiddleButtons/HBoxContainer/ButtonMusic" to="." method="_on_ButtonMusic_toggled"]
+[connection signal="pressed" from="VBoxContainer/MiddleButtons/HBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="toggled" from="VBoxContainer/MiddleButtons/HBoxContainer/ButtonSound" to="." method="_on_ButtonSound_toggled"]
-[connection signal="pressed" from="VBoxContainer/StartButtonArea/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="button_down" from="VBoxContainer/LowerButtonArea/CreditsButton" to="." method="_on_CreditsButton_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_MessageTimer_timeout"]
-[connection signal="pressed" from="PAUSE/NinePatchRect/VBoxContainer/StartButtonArea/ResumeButton" to="." method="_on_ResumeButton_pressed"]
+[connection signal="pressed" from="PauseLayer/PAUSE/NinePatchRect/VBoxContainer/ResumeButton" to="." method="_on_ResumeButton_pressed"]
 [connection signal="tween_completed" from="Tween" to="." method="_on_Tween_completed"]
+[connection signal="pressed" from="CREDITS/NinePatchRect/VBoxContainer/BackButton" to="." method="_on_Credits_BackButton_pressed"]

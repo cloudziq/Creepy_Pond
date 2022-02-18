@@ -6,13 +6,12 @@ export(PackedScene) var BG_scene
 export(PackedScene) var level_light
 
 
-#var default_player_speed
-#var default_playback_speed
-var score = 0 ; var score_record = 0
-var allow_bonus_spawn
-var allow_clock_spawn
-var allow_pill_spawn
-var allow_mob_spawn
+var score := 0 ; var score_record := 0
+var allow_bonus_spawn := false
+var allow_clock_spawn := false
+var allow_pill_spawn  := false
+var allow_mob_spawn   := false
+var start_clock_sound := false
 
 onready var default_player_speed   = $player.speed
 onready var default_playback_speed = $player/Sprite/AnimationPlayer.playback_speed
@@ -23,8 +22,8 @@ onready var default_pill_bonus_wait_time = $Timers/PillBonusDelay.wait_time
 
 func _ready():
 	randomize()
-	var num_of_BGs = 4
-	var lights_num = 4
+	var num_of_BGs := 4
+	var lights_num := 4
 
 	for a in num_of_BGs:
 		var BG = BG_scene.instance()
@@ -183,6 +182,9 @@ func _on_ScoreTimer_timeout():
 		$Timers/MobTimer.wait_time -= $Timers/MobTimer.wait_time / 86
 	score += 1
 	$HUD.update_score(score, false)
+	if start_clock_sound:
+		$Sounds/clock_ticking.play()
+		start_clock_sound = false
 #	print($Timers/MobTimer.wait_time)
 
 
@@ -215,6 +217,7 @@ func _on_player_bonus_collected():
 			$player.speed *= 1.1
 			$player/Sprite/AnimationPlayer.playback_speed *= 1.1
 		"clock":
+			start_clock_sound = true
 			var default_timer = 8
 			var time = default_timer * (1 + (1 - ($Timers/MobTimer.wait_time * 1.6)))
 			#print("CLOCK TIME:" + ("%.2f" % time))
@@ -222,7 +225,6 @@ func _on_player_bonus_collected():
 			$Timers/MobClockDelay.start()
 			$Timers/ClockBonusDelay.start()
 			$Sounds/bonus_clock_collect.play()
-			$Sounds/clock_ticking.play()
 			$HUD/ScoreLabel.set("custom_colors/font_color", Color(0, .6, 0, 1))
 			mob.time_scale("reduce")
 			allow_mob_spawn = false

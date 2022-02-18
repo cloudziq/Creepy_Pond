@@ -1,7 +1,8 @@
 extends RigidBody2D
 
-export var min_speed = 34    # Minimum speed range.
-export var max_speed = 68    # Maximum speed range.
+
+export var min_speed := 34.0    # Minimum speed range.
+export var max_speed := 68.0    # Maximum speed range.
 
 
 

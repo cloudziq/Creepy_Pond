@@ -1,11 +1,9 @@
 extends CenterContainer
 
 
-
-
-var title_length = [6, 4]
-var def_pos = {}
-var allow = true
+var title_length := [6, 4]
+var def_pos      := {}
+var allow        := true
 
 
 
