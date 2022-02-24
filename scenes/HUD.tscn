@@ -167,6 +167,12 @@ use_filter = true
 extra_spacing_bottom = 1
 font_data = ExtResource( 2 )
 
+[sub_resource type="DynamicFont" id=17]
+outline_size = 1
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
 [sub_resource type="DynamicFont" id=15]
 size = 68
 outline_size = 2
@@ -182,69 +188,6 @@ region_rect = Rect2( 0, 0, 128, 128 )
 [sub_resource type="StyleBoxTexture" id=31]
 texture = ExtResource( 19 )
 region_rect = Rect2( -10, -10, 147, 149 )
-
-[sub_resource type="DynamicFont" id=17]
-outline_size = 1
-use_mipmaps = true
-use_filter = true
-font_data = ExtResource( 2 )
-
-[sub_resource type="Animation" id=26]
-length = 0.001
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 66, 196 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../Light_2:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 528, 197 ) ]
-}
-
-[sub_resource type="Animation" id=27]
-resource_name = "light_move"
-length = 10.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 5 ),
-"transitions": PoolRealArray( -2, -2 ),
-"update": 0,
-"values": [ Vector2( -24, 193 ), Vector2( 532, 192 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../Light_2:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 5 ),
-"transitions": PoolRealArray( -2, -2 ),
-"update": 0,
-"values": [ Vector2( 528, 197 ), Vector2( -54, 191 ) ]
-}
 
 [sub_resource type="DynamicFont" id=32]
 size = 40
@@ -330,6 +273,63 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 0.5, 1 ),
 "update": 0,
 "values": [ Vector2( 500, 27 ), Vector2( 60, 27 ) ]
+}
+
+[sub_resource type="Animation" id=26]
+length = 0.001
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 66, 196 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Light_2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 528, 197 ) ]
+}
+
+[sub_resource type="Animation" id=27]
+resource_name = "light_move"
+length = 10.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ Vector2( -24, 193 ), Vector2( 532, 192 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Light_2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ Vector2( 528, 197 ), Vector2( -54, 191 ) ]
 }
 
 [node name="HUD" type="CanvasLayer"]
@@ -798,27 +798,23 @@ anchor_bottom = 1.0
 size_flags_vertical = 1
 custom_colors/font_color = Color( 1, 1, 1, 0.65098 )
 custom_fonts/font = SubResource( 8 )
-text = "v0.9"
+text = "v0.92"
 align = 1
 valign = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MessageTimer" type="Timer" parent="."]
-wait_time = 4.0
-one_shot = true
-
-[node name="ButtonClick" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 13 )
-volume_db = -8.0
-bus = "Sound"
-
-[node name="PauseSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 12 )
-volume_db = -8.0
-pitch_scale = 0.66
-bus = "Sound"
+[node name="FPS_DISPLAY" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = -1.0
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="PauseLayer" type="CanvasLayer" parent="."]
 layer = 3
@@ -886,45 +882,6 @@ custom_styles/focus = SubResource( 14 )
 custom_styles/normal = SubResource( 30 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 3 )
-
-[node name="FPS_DISPLAY" type="Label" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 2.0
-margin_top = -1.0
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 17 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Tween" type="Tween" parent="."]
-
-[node name="MenuLightEffects" type="Node2D" parent="." groups=["main_menu"]]
-
-[node name="Light_1" type="Light2D" parent="MenuLightEffects"]
-position = Vector2( 66, 196 )
-texture = ExtResource( 17 )
-texture_scale = 6.0
-color = Color( 0.407843, 0.611765, 0.996078, 1 )
-energy = 0.8
-range_layer_min = 1
-range_layer_max = 1
-
-[node name="Light_2" type="Light2D" parent="MenuLightEffects"]
-position = Vector2( 528, 197 )
-texture = ExtResource( 17 )
-texture_scale = 6.0
-color = Color( 0.356863, 0.403922, 0.196078, 1 )
-mode = 1
-range_layer_min = 1
-range_layer_max = 1
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="MenuLightEffects"]
-root_node = NodePath("../Light_1")
-playback_speed = 0.6
-anims/RESET = SubResource( 26 )
-anims/light_move = SubResource( 27 )
 
 [node name="CREDITS" type="MarginContainer" parent="."]
 visible = false
@@ -1024,13 +981,56 @@ anims/RESET = SubResource( 36 )
 "anims/credits window hide" = SubResource( 38 )
 "anims/credits window show" = SubResource( 37 )
 
+[node name="MenuLightEffects" type="Node2D" parent="." groups=["main_menu"]]
+
+[node name="Light_1" type="Light2D" parent="MenuLightEffects"]
+position = Vector2( 66, 196 )
+texture = ExtResource( 17 )
+texture_scale = 6.0
+color = Color( 0.407843, 0.611765, 0.996078, 1 )
+energy = 0.8
+range_layer_min = 1
+range_layer_max = 1
+
+[node name="Light_2" type="Light2D" parent="MenuLightEffects"]
+position = Vector2( 528, 197 )
+texture = ExtResource( 17 )
+texture_scale = 6.0
+color = Color( 0.356863, 0.403922, 0.196078, 1 )
+mode = 1
+range_layer_min = 1
+range_layer_max = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MenuLightEffects"]
+root_node = NodePath("../Light_1")
+playback_speed = 0.6
+anims/RESET = SubResource( 26 )
+anims/light_move = SubResource( 27 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="MessageTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="PauseSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -8.0
+pitch_scale = 0.66
+bus = "Sound"
+
+[node name="ButtonClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+volume_db = -8.0
+bus = "Sound"
+
 [connection signal="toggle_title_anim" from="." to="VBoxContainer/Title/TitleBG/TITLE_NAME" method="_on_HUD_toggle_title_anim"]
 [connection signal="tween_completed" from="VBoxContainer/Title/TitleBG/TITLE_NAME/Tween" to="VBoxContainer/Title/TitleBG/TITLE_NAME" method="_on_Tween_completed"]
 [connection signal="toggled" from="VBoxContainer/MiddleButtons/HBoxContainer/ButtonMusic" to="." method="_on_ButtonMusic_toggled"]
 [connection signal="pressed" from="VBoxContainer/MiddleButtons/HBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="toggled" from="VBoxContainer/MiddleButtons/HBoxContainer/ButtonSound" to="." method="_on_ButtonSound_toggled"]
 [connection signal="button_down" from="VBoxContainer/LowerButtonArea/CreditsButton" to="." method="_on_CreditsButton_pressed"]
-[connection signal="timeout" from="MessageTimer" to="." method="_on_MessageTimer_timeout"]
 [connection signal="pressed" from="PauseLayer/PAUSE/NinePatchRect/VBoxContainer/ResumeButton" to="." method="_on_ResumeButton_pressed"]
-[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_completed"]
 [connection signal="pressed" from="CREDITS/NinePatchRect/VBoxContainer/BackButton" to="." method="_on_Credits_BackButton_pressed"]
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_completed"]
+[connection signal="timeout" from="MessageTimer" to="." method="_on_MessageTimer_timeout"]

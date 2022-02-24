@@ -117,6 +117,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Creepy Pond"
+config/description="how long you can survive in creepy pond?"
 run/main_scene="res://scenes/main.tscn"
 boot_splash/image="res://assets/mobs/player3.png"
 boot_splash/fullsize=false
@@ -126,7 +127,12 @@ config/windows_native_icon="res://icon.ico"
 
 [audio]
 
-channel_disable_time=1.0
+output_latency=30
+channel_disable_time=0.2
+
+[autoload]
+
+Util="*res://scripts/utils.gd"
 
 [debug]
 

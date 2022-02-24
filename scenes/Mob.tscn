@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://scripts/Mob.gd" type="Script" id=1]
 [ext_resource path="res://assets/mobs/enemy1_1.png" type="Texture" id=2]
@@ -14,6 +14,28 @@
 [ext_resource path="res://assets/particles/spark1.png" type="Texture" id=12]
 [ext_resource path="res://assets/mobs/enemy2_1_n.png" type="Texture" id=13]
 [ext_resource path="res://assets/mobs/enemy2_2_n.png" type="Texture" id=14]
+[ext_resource path="res://assets/mobs/enemy3_9_n.png" type="Texture" id=15]
+[ext_resource path="res://assets/mobs/enemy3_1.png" type="Texture" id=16]
+[ext_resource path="res://assets/mobs/enemy3_1_n.png" type="Texture" id=17]
+[ext_resource path="res://assets/mobs/enemy3_2.png" type="Texture" id=18]
+[ext_resource path="res://assets/mobs/enemy3_3.png" type="Texture" id=19]
+[ext_resource path="res://assets/mobs/enemy3_3_n.png" type="Texture" id=20]
+[ext_resource path="res://assets/mobs/enemy3_4.png" type="Texture" id=21]
+[ext_resource path="res://assets/mobs/enemy3_4_n.png" type="Texture" id=22]
+[ext_resource path="res://assets/mobs/enemy3_5.png" type="Texture" id=23]
+[ext_resource path="res://assets/mobs/enemy3_5_n.png" type="Texture" id=24]
+[ext_resource path="res://assets/mobs/enemy3_6.png" type="Texture" id=25]
+[ext_resource path="res://assets/mobs/enemy3_6_n.png" type="Texture" id=26]
+[ext_resource path="res://assets/mobs/enemy3_7.png" type="Texture" id=27]
+[ext_resource path="res://assets/mobs/enemy3_7_n.png" type="Texture" id=28]
+[ext_resource path="res://assets/mobs/enemy3_8.png" type="Texture" id=29]
+[ext_resource path="res://assets/mobs/enemy3_8_n.png" type="Texture" id=30]
+[ext_resource path="res://assets/mobs/enemy3_9.png" type="Texture" id=31]
+[ext_resource path="res://assets/mobs/enemy3_10.png" type="Texture" id=32]
+[ext_resource path="res://assets/mobs/enemy3_10_n.png" type="Texture" id=33]
+[ext_resource path="res://assets/mobs/enemy3_11.png" type="Texture" id=34]
+[ext_resource path="res://assets/mobs/enemy3_11_n.png" type="Texture" id=35]
+[ext_resource path="res://assets/mobs/enemy3_2_n.png" type="Texture" id=36]
 
 [sub_resource type="AnimatedTexture" id=9]
 flags = 4
@@ -48,7 +70,7 @@ offsets = PoolRealArray( 0.0191083, 0.0828025, 0.878981 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0.568345, 1, 1, 1, 0 )
 
 [sub_resource type="Animation" id=17]
-length = 1.2
+length = 0.1
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:texture")
@@ -57,10 +79,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.6 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ ExtResource( 2 ), ExtResource( 3 ) ]
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 2 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:normal_map")
@@ -69,10 +91,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.6 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 4 ), ExtResource( 5 ) ]
+"values": [ ExtResource( 4 ) ]
 }
 
 [sub_resource type="Animation" id=18]
@@ -133,14 +155,42 @@ tracks/1/keys = {
 "values": [ ExtResource( 13 ), ExtResource( 14 ) ]
 }
 
+[sub_resource type="Animation" id=20]
+resource_name = "enemy3"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 16 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 21 ), ExtResource( 23 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 29 ), ExtResource( 31 ), ExtResource( 32 ), ExtResource( 34 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:normal_map")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 17 ), ExtResource( 36 ), ExtResource( 20 ), ExtResource( 22 ), ExtResource( 24 ), ExtResource( 26 ), ExtResource( 28 ), ExtResource( 30 ), ExtResource( 15 ), ExtResource( 33 ), ExtResource( 35 ) ]
+}
+
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 89.0001
 height = 11.9988
 
-[node name="Mob" type="RigidBody2D" groups=["mobs"]]
+[node name="Mob" type="KinematicBody2D" groups=["mobs"]]
 z_index = 10
 collision_mask = 0
-gravity_scale = 0.0
 script = ExtResource( 1 )
 
 [node name="move_particles" type="CPUParticles2D" parent="."]
@@ -197,16 +247,15 @@ normal_map = ExtResource( 4 )
 anims/RESET = SubResource( 17 )
 anims/enemy1 = SubResource( 18 )
 anims/enemy2 = SubResource( 19 )
+anims/enemy3 = SubResource( 20 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( -5, 0 )
 rotation = 1.57079
 shape = SubResource( 2 )
 one_way_collision_margin = 0.0
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-visible = false
 position = Vector2( 0.999996, 0 )
 rect = Rect2( -20, -20, 40, 40 )
 
@@ -216,5 +265,8 @@ volume_db = 8.0
 max_distance = 140.0
 attenuation = 1.80251
 bus = "Sound"
+
+[node name="Tween" type="Tween" parent="."]
+playback_process_mode = 0
 
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

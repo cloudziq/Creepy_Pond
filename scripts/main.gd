@@ -40,8 +40,8 @@ func _ready():
 		if a >= lights_num - 2:
 			light.is_vertical = 1
 
-	window_prepare()
-	load_config()
+	Util.window_prepare()
+	Util.load_config()
 
 
 
@@ -79,10 +79,10 @@ func new_game():
 
 
 func game_over():
-	if score > SETTINGS["score_record"]:
-		SETTINGS["score_record"] = score
-		save_config()
-#	allow_bonus_spawn = false
+	if score > Util.SETTINGS["score_record"]:
+		Util.SETTINGS["score_record"] = score
+		Util.save_config()
+	$Line2D.hide()
 	$HUD.show_game_over()
 	$Timers/ScoreTimer.stop()
 	$Timers/MobTimer.stop()
@@ -94,70 +94,6 @@ func game_over():
 	yield(get_tree().create_timer(.8), "timeout")
 	$Sounds/death_sound.play()
 	$Sounds/clock_ticking.stop()
-
-
-
-
-var SETTINGS
-var save_version = 1
-var config_path
-# userdata path: "user://config.cfg"     -- for mobile
-
-func save_config():
-	var password = "7846536587438346574"
-	var key = password.sha256_buffer()
-	var config = ConfigFile.new()
-
-	config.set_value("main", "save_version", save_version)
-	config.set_value("main", "settings", SETTINGS)
-
-
-#	config.save(config_path)
-	config.save_encrypted(config_path, key)
-
-
-
-
-func load_config():
-	var password = "7846536587438346574"
-	var key = password.sha256_buffer()
-	var config = ConfigFile.new()
-
-	var system = OS.get_name()
-	match system:
-		"Windows", "X11":
-			config_path = OS.get_executable_path().get_base_dir() + "/config.cfg"
-
-#	var err = config.load(config_path)
-	var err = config.load_encrypted(config_path, key)
-	if err != OK or config.get_value("main", "save_version") != save_version:
-		SETTINGS = {
-			"sound_mute"   : false,
-			"music_mute"   : false,
-			"score_record" : 0
-		}
-	else:
-		SETTINGS = config.get_value("main", "settings")
-
-
-
-
-func window_prepare():
-	var display_size = OS.get_screen_size()
-	var window_size = OS.window_size
-	window_size.x *= 4 ; window_size.y *= 4
-
-	if display_size.y <= window_size.y:
-		var scale_ratio = window_size.y / (display_size.y - 100)
-		window_size.x /= scale_ratio ; window_size.y /= scale_ratio
-
-	OS.set_window_size(window_size)
-	window_size.y += 80
-	OS.set_window_position(display_size * .5 - window_size * .5)
-
-
-
-
 
 
 
@@ -179,7 +115,7 @@ func _on_StartTimer_timeout():    ## After intro message
 
 func _on_ScoreTimer_timeout():
 	if $Timers/MobTimer.wait_time > .1 and $Timers/MobClockDelay.is_stopped():
-		$Timers/MobTimer.wait_time -= $Timers/MobTimer.wait_time / 86
+		$Timers/MobTimer.wait_time -= $Timers/MobTimer.wait_time / 92
 	score += 1
 	$HUD.update_score(score, false)
 	if start_clock_sound:

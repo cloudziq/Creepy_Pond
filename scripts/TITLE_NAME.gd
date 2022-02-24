@@ -27,7 +27,7 @@ func anim(node, delay):
 	var pos = def_pos[node]
 	pos.x += rand_range(-4, 4)
 	pos.y += rand_range(-4, 4)
-	var delay_time = rand_range(.6, 1.2) if delay else 0.0
+	var delay_time := rand_range(.6, 1.2) if delay else 0.0
 
 	$Tween.interpolate_property(node, "rect_position",
 		node.rect_position, pos, rand_range(2, 4),

@@ -1,20 +1,38 @@
-extends RigidBody2D
+extends KinematicBody2D
 
 
-export var min_speed := 34.0    # Minimum speed range.
-export var max_speed := 68.0    # Maximum speed range.
+export var min_speed      := 34.0
+export var max_speed      := 68.0
+export var max_turn_angle := 65.0
+
+
+onready var mob_timer = get_parent().get_node("Timers/MobTimer").wait_time
+
+
+enum mob_modes {STRAIGHT, ANGULAR}
+var mob_mode       : int
+var current_turn   := 0
+var mob_turn_angle := 0.0
+var mob_turn_speed := 1.6
+var time_to_turn   := 0.0
+
+var speed_min
+var speed_max
+var speed
+var velocity := Vector2()
 
 
 
 
 func _ready():
-	var MobSpawn = get_parent().get_node("MobPath/MobSpawnLocation")
-	var timer = get_parent().get_node("Timers/MobTimer")
+	#### DETERMINE MOB MOVEMENT TYPE
+	mob_mode = mob_modes.ANGULAR if randf() + mob_timer <= .6 else mob_modes.STRAIGHT
+
+	var MobSpawn  = get_parent().get_node("MobPath/MobSpawnLocation")
+	var timer     = get_parent().get_node("Timers/MobTimer")
+	var mob_anims = $Sprite/AnimationPlayer.get_animation_list()
 
 	MobSpawn.offset = randi()
-	var mob_types = $Sprite/AnimationPlayer.get_animation_list()
-#	$Sprite/AnimationPlayer.assigned_animation = mob_types[randi() % mob_types.size()]
-	$Sprite/AnimationPlayer.play(mob_types[rand_range(1, mob_types.size())])
 	z_index = 10
 
 	# randomize scale
@@ -24,39 +42,78 @@ func _ready():
 	$Sprite.scale = (Vector2(scale_new, scale_new))
 	$CollisionShape2D.scale = (Vector2(scale_new, scale_new))
 	$move_particles.scale = Vector2(scale_new * 6, scale_new * 5)
-	$move_particles.set("scale_amount", 0.16 * (.3 - scale_new))
-
-	# Randomize color a bit
-	var R = rand_range(.72, .90)
-	var G = rand_range(.62, .99)
-	var B = rand_range(.32, .44)
-	$Sprite.self_modulate = Color(R,G,B)
+	$move_particles.set("scale_amount", 0.16 * (.32 - scale_new))
 
 	# Set the mob's direction perpendicular to the path direction.
 	var direction = MobSpawn.rotation + PI / 2
-
 	# Set the mob's position to a random location.
 	position = MobSpawn.position
-
 	# Add some randomness to the direction.
 	direction += rand_range(-PI / 4, PI / 4)
 	rotation = direction - PI
 
 	# Set the velocity (speed & direction).
-	var speed_min = min_speed * (1 + (1 - timer.wait_time))
-	speed_min += (speed_min * .1)
-	var speed_max = max_speed * (1 + (1 - timer.wait_time))
-	speed_max += (speed_max * .2)
+	speed_min = min_speed * (1 + (1 - timer.wait_time)) ; speed_min += (speed_min * .1)
+	speed_max = max_speed * (1 + (1 - timer.wait_time)) ; speed_max += (speed_max * .2)
 #	print("min: "+ ("%.2f" % speed_min) +"    max: "+ ("%.2f" % speed_max))
-	var speed = rand_range(speed_min, speed_max)
-	linear_velocity = Vector2(speed, 0)
-	linear_velocity = linear_velocity.rotated(direction)
-
-	$Sprite/AnimationPlayer.playback_speed = .4 + (speed / 100)
+	speed = rand_range(speed_min, speed_max)
 
 	var pitch = 1.2 - scale_new if scale_new >= scale_mid else 1.2 + scale_new
 	$MobSound.pitch_scale += pitch
 	$MobSound.play()
+
+	var R ; var G ; var B
+	match mob_mode:
+		mob_modes.STRAIGHT:
+			R = rand_range(.72, .90)
+			G = rand_range(.62, .99)
+			B = rand_range(.32, .44)
+			$Sprite/AnimationPlayer.play(mob_anims[rand_range(1, mob_anims.size() - 1)])
+			$Sprite/AnimationPlayer.playback_speed = .4 + (speed / 100)
+		mob_modes.ANGULAR:
+			R = rand_range(.86, .98)
+			G = rand_range(.12, .20)
+			B = rand_range(.08, .12)
+			$Sprite/AnimationPlayer.play("enemy3")
+			$Sprite/AnimationPlayer.playback_speed = 6 + (speed / 100)
+	$Sprite.self_modulate = Color(R,G,B)
+
+
+
+
+func _physics_process(delta):
+	velocity = Vector2(1,0).rotated(rotation - PI) * speed * delta
+	# warning-ignore:return_value_discarded
+	move_and_collide(velocity)
+
+
+
+
+func _process(_delta):
+	var time = OS.get_system_time_msecs()
+
+	if mob_mode == mob_modes.ANGULAR and time > time_to_turn:
+		match current_turn:
+			0:
+				mob_turn_angle = deg2rad(rand_range(12, max_turn_angle * (1 - mob_timer)))
+				rotation += mob_turn_angle
+				current_turn = 1
+			1:
+				$Tween.interpolate_property($".", "rotation",
+					rotation, rotation - mob_turn_angle * 2, mob_turn_speed * (1 - mob_timer),
+					Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+				$Tween.start()
+				current_turn = 2
+			2:
+				$Tween.interpolate_property($".", "rotation",
+					rotation, rotation + mob_turn_angle * 2, mob_turn_speed * (1 - mob_timer),
+					Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+				$Tween.start()
+				current_turn = 1
+
+		time_to_turn = time + (mob_turn_speed * 1000 + 50) * (1 - mob_timer)
+
+
 
 
 
@@ -70,6 +127,7 @@ func _on_VisibilityNotifier2D_screen_exited():
 func time_scale(effect):
 	var scale = 2.0 if effect == "normal" else .5
 	for instance in get_tree().get_nodes_in_group("mobs"):
-		instance.linear_velocity *= scale
+		instance.speed *= scale
+		instance.mob_turn_speed *= 2
 		instance.get_node("clock_particles").emitting = true
 		instance.get_node("Sprite/AnimationPlayer").playback_speed *= .5

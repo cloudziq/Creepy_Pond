@@ -22,14 +22,14 @@ func _ready():
 	$MenuLightEffects/AnimationPlayer.play("light_move")
 
 	yield(get_tree().create_timer(.1), "timeout")
-	if get_parent().SETTINGS["score_record"] != 0:
-		$ScoreLabel.text = "BEST SCORE:  " + str(get_parent().SETTINGS["score_record"])
+	if Util.SETTINGS["score_record"] != 0:
+		$ScoreLabel.text = "BEST SCORE:  " + str(Util.SETTINGS["score_record"])
 
 	buttons_sound_allow = false
 	var node_path = "VBoxContainer/MiddleButtons/HBoxContainer/"
-	if get_parent().SETTINGS["music_mute"] == true:
+	if Util.SETTINGS["music_mute"] == true:
 		get_node(node_path +"ButtonMusic").pressed = true
-	if get_parent().SETTINGS["sound_mute"] == true:
+	if Util.SETTINGS["sound_mute"] == true:
 		get_node(node_path +"ButtonSound").pressed = true
 	buttons_sound_allow = true
 
@@ -81,7 +81,7 @@ func show_game_over():
 	$Message/AnimationPlayer.play("message_anim")
 	yield($MessageTimer, "timeout")
 	$ScoreLabel.set("custom_colors/font_color", Color(0,0,0,1))
-	$ScoreLabel.text = "BEST SCORE:  " + str(get_parent().SETTINGS["score_record"])
+	$ScoreLabel.text = "BEST SCORE:  " + str(Util.SETTINGS["score_record"])
 	for node in get_tree().get_nodes_in_group("main_menu"):
 		node.show()
 	emit_signal("toggle_title_anim")
@@ -95,6 +95,7 @@ func show_game_over():
 func _on_StartButton_pressed():
 	yield(get_tree().create_timer(0.12), "timeout")
 	Fade.fade_in(1.6, Color.black)
+	emit_signal("toggle_title_anim")
 	for node in get_tree().get_nodes_in_group("main_menu"):
 		node.hide()
 	emit_signal("start_game")
@@ -106,7 +107,6 @@ func _on_StartButton_pressed():
 	$ButtonClick.play()
 	$ScoreLabel.text = ""
 	main_menu_visible = false
-	emit_signal("toggle_title_anim")
 
 
 
@@ -170,8 +170,8 @@ func _on_ButtonSound_toggled(button_pressed):
 func process_button(node, type, button_state):
 	var texture_overlay = load("res://assets/menus/button_OFF.png")
 	var busID = AudioServer.get_bus_index(type)
-	get_parent().SETTINGS[str(type).to_lower() +"_mute"] = true if button_state else false
-	get_parent().save_config()
+	Util.SETTINGS[str(type).to_lower() +"_mute"] = true if button_state else false
+	Util.save_config()
 
 	if button_state:
 		node.texture = texture_overlay

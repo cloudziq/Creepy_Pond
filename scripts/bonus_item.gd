@@ -45,7 +45,6 @@ func _ready():
 
 	match bonuses[bonus_type][0]:
 		"point":
-#			point_bonus_anim("all")
 			$Sprite.scale = Vector2(.4, .4)
 			$CollisionShape2D.scale = Vector2(1,1)
 			$Sprite/AnimationPlayer.play("point")
