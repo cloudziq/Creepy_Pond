@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://scripts/Mob.gd" type="Script" id=1]
 [ext_resource path="res://assets/mobs/enemy1_1.png" type="Texture" id=2]
@@ -188,8 +188,12 @@ tracks/1/keys = {
 radius = 89.0001
 height = 11.9988
 
+[sub_resource type="CircleShape2D" id=21]
+radius = 640.0
+
 [node name="Mob" type="KinematicBody2D" groups=["mobs"]]
 z_index = 10
+collision_layer = 2
 collision_mask = 0
 script = ExtResource( 1 )
 
@@ -269,4 +273,12 @@ bus = "Sound"
 [node name="Tween" type="Tween" parent="."]
 playback_process_mode = 0
 
+[node name="MobSoundEnabler" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MobSoundEnabler"]
+shape = SubResource( 21 )
+
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="area_entered" from="MobSoundEnabler" to="." method="_on_MobSoundEnabler_area_entered"]
+[connection signal="area_exited" from="MobSoundEnabler" to="." method="_on_MobSoundEnabler_area_exited"]

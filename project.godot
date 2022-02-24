@@ -172,6 +172,12 @@ pause={
 
 pointing/emulate_touch_from_mouse=true
 
+[layer_names]
+
+2d_physics/layer_1="player"
+2d_physics/layer_2="mob"
+2d_physics/layer_3="bonus"
+
 [physics]
 
 common/physics_fps=30

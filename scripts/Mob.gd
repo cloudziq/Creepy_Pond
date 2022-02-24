@@ -26,7 +26,13 @@ var velocity := Vector2()
 
 func _ready():
 	#### DETERMINE MOB MOVEMENT TYPE
-	mob_mode = mob_modes.ANGULAR if randf() + mob_timer <= .6 else mob_modes.STRAIGHT
+	var base_probability = .2
+	var modifier         = mob_timer / 10
+	var probability      = randf() + modifier
+	if probability < base_probability and mob_timer < .8:
+		mob_mode = mob_modes.ANGULAR
+	else:
+		mob_mode = mob_modes.STRAIGHT
 
 	var MobSpawn  = get_parent().get_node("MobPath/MobSpawnLocation")
 	var timer     = get_parent().get_node("Timers/MobTimer")
@@ -41,8 +47,10 @@ func _ready():
 	var scale_new = rand_range(scale_min, scale_max)
 	$Sprite.scale = (Vector2(scale_new, scale_new))
 	$CollisionShape2D.scale = (Vector2(scale_new, scale_new))
+	$MobSoundEnabler/CollisionShape2D.scale = (Vector2(scale_new, scale_new))
 	$move_particles.scale = Vector2(scale_new * 6, scale_new * 5)
 	$move_particles.set("scale_amount", 0.16 * (.32 - scale_new))
+	$move_particles.amount = 200 * mob_timer * 1.4
 
 	# Set the mob's direction perpendicular to the path direction.
 	var direction = MobSpawn.rotation + PI / 2
@@ -60,7 +68,6 @@ func _ready():
 
 	var pitch = 1.2 - scale_new if scale_new >= scale_mid else 1.2 + scale_new
 	$MobSound.pitch_scale += pitch
-	$MobSound.play()
 
 	var R ; var G ; var B
 	match mob_mode:
@@ -116,6 +123,15 @@ func _process(_delta):
 
 
 
+func time_scale(effect):
+	var scale = 2.0 if effect == "normal" else .5
+	for instance in get_tree().get_nodes_in_group("mobs"):
+		instance.speed *= scale
+		instance.mob_turn_speed *= 2
+		instance.get_node("clock_particles").emitting = true
+		instance.get_node("Sprite/AnimationPlayer").playback_speed *= .5
+
+
 
 
 func _on_VisibilityNotifier2D_screen_exited():
@@ -124,10 +140,12 @@ func _on_VisibilityNotifier2D_screen_exited():
 
 
 
-func time_scale(effect):
-	var scale = 2.0 if effect == "normal" else .5
-	for instance in get_tree().get_nodes_in_group("mobs"):
-		instance.speed *= scale
-		instance.mob_turn_speed *= 2
-		instance.get_node("clock_particles").emitting = true
-		instance.get_node("Sprite/AnimationPlayer").playback_speed *= .5
+func _on_MobSoundEnabler_area_entered(_area):
+	Util.mob_sound_count += 1
+	if Util.mob_sound_count <= Util.mob_sound_max_amount:
+		$MobSound.play()
+
+
+func _on_MobSoundEnabler_area_exited(_area):
+	Util.mob_sound_count -= 1
+	$MobSound.stop()

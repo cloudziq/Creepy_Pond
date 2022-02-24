@@ -1,6 +1,10 @@
 extends Node
 
 
+var mob_sound_count      : int
+var mob_sound_max_amount := 10
+
+
 var SETTINGS
 var save_version = 1
 var config_path
