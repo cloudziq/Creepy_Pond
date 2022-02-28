@@ -1,16 +1,12 @@
 extends RigidBody2D
 
 
-onready var anim_dir  := 1
-onready var anim_iter := 0
+
 
 var bonus_type  := -1
-var anim_scale  := true
-var anim_rotate := true
-
 
 var bonuses = [
-	["point",       62],
+	["point",       40],
 	["speed_pill",  96],
 	["clock",      100],
 ]
@@ -21,6 +17,7 @@ var bonuses = [
 func _ready():
 	var bonus_spawn_offset = 100
 	var val = randi() % 100 + 1
+	$Sprite.hide()
 
 	for index in bonuses.size():
 		if val <= bonuses[index][1]:
@@ -47,77 +44,20 @@ func _ready():
 		"point":
 			$Sprite.scale = Vector2(.4, .4)
 			$CollisionShape2D.scale = Vector2(1,1)
-			$Sprite/AnimationPlayer.play("point")
+			$AnimationPlayer.play("point")
+			$AnimationPlayer.playback_speed = .65
 		"speed_pill":
-			pill_bonus_anim(1)
 			$Sprite.scale = Vector2(.5, .5)
 			$CollisionShape2D.scale = Vector2(1.2, 1.2)
-			$Sprite/AnimationPlayer.play("pill")
+			$AnimationPlayer.play("pill")
+			$AnimationPlayer.playback_speed = .45
 			get_parent().allow_pill_spawn = false
 		"clock":
-			clock_bonus_anim(1, 0)
 			$Sprite.scale = Vector2(.5, .5)
 			$CollisionShape2D.scale = Vector2(1.2, 1.2)
-			$Sprite/AnimationPlayer.play("clock")
+			$AnimationPlayer.play("clock")
+			$AnimationPlayer.playback_speed = 1.45
 			get_parent().allow_clock_spawn = false
 
-
-
-
-func pill_bonus_anim(dir):
-	var rot ; var time ; var delay
-
-	if dir == 1:
-		rot = 270
-		time = .6
-		delay = .2
-		anim_dir = -1
-	else:
-		rot = 0
-		time = .6
-		delay = .6
-		anim_dir = 1
-
-	$anim_rotation.interpolate_property($Sprite, "rotation_degrees",
-		$Sprite.rotation_degrees, rot, time,
-		Tween.TRANS_SINE, Tween.EASE_IN_OUT, delay)
-	$anim_rotation.start()
-
-
-
-
-func clock_bonus_anim(dir, iter):
-	var rot ; var delay
-	anim_iter += 1
-
-	if iter < 7:
-		delay = .01
-		if dir == 1:
-			rot = 16
-			anim_dir = -1
-		else:
-			rot = -16
-			anim_dir = 1
-	elif iter == 7:
-		delay = .005
-		rot = 0
-	else:
-		rot = 0
-		delay = 1
-		anim_dir = 1
-		anim_iter = 0
-
-	$anim_rotation.interpolate_property($Sprite, "rotation_degrees",
-		$Sprite.rotation_degrees, rot, .06,
-		Tween.TRANS_LINEAR, 0, delay)
-	$anim_rotation.start()
-
-
-
-
-func _on_anim_rotation_end():
-	match bonuses[bonus_type][0]:
-		"speed_pill":
-			pill_bonus_anim(anim_dir)
-		"clock":
-			clock_bonus_anim(anim_dir, anim_iter)
+	yield(get_tree().create_timer(.1), "timeout")
+	$Sprite.show()

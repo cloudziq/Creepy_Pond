@@ -9,7 +9,6 @@ export var show_FPS_counter   := false
 onready var main_menu_visible := true
 
 var MessageFade
-var buttons_sound_allow    #### to prevent playing button sounds on start
 
 
 
@@ -25,13 +24,14 @@ func _ready():
 	if Util.SETTINGS["score_record"] != 0:
 		$ScoreLabel.text = "BEST SCORE:  " + str(Util.SETTINGS["score_record"])
 
-	buttons_sound_allow = false
 	var node_path = "VBoxContainer/MiddleButtons/HBoxContainer/"
+	var texture_overlay = load("res://assets/menus/button_OFF.png")
 	if Util.SETTINGS["music_mute"] == true:
-		get_node(node_path +"ButtonMusic").pressed = true
+		get_node(node_path +"ButtonMusic").set_pressed_no_signal(true)
+		get_node(node_path +"ButtonMusic/disabled").texture = texture_overlay
 	if Util.SETTINGS["sound_mute"] == true:
-		get_node(node_path +"ButtonSound").pressed = true
-	buttons_sound_allow = true
+		get_node(node_path +"ButtonSound").set_pressed_no_signal(true)
+		get_node(node_path +"ButtonSound/disabled").texture = texture_overlay
 
 	Fade.fade_in(.6, Color.black, "GradientVertical", false, true)
 
@@ -84,15 +84,16 @@ func show_game_over():
 	$ScoreLabel.text = "BEST SCORE:  " + str(Util.SETTINGS["score_record"])
 	for node in get_tree().get_nodes_in_group("main_menu"):
 		node.show()
-	emit_signal("toggle_title_anim")
 	main_menu_visible = true
 	$FPS_DISPLAY.text = ""
 	Fade.fade_in(1.2, Color.black, "Noise", false, true)
+	emit_signal("toggle_title_anim")
 
 
 
 
 func _on_StartButton_pressed():
+	$ButtonClick.play()
 	yield(get_tree().create_timer(0.12), "timeout")
 	Fade.fade_in(1.6, Color.black)
 	emit_signal("toggle_title_anim")
@@ -104,9 +105,12 @@ func _on_StartButton_pressed():
 	$Message/AnimationPlayer.stop()
 	$Message/AnimationPlayer.playback_speed = 1
 	$Message/AnimationPlayer.play("message_anim")
-	$ButtonClick.play()
 	$ScoreLabel.text = ""
 	main_menu_visible = false
+	var sound = AudioStreamPlayer.new() ; add_child(sound)
+	sound.stream    = load("res://assets/sounds/splash.ogg")
+	sound.volume_db = -4
+	sound.play() ; yield(sound, "finished") ; sound.queue_free()
 
 
 
@@ -170,6 +174,7 @@ func _on_ButtonSound_toggled(button_pressed):
 func process_button(node, type, button_state):
 	var texture_overlay = load("res://assets/menus/button_OFF.png")
 	var busID = AudioServer.get_bus_index(type)
+
 	Util.SETTINGS[str(type).to_lower() +"_mute"] = true if button_state else false
 	Util.save_config()
 
@@ -184,9 +189,8 @@ func process_button(node, type, button_state):
 
 
 func create_button_audio(pitch, volume):
-	if buttons_sound_allow:
-		var audio = AudioStreamPlayer.new() ; add_child(audio)
-		audio.stream      = load("res://assets/sounds/ButtonClick.ogg")
-		audio.pitch_scale = pitch
-		audio.volume_db   = volume
-		audio.play() ; yield(audio, "finished") ; audio.queue_free()
+	var audio = AudioStreamPlayer.new() ; add_child(audio)
+	audio.stream      = load("res://assets/sounds/ButtonClick.ogg")
+	audio.pitch_scale = pitch
+	audio.volume_db   = volume
+	audio.play() ; yield(audio, "finished") ; audio.queue_free()

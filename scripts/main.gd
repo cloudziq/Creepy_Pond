@@ -13,8 +13,8 @@ var allow_pill_spawn  := false
 var allow_mob_spawn   := false
 var start_clock_sound := false
 
-onready var default_player_speed   = $player.speed
-onready var default_playback_speed = $player/Sprite/AnimationPlayer.playback_speed
+onready var default_player_speed         = $player.SPEED
+onready var default_playback_speed       = $player/Sprite/AnimationPlayer.playback_speed
 onready var default_pill_bonus_wait_time = $Timers/PillBonusDelay.wait_time
 
 
@@ -22,8 +22,15 @@ onready var default_pill_bonus_wait_time = $Timers/PillBonusDelay.wait_time
 
 func _ready():
 	randomize()
-	var num_of_BGs := 4
-	var lights_num := 4
+	var num_of_BGs : int
+	var lights_num : int
+
+	if OS.get_name() == "HTML5":
+		num_of_BGs = 2
+		lights_num = 2
+	else:
+		num_of_BGs = 4
+		lights_num = 4
 
 	for a in num_of_BGs:
 		var BG = BG_scene.instance()
@@ -47,7 +54,7 @@ func _ready():
 
 
 
-func _process(_delta):
+func _process(_dt):
 	if allow_bonus_spawn:
 		allow_bonus_spawn = false
 		bonus = bonus_item.instance()
@@ -60,7 +67,8 @@ func _process(_delta):
 
 func new_game():
 	score = 0
-	$player.speed = default_player_speed
+	Util.mob_sound_count = 0
+	$player.SPEED = default_player_speed
 	$player/Sprite/AnimationPlayer.playback_speed = default_playback_speed
 	$Timers/PillBonusDelay.wait_time = default_pill_bonus_wait_time
 	allow_mob_spawn   = true
@@ -93,7 +101,7 @@ func game_over():
 	get_tree().call_group("bonus", "queue_free")
 	yield(get_tree().create_timer(.8), "timeout")
 	$Sounds/death_sound.play()
-	$Sounds/clock_ticking.stop()
+	$Sounds/Clock.stop()
 
 
 
@@ -115,11 +123,12 @@ func _on_StartTimer_timeout():    ## After intro message
 
 func _on_ScoreTimer_timeout():
 	if $Timers/MobTimer.wait_time > .1 and $Timers/MobClockDelay.is_stopped():
-		$Timers/MobTimer.wait_time -= $Timers/MobTimer.wait_time / 92
+		$Timers/MobTimer.wait_time -= $Timers/MobTimer.wait_time / 90    # 90
 	score += 1
 	$HUD.update_score(score, false)
 	if start_clock_sound:
-		$Sounds/clock_ticking.play()
+		$Sounds/Clock.stream = load("res://assets/sounds/clock_ticking.ogg")
+		$Sounds/Clock.play()
 		start_clock_sound = false
 #	print($Timers/MobTimer.wait_time)
 
@@ -127,7 +136,8 @@ func _on_ScoreTimer_timeout():
 
 
 func _on_MobClockDelay_timeout():
-	$Sounds/clock_ticking.stop()
+	$Sounds/Clock.stream = load("res://assets/sounds/clock_bell.ogg")
+	$Sounds/Clock.play()
 	$HUD/ScoreLabel.set("custom_colors/font_color", Color(0,0,0,1))
 	allow_mob_spawn = true
 
@@ -150,10 +160,12 @@ func _on_player_bonus_collected():
 			$Timers/PillBonusDelay.start()
 			$player/pill_particles/big.emitting   = true
 			$player/pill_particles/small.emitting = true
-			$player.speed *= 1.1
+			$player.SPEED *= 1.1
+			$player.get_node("PlayerMove").pitch_scale *= 1.025
 			$player/Sprite/AnimationPlayer.playback_speed *= 1.1
 		"clock":
 			start_clock_sound = true
+			allow_mob_spawn   = false
 			var default_timer = 8
 			var time = default_timer * (1 + (1 - ($Timers/MobTimer.wait_time * 1.6)))
 			#print("CLOCK TIME:" + ("%.2f" % time))
@@ -163,7 +175,6 @@ func _on_player_bonus_collected():
 			$Sounds/bonus_clock_collect.play()
 			$HUD/ScoreLabel.set("custom_colors/font_color", Color(0, .6, 0, 1))
 			mob.time_scale("reduce")
-			allow_mob_spawn = false
 
 
 

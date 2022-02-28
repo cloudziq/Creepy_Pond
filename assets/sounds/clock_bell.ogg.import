@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/clock_bell.ogg-02cb8d6b750aaa1388d4dddb088061ed.oggstr"
+
+[deps]
+
+source_file="res://assets/sounds/clock_bell.ogg"
+dest_files=[ "res://.import/clock_bell.ogg-02cb8d6b750aaa1388d4dddb088061ed.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

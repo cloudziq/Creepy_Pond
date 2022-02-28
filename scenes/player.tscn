@@ -7,7 +7,7 @@
 [ext_resource path="res://scripts/player.gd" type="Script" id=5]
 [ext_resource path="res://assets/particles/spark2.png" type="Texture" id=6]
 [ext_resource path="res://assets/particles/spark3.png" type="Texture" id=7]
-[ext_resource path="res://assets/sounds/player_move.ogg" type="AudioStream" id=8]
+[ext_resource path="res://assets/sounds/PlayerMove.wav" type="AudioStream" id=8]
 [ext_resource path="res://assets/mobs/player3.png" type="Texture" id=9]
 [ext_resource path="res://assets/mobs/player4.png" type="Texture" id=10]
 [ext_resource path="res://assets/mobs/player1_n.png" type="Texture" id=11]
@@ -254,6 +254,7 @@ current = true
 [node name="PlayerMove" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
 volume_db = 2.2
+pitch_scale = 0.96
 mix_target = 2
 bus = "Sound"
 

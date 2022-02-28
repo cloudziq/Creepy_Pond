@@ -5,9 +5,12 @@ export var min_speed      := 34.0
 export var max_speed      := 68.0
 export var max_turn_angle := 65.0
 
-
 onready var mob_timer = get_parent().get_node("Timers/MobTimer").wait_time
 
+const mob_sound = [
+	preload("res://assets/sounds/MobSound.wav"),
+	preload("res://assets/sounds/MobSound2.wav")
+]
 
 enum mob_modes {STRAIGHT, ANGULAR}
 var mob_mode       : int
@@ -54,9 +57,8 @@ func _ready():
 
 	# Set the mob's direction perpendicular to the path direction.
 	var direction = MobSpawn.rotation + PI / 2
-	# Set the mob's position to a random location.
+	# Set the mob's position to a random location and add some randomness
 	position = MobSpawn.position
-	# Add some randomness to the direction.
 	direction += rand_range(-PI / 4, PI / 4)
 	rotation = direction - PI
 
@@ -66,9 +68,6 @@ func _ready():
 #	print("min: "+ ("%.2f" % speed_min) +"    max: "+ ("%.2f" % speed_max))
 	speed = rand_range(speed_min, speed_max)
 
-	var pitch = 1.2 - scale_new if scale_new >= scale_mid else 1.2 + scale_new
-	$MobSound.pitch_scale += pitch
-
 	var R ; var G ; var B
 	match mob_mode:
 		mob_modes.STRAIGHT:
@@ -77,13 +76,22 @@ func _ready():
 			B = rand_range(.32, .44)
 			$Sprite/AnimationPlayer.play(mob_anims[rand_range(1, mob_anims.size() - 1)])
 			$Sprite/AnimationPlayer.playback_speed = .4 + (speed / 100)
+			$MobSound.stream = mob_sound[0]
+			var pitch = 1.2 - scale_new if scale_new >= scale_mid else 1.2 + scale_new
+			$MobSound.pitch_scale += pitch
 		mob_modes.ANGULAR:
-			R = rand_range(.86, .98)
-			G = rand_range(.12, .20)
-			B = rand_range(.08, .12)
+			R = rand_range(.7,  1)
+			G = rand_range(.6, .9)
+			B = rand_range(.4, .6)
 			$Sprite/AnimationPlayer.play("enemy3")
 			$Sprite/AnimationPlayer.playback_speed = 6 + (speed / 100)
+			$MobSound.stream = mob_sound[1]
+			$MobSound.pitch_scale = .4 + (speed / 100)
 	$Sprite.self_modulate = Color(R,G,B)
+
+	if OS.get_name() == "HTML5":
+		$move_particles.hide()
+		$clock_particles.hide()
 
 
 
@@ -100,6 +108,7 @@ func _process(_delta):
 	var time = OS.get_system_time_msecs()
 
 	if mob_mode == mob_modes.ANGULAR and time > time_to_turn:
+		time_to_turn = time + (mob_turn_speed * 1000 + 50) * (1 - mob_timer)
 		match current_turn:
 			0:
 				mob_turn_angle = deg2rad(rand_range(12, max_turn_angle * (1 - mob_timer)))
@@ -118,8 +127,6 @@ func _process(_delta):
 				$Tween.start()
 				current_turn = 1
 
-		time_to_turn = time + (mob_turn_speed * 1000 + 50) * (1 - mob_timer)
-
 
 
 
@@ -130,6 +137,8 @@ func time_scale(effect):
 		instance.mob_turn_speed *= 2
 		instance.get_node("clock_particles").emitting = true
 		instance.get_node("Sprite/AnimationPlayer").playback_speed *= .5
+		$MobSound.pitch_scale *= .5
+#		$MobSound.stop() ; $MobSound.play()
 
 
 

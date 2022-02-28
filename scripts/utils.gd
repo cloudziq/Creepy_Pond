@@ -2,7 +2,7 @@ extends Node
 
 
 var mob_sound_count      : int
-var mob_sound_max_amount := 10
+var mob_sound_max_amount := 12
 
 
 var SETTINGS
@@ -37,6 +37,8 @@ func load_config():
 	match system:
 		"Windows", "X11":
 			config_path = OS.get_executable_path().get_base_dir() + "/config.cfg"
+		"HTML5":
+			config_path = "user://config.cfg"
 
 #	var err = config.load(config_path)
 	var err = config.load_encrypted(config_path, key)

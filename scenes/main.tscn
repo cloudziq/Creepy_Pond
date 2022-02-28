@@ -104,7 +104,7 @@ stream = ExtResource( 12 )
 volume_db = -12.0
 bus = "Sound"
 
-[node name="clock_ticking" type="AudioStreamPlayer" parent="Sounds"]
+[node name="Clock" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 13 )
 volume_db = -10.0
 bus = "Sound"
@@ -137,7 +137,7 @@ wait_time = 40.0
 one_shot = true
 
 [node name="PillBonusDelay" type="Timer" parent="Timers"]
-wait_time = 16.0
+wait_time = 18.0
 one_shot = true
 
 [connection signal="bonus_collected" from="player" to="." method="_on_player_bonus_collected"]

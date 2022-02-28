@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://scripts/Mob.gd" type="Script" id=1]
 [ext_resource path="res://assets/mobs/enemy1_1.png" type="Texture" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://assets/mobs/enemy1_2_n.png" type="Texture" id=5]
 [ext_resource path="res://assets/mobs/enemy2_1.png" type="Texture" id=6]
 [ext_resource path="res://assets/mobs/enemy2_2.png" type="Texture" id=7]
-[ext_resource path="res://assets/sounds/MobSound.ogg" type="AudioStream" id=8]
 [ext_resource path="res://assets/particles/spark2.png" type="Texture" id=9]
 [ext_resource path="res://assets/particles/spark3.png" type="Texture" id=10]
 [ext_resource path="res://assets/particles/spark4.png" type="Texture" id=11]
@@ -189,17 +188,20 @@ radius = 89.0001
 height = 11.9988
 
 [sub_resource type="CircleShape2D" id=21]
-radius = 640.0
+radius = 860.0
 
 [node name="Mob" type="KinematicBody2D" groups=["mobs"]]
 z_index = 10
 collision_layer = 2
 collision_mask = 0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ -698.0 ]
+}
 
 [node name="move_particles" type="CPUParticles2D" parent="."]
 self_modulate = Color( 1, 1, 1, 0.6 )
-light_mask = 2
+light_mask = 0
 position = Vector2( 5, 0 )
 amount = 200
 lifetime = 2.0
@@ -218,7 +220,7 @@ color = Color( 0.24, 0.32, 0.44, 0.4 )
 color_ramp = SubResource( 7 )
 
 [node name="clock_particles" type="CPUParticles2D" parent="."]
-light_mask = 2
+light_mask = 0
 position = Vector2( -4, 0 )
 scale = Vector2( 0.22, 0.22 )
 emitting = false
@@ -259,12 +261,17 @@ rotation = 1.57079
 shape = SubResource( 2 )
 one_way_collision_margin = 0.0
 
+[node name="MobSoundEnabler" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MobSoundEnabler"]
+shape = SubResource( 21 )
+
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 position = Vector2( 0.999996, 0 )
 rect = Rect2( -20, -20, 40, 40 )
 
 [node name="MobSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 8 )
 volume_db = 8.0
 max_distance = 140.0
 attenuation = 1.80251
@@ -273,12 +280,6 @@ bus = "Sound"
 [node name="Tween" type="Tween" parent="."]
 playback_process_mode = 0
 
-[node name="MobSoundEnabler" type="Area2D" parent="."]
-collision_layer = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MobSoundEnabler"]
-shape = SubResource( 21 )
-
-[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 [connection signal="area_entered" from="MobSoundEnabler" to="." method="_on_MobSoundEnabler_area_entered"]
 [connection signal="area_exited" from="MobSoundEnabler" to="." method="_on_MobSoundEnabler_area_exited"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
