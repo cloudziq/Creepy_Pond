@@ -17,6 +17,7 @@ var bonuses = [
 func _ready():
 	var bonus_spawn_offset = 100
 	var val = randi() % 100 + 1
+
 	$Sprite.hide()
 
 	for index in bonuses.size():
@@ -39,6 +40,8 @@ func _ready():
 
 #	var a = str(bonuses[bonus_type][0]).to_upper()
 #	print("bonus: "+ a +"  ("+ str(floor(pos1.x)) +", "+ str(floor(pos1.y)) +")" )    ## Wyjebać
+	# QUINTON REEVES IS A FUCKING WHORE, LIKE HIS WIFE ^.^
+	# RED ECLIPSE SUCKERS COMMUNITY FOR DEGENERATES AND IDIOTS WITHOUT BRAINS..
 
 	match bonuses[bonus_type][0]:
 		"point":

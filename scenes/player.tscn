@@ -15,6 +15,10 @@
 [ext_resource path="res://assets/mobs/player3_n.png" type="Texture" id=13]
 [ext_resource path="res://assets/mobs/player4_n.png" type="Texture" id=14]
 
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 12.0
+height = 0.0
+
 [sub_resource type="AnimatedTexture" id=9]
 flags = 4
 frames = 4
@@ -143,10 +147,6 @@ tracks/3/keys = {
 "values": [ Vector2( -2, 0 ), Vector2( 0.8, 0 ), Vector2( 0.8, 0 ) ]
 }
 
-[sub_resource type="CapsuleShape2D" id=2]
-radius = 12.0
-height = 0.0
-
 [node name="player" type="Area2D"]
 position = Vector2( 1.2, 0 )
 z_index = 10
@@ -157,6 +157,13 @@ script = ExtResource( 5 )
 [node name="DebugOverlay" type="CanvasModulate" parent="."]
 visible = false
 color = Color( 0, 0, 0, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -2, 0 )
+shape = SubResource( 2 )
+
+[node name="Listener2D" type="Listener2D" parent="."]
+current = true
 
 [node name="move_particles" type="CPUParticles2D" parent="."]
 self_modulate = Color( 1, 1, 1, 0.6 )
@@ -243,13 +250,6 @@ playback_default_blend_time = 0.1
 playback_speed = 3.6
 anims/RESET = SubResource( 16 )
 anims/player = SubResource( 15 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -2, 0 )
-shape = SubResource( 2 )
-
-[node name="Listener2D" type="Listener2D" parent="."]
-current = true
 
 [node name="PlayerMove" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )

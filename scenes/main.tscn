@@ -42,17 +42,26 @@ anchor_bottom = 1.0
 margin_right = 480.0
 margin_bottom = 720.0
 color = Color( 0.101961, 0.164706, 0.2, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="player" parent="." instance=ExtResource( 2 )]
 z_as_relative = false
 
-[node name="Line2D" type="Line2D" parent="."]
+[node name="PlayerDest" type="Line2D" parent="."]
 light_mask = 0
 position = Vector2( 1.2, 0 )
 z_index = 1
+points = PoolVector2Array( -1.2, 0 )
+width = 1.0
+width_curve = SubResource( 3 )
+default_color = Color( 0, 0, 0, 0 )
+gradient = SubResource( 2 )
+end_cap_mode = 2
+round_precision = 6
+
+[node name="Tongue" type="Line2D" parent="."]
+light_mask = 0
+z_index = 1
+points = PoolVector2Array( 0.6, 0 )
 width = 1.0
 width_curve = SubResource( 3 )
 default_color = Color( 0, 0, 0, 0 )

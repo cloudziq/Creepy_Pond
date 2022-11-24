@@ -49,6 +49,7 @@ func _ready():
 
 	Util.window_prepare()
 	Util.load_config()
+	Util.load_BGs()
 
 
 
@@ -90,11 +91,13 @@ func game_over():
 	if score > Util.SETTINGS["score_record"]:
 		Util.SETTINGS["score_record"] = score
 		Util.save_config()
-	$Line2D.hide()
+
 	$HUD.show_game_over()
+	$PlayerDest.hide()
 	$Timers/ScoreTimer.stop()
 	$Timers/MobTimer.stop()
 	$Timers/BonusDelay.stop()
+	$Timers/MobClockDelay.stop()
 	$Sounds/level_music.stop()
 	$Sounds/enemy_bite.play()
 	get_tree().call_group("mobs",  "queue_free")
@@ -106,8 +109,8 @@ func game_over():
 
 
 
-func _on_MobTimer_timeout():
-	if allow_mob_spawn:
+func :
+	if _on_MobTimer_timeout()allow_mob_spawn:
 		mob = Mob.instance()
 		add_child(mob)
 
@@ -123,7 +126,7 @@ func _on_StartTimer_timeout():    ## After intro message
 
 func _on_ScoreTimer_timeout():
 	if $Timers/MobTimer.wait_time > .1 and $Timers/MobClockDelay.is_stopped():
-		$Timers/MobTimer.wait_time -= $Timers/MobTimer.wait_time / 90    # 90
+		$Timers/MobTimer.wait_time -= $Timers/MobTimer.wait_time / 82
 	score += 1
 	$HUD.update_score(score, false)
 	if start_clock_sound:

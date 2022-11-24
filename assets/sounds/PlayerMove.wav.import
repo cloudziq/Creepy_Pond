@@ -12,7 +12,7 @@ dest_files=[ "res://.import/PlayerMove.wav-1aee5fbfbc0824d2b6cf66e4c5b5bae6.samp
 [params]
 
 force/8_bit=false
-force/mono=false
+force/mono=true
 force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false

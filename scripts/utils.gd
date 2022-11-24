@@ -4,11 +4,26 @@ extends Node
 var mob_sound_count      : int
 var mob_sound_max_amount := 12
 
+var BG_in_folder  := 24
+var BG_table      := []
 
 var SETTINGS
 var save_version = 1
 var config_path
 # userdata path: "user://config.cfg"     -- for mobile
+
+
+
+
+func load_BGs():
+	var path = "res://assets/level_bg/bg"
+
+	for a in BG_in_folder:
+		BG_table.append([])
+		BG_table[a] = [
+			load(path + str(a+1) +".png"),
+			load(path + str(a+1) +"_n.png")
+		]
 
 
 

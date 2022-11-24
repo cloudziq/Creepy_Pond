@@ -198,6 +198,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_horizontal_guides_": [ -698.0 ]
 }
+max_turn_angle = 56.0
 
 [node name="move_particles" type="CPUParticles2D" parent="."]
 self_modulate = Color( 1, 1, 1, 0.6 )

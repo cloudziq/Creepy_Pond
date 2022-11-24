@@ -1,7 +1,6 @@
 extends Node2D
 
 
-var BG_amount      := 24
 var default_range  := 10000
 
 onready var ACTIVE := false
@@ -59,7 +58,7 @@ func _process(_delta):
 				$Sprite.scale, Vector2(scale, scale), time,
 				Tween.TRANS_SINE, Tween.EASE_IN_OUT, delay)
 			$anim_scale.start()
-		elif randi() % default_range + 1 == default_range and CHANGE == false:
+		elif randi() % default_range + 1 == default_range and not CHANGE:
 			CHANGE = true
 			time  = rand_range(40, 60)
 			delay = rand_range(4, 12)
@@ -92,8 +91,8 @@ func _on_anim_color_end():
 
 func assign_tex():
 	#print("BG CHANGED")
-	var path = "res://assets/level_bg/bg" + str(floor(rand_range(1, BG_amount+1)))
-	$Sprite.texture = load(path +".png")
+	var num = randi() % Util.BG_in_folder
+	$Sprite.texture = Util.BG_table[num][0]
 	if z_index != 100:
-		$Sprite.normal_map = load(path +"_n.png")
+		$Sprite.normal_map = Util.BG_table[num][1]
 	#print("z_index: "+ str(z_index) +"    light_mask: "+ str(light_mask))
